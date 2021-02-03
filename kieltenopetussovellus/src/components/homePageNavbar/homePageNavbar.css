@@ -1,0 +1,83 @@
+.nav{
+    background-color: black;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 15vh;
+}
+.links{
+    padding: 1em;
+    color: white;
+    display: flex;
+}
+.links li{
+    list-style: none;
+}
+
+.navbar-button{
+    border: 1px solid green;
+    background: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    margin-right: 1rem;
+    cursor: pointer;
+    border-radius: 1rem;
+    color: green;
+}
+.navbar-button:hover{
+    background: lightgreen;
+}
+.navlink{
+    color: rgb(231, 231, 231);
+    text-decoration: none;
+    font-size: 1.5rem;
+    margin: 1rem;
+    letter-spacing: 3px;
+}
+.burger{
+    display: none;
+    padding: 1rem;
+    position: absolute;
+    top: .75rem;
+    right: 1rem;
+}
+.burger div{
+    width: 25px;
+    height: 3px;
+    background-color: rgb(231, 231, 231);
+    margin: 5px;
+}
+.burger:hover{
+    opacity: 50%;
+}
+
+@media (max-width:600px){
+    .links{
+        flex-direction: column;
+        display: none;
+    }
+    .burger{
+        display: block;
+    }
+    .nav{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .navbar-button{
+        margin:5px;
+    }
+    .linksActive{
+        display: flex;
+        animation: fadeIn 1s;
+    }
+}
+
+@keyframes fadeIn{
+    from{
+        opacity: 0%;
+    }
+    to{
+        opacity: 100%;
+    }
+}
