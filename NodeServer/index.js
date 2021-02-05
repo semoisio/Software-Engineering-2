@@ -32,6 +32,9 @@ var cors = function (req, res, next)
 
 app.use(cors);
 
+// user routes
+const userRoutes = require('./routes/userRoutes');
+app.use(userRoutes);
 
 
 

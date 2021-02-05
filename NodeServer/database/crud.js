@@ -86,14 +86,14 @@ async function findOne(client, db, collection, params) {
 async function findMany(client, db, collection, params, sort, limit) {
     try {
         await client.connect();
-        const result = await client.db(db).collection(collection).find(params);
+        const result = await client.db(db).collection(collection).find(params).toArray();
         if (limit) {
             result.limit(limit);
         }
         if (sort) {
             result.sort(sort);
         }
-        if (result) {
+        if (result.length > 0) {
             console.log("Found documents");
             return result;
         }
@@ -120,13 +120,11 @@ async function updateOne(client, db, collection, id, newValue) {
     try {
         await client.connect();
         const result = await client.db(db).collection(collection).updateOne(id, { $set: newValue });
-        if (result.modifiedCount > 0) {
+        if (result.modifiedCount > 0)
             console.log("Updated document");
-            return(result.modifiedCount);
-        }
         else
             console.log("No documents were updated");
-            return(result.modifiedCount);
+        return (result.modifiedCount);
     }
     catch (e) {
         console.log("Something went wrong while updating a document");
@@ -148,12 +146,11 @@ async function updateMany(client, db, collection, id, newValue) {
     try {
         await client.connect();
         const result = await client.db(db).collection(collection).updateMany(id, { $set: newValue });
-        if (result) {
+        if (result.modifiedCount > 0)
             console.log("Updated documents");
-            return result;
-        }
         else
             console.log("No documents were updated");
+        return result.modifiedCount;
     }
     catch (e) {
         console.log("Something went wrong while updating documents");
@@ -174,12 +171,11 @@ async function deleteOne(client, db, collection, id) {
     try {
         await client.connect();
         const result = await client.db(db).collection(collection).deleteOne(id);
-        if (result) {
+        if (result.deletedCount > 0)
             console.log("Deleted document");
-            return result;
-        }
         else
             console.log("No documents were deleted");
+        return result.deletedCount;
     }
     catch (e) {
         console.log("Something went wrong while deleting a document");
@@ -200,12 +196,11 @@ async function deleteMany(client, db, collection, id) {
     try {
         await client.connect();
         const result = await client.db(db).collection(collection).deleteMany(id);
-        if (result) {
+        if (result.deletedCount > 0)
             console.log("Deleted documents");
-            return result;
-        }
         else
             console.log("No documents were deleted");
+        return result.deletedCount;
     }
     catch (e) {
         console.log("Something went wrong while deleting documents");
