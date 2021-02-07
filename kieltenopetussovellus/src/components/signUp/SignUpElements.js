@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
+//Container for whole page
 export const Container = styled.nav`
     min-height: 692px;
     position: fixed;
@@ -17,7 +18,7 @@ export const Container = styled.nav`
     );
 `;
 
-
+//Wrapper for content
 export const FormWrap = styled.div`
     height: 100%;
     width: 100%;
@@ -30,6 +31,7 @@ export const FormWrap = styled.div`
     };
 `;
 
+// NavLink styled Icon
 export const Icon = styled(NavLink)`
     margin-left: 32px;
     margin-top: 32px;
@@ -46,6 +48,7 @@ export const Icon = styled(NavLink)`
     };
 `;
 
+//Wrapper for form
 export const FormContent = styled.div`
     height: 100%;
     display: flex;
@@ -57,6 +60,7 @@ export const FormContent = styled.div`
     };
 `;
 
+// Form
 export const Form = styled.form`
     background: #010101;
     max-width: 400px;
@@ -83,6 +87,7 @@ export const Form = styled.form`
     };
 `;
 
+// Headline for form
 export const FormH1 = styled.h1`
     margin-bottom: 40px;
     color: #fff;
@@ -91,12 +96,14 @@ export const FormH1 = styled.h1`
     text-align: center;
 `;
 
+// Labels for diffrent form elements
 export const FormLabel = styled.label`
     margin-bottom: 8px;
     font-size: 14px;
     color: #fff;
 `;
 
+// Styles for inputs
 export const FormInput = styled.input`
     padding: 16px 16px;
     margin-bottom: 32px;
@@ -104,6 +111,7 @@ export const FormInput = styled.input`
     border-radius: 4px;
 `;
 
+//Styles for form button
 export const FormButton = styled.button`
     background: #01bf71;
     padding: 16px 0;
@@ -114,6 +122,7 @@ export const FormButton = styled.button`
     cursor: pointer;
 `;
 
+// If needed text area
 export const Text = styled.span`
     text-align: center;
     margin-top: 24px;

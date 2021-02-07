@@ -12,23 +12,28 @@ import {
     NavBtnLink
 } from './NavbarElements';
 
+/**
+ * Navbarcomponent
+ * 
+ * @param {toggle} param1  Toggle function to show and hide sidebar.
+ */
 const Navbar = ({toggle}) => {
     return (
         <>
-            <Nav>
-                <NavbarContainer>
-                    <NavLogo to="/">GroupO</NavLogo>
-                    <MobileIcon onClick={toggle}>
-                        <FaBars/>
+            <Nav data-testid="navbarNav">
+                <NavbarContainer data-testid="navbarContainer">
+                    <NavLogo to="/" data-testid="navbarLogo">GroupO</NavLogo>
+                    <MobileIcon onClick={toggle} data-testid="navbarIcon">
+                        <FaBars data-testid="navbarBurger"/>
                     </MobileIcon>
-                    <NavMenu>
-                        <NavItem>
-                            <NavLinks to="/">Home</NavLinks>
+                    <NavMenu data-testid="navbarMenu">
+                        <NavItem data-testid="navbarMenuItem">
+                            <NavLinks to="/" data-testid="navbarLink">Home</NavLinks>
                         </NavItem>
                     </NavMenu>
-                    <NavBtn>
-                        <NavBtnLink to="/">Sign In</NavBtnLink>
-                        <NavBtnLink to="/signup">Sign Up</NavBtnLink>
+                    <NavBtn data-testid="navbarBtn">
+                        <NavBtnLink to="/" data-testid="navbarBtnLink1">Sign In</NavBtnLink>
+                        <NavBtnLink to="/signup" data-testid="navbarBtnLink2">Sign Up</NavBtnLink>
                     </NavBtn>
                 </NavbarContainer>
             </Nav>

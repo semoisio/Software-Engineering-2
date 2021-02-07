@@ -45,10 +45,12 @@ export const SidebarWrapper = styled.div`
     color: #fff;
 `;
 
-export const SidebarMenu = styled.ul`
+export const SidebarMenu = styled.div`
     display: flex;
     flex-direction: column;
-    padding:0;
+    align-items: center;
+    height: 100%;
+
 `;
 
 export const SidebarLink = styled(NavLink)`
@@ -71,8 +73,8 @@ export const SidebarLink = styled(NavLink)`
 
 export const SideBtnWrap = styled.div`
     display:flex;
+    flex-direction:column;
     justify-content: center;
-    margin-top: 50px;
 `;
 
 export const SidebarRoute = styled(NavLink)`
@@ -87,6 +89,7 @@ export const SidebarRoute = styled(NavLink)`
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     text-decoration: none;
+    margin-top: 1rem;
 
     &:hover{
         transition: all 0.2s ease-in-out;
