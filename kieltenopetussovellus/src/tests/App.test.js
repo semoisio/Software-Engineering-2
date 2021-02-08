@@ -1,4 +1,4 @@
-import { render, screen, cleanup } from '@testing-library/react';
+import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import App from '../App';
 
 
@@ -90,5 +90,13 @@ test('renders Navbar button signip', () => {
 test('renders sidebar to display none', () => {
   render(<App />);
   const element = screen.getByTestId("sidebarcontainer", {display: "none"});
+  expect(element).toBeInTheDocument();
+});
+
+test('Sidebar toggle works', () => {
+  render(<App />);
+  fireEvent.click(screen.getByTestId('navbarIcon'))
+
+  const element = screen.getByTestId("sidebarcontainer", {top: 0});
   expect(element).toBeInTheDocument();
 });
