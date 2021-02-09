@@ -10,7 +10,7 @@ Ladatut kirjastot:
 */
 
 //Portti ja hostnimi jota serveri kuuntelee
-var port = 3000; 
+var port = 3001; 
 var hostname = "127.0.0.1";
 
 //Otetaan express käyttöön
