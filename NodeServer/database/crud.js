@@ -1,5 +1,8 @@
 //Create, read, update and delete functions for MongoDB
 
+var sanitize = require('mongo-sanitize');
+
+
 /**
  * Creates one document to db.
  * @param {client} client - The client used to connect to database
@@ -10,7 +13,7 @@
 async function createOne(client, db, collection, newObj) {
     try {
         await client.connect();
-        const result = await client.db(db).collection(collection).insertOne(newObj);
+        const result = await client.db(db).collection(collection).insertOne(newObj, { checkKeys: true });
         if (result) {
             console.log("New document created");
             return result.ops;
@@ -34,7 +37,7 @@ async function createOne(client, db, collection, newObj) {
 async function createMany(client, db, collection, newObj) {
     try {
         await client.connect();
-        const result = await client.db(db).collection(collection).insertMany(newObj);
+        const result = await client.db(db).collection(collection).insertMany(newObj, { checkKeys: true });
         if (result) {
             console.log("New documents created");
             return result.ops;
@@ -58,7 +61,9 @@ async function createMany(client, db, collection, newObj) {
 async function findOne(client, db, collection, params) {
     try {
         await client.connect();
-        const result = await client.db(db).collection(collection).findOne(params);
+        // clean input of keys starting with $-sign
+        var clean = sanitize(params);
+        const result = await client.db(db).collection(collection).findOne(clean);
         if (result) {
             console.log("Found a document");
             return result;
@@ -86,7 +91,9 @@ async function findOne(client, db, collection, params) {
 async function findMany(client, db, collection, params, sort, limit) {
     try {
         await client.connect();
-        const result = await client.db(db).collection(collection).find(params).toArray();
+        // clean input of keys starting with $-sign
+        var clean = sanitize(params);
+        const result = await client.db(db).collection(collection).find(clean).toArray();
         if (limit) {
             result.limit(limit);
         }
@@ -170,7 +177,7 @@ async function updateMany(client, db, collection, id, newValue) {
 async function deleteOne(client, db, collection, id) {
     try {
         await client.connect();
-        const result = await client.db(db).collection(collection).deleteOne(id);
+        const result = await client.db(db).collection(collection).deleteOne(id, { checkKeys: true });
         if (result.deletedCount > 0)
             console.log("Deleted document");
         else
@@ -195,7 +202,7 @@ async function deleteOne(client, db, collection, id) {
 async function deleteMany(client, db, collection, id) {
     try {
         await client.connect();
-        const result = await client.db(db).collection(collection).deleteMany(id);
+        const result = await client.db(db).collection(collection).deleteMany(id, { checkKeys: true });
         if (result.deletedCount > 0)
             console.log("Deleted documents");
         else

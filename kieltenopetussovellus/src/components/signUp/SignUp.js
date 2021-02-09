@@ -17,6 +17,8 @@ function SignUp() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
+    const [learning, setLearning] = useState("");
+    const [infoText, setInfotext] = useState("");
 
     // This functions changes states if user types in something
     const usernameChanged = (event) => {
@@ -28,6 +30,28 @@ function SignUp() {
     const emailChanged = (event) => {
         setEmail(event.target.value);
     };
+    const learningChanged = (event) => {
+        setLearning(event.target.value);
+    };
+
+    const SubmitRegister = async (e) => {
+        e.preventDefault();
+        console.log(e);
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ "username": username, "password": password, "email": email, "learning": learning})
+        };
+        const result = await fetch("http://127.0.0.1:3001/user", requestOptions);
+        let response = result.json();
+        console.log(response);
+        if (response.status === "OK") {
+            setInfotext("success");
+        }
+        else {
+            setInfotext("failure");
+        }
+    };
 
     return (
         <>
@@ -35,7 +59,7 @@ function SignUp() {
                 <FormWrap data-testid="signupformwrap">
                     <Icon to="/" data-testid="signupicon">GroupO</Icon>
                     <FormContent data-testid="signupformcontent">
-                        <Form action="#" data-testid="signupform">
+                        <Form action="" data-testid="signupform" onSubmit={(e) => SubmitRegister(e)}>
                             <FormH1 data-testid="signupformh1">Create user</FormH1>
                             <FormLabel htmlFor="for" data-testid="signupformlabel1">Username</FormLabel>
                             <FormInput type="text" required value={username} onChange={(e) => { usernameChanged(e) }} data-testid="signupforminput1"/>
@@ -43,7 +67,10 @@ function SignUp() {
                             <FormInput type="password" required value={password} onChange={(e) => { passwordChanged(e) }} />
                             <FormLabel htmlFor="for">Email</FormLabel>
                             <FormInput type="email" required value={email} onChange={(e) => { emailChanged(e) }} />
-                            <FormButton type="submit">register</FormButton>
+                            <FormLabel htmlFor="for">I want to learn</FormLabel>
+                            <FormInput type="text" required value={learning} onChange={(e) => { learningChanged(e) }} />
+                            <FormButton type="submit">Register</FormButton>
+                            <p style={{ color: "red"}}>{infoText}</p>
                         </Form>
                     </FormContent>
                 </FormWrap>
