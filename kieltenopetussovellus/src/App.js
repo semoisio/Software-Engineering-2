@@ -4,6 +4,7 @@ import HomePage from './components/homePage/HomePage'
 import React from 'react';
 import SignUp from './components/signUp/SignUp';
 import Errorpage from './components/errorPage/Errorpage';
+import SignIn from './components/signIn/SignIn';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
             <Switch>
                 <Route exact path="/" component={HomePage} />
                 <Route path="/signup" component={SignUp} />
+                <Route path="/signin" component={SignIn} />
 
                 /**Tämä aina viimeiseksi. Ohjaa virhe sivulle */
                 <Route path="/" component={Errorpage} /> 
