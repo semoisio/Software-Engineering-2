@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 //Container for the whole page
 export const Container = styled.nav`
-    min-height: 792px;
+    min-height: 100vh;
     background: linear-gradient( 
         108deg, 
         rgba(1,147,86,1) 0%,

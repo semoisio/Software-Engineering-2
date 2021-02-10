@@ -48,7 +48,6 @@ function SignUp() {
 
     const SubmitRegister = async (e) => {
         e.preventDefault();
-        console.log(e);
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -56,7 +55,6 @@ function SignUp() {
         };
         const result = await fetch("http://127.0.0.1:3001/user", requestOptions);
         let response = result.json();
-        console.log(response);
         if (response.status === "OK") {
             setInfotext("success");
         }
