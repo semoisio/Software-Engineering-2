@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Navbar from '../homePageNavbar/Navbar';
+import SideBar from '../homePageNavbar/SideBar';
 
 import {
     Container,
@@ -10,10 +12,19 @@ import {
     FormLabel,
     FormInput,
     FormButton,
-    
+
 } from './SignInElements';
 
 function SignIn() {
+    // This state keeps track is sidebaropen or not
+    const [isOpen, setIsOpen] = useState(false);
+
+    /**
+     * Toggle function for showing and hiding sidebar
+     */
+    const toggle = () =>{
+        setIsOpen(!isOpen);
+    };
     // Tracks values of form
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -31,7 +42,8 @@ function SignIn() {
         <>
             <Container data-testid="signincontainer">
                 <FormWrap data-testid="signinformwrap">
-                    <Icon to="/" data-testid="signinicon">GroupO</Icon>
+                    <Navbar data-testid="navbar" toggle={toggle} />
+                    <SideBar data-testid="sidebar" isOpen={isOpen} toggle={toggle} />
                     <FormContent data-testid="signinformcontent">
                         <Form action="#" data-testid="signinform">
                             <FormH1 data-testid="signinformh1">User login</FormH1>
@@ -41,7 +53,7 @@ function SignIn() {
                             <FormInput type="password" required value={password} onChange={(e) => { passwordChanged(e) }} />
                             <FormButton type="submit">Login</FormButton>
                         </Form>
-                        
+
                     </FormContent>
                 </FormWrap>
             </Container>

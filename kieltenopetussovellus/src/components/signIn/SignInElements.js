@@ -3,14 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 //Container for the whole page
 export const Container = styled.nav`
-    min-height: 692px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right:0;
-    top:0;
-    z-index:0;
-    overflow:hidden;
+    min-height: 792px;
     background: linear-gradient( 
         108deg, 
         rgba(1,147,86,1) 0%,
@@ -25,6 +18,7 @@ export const FormWrap = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    overflow: auto;
 
     @media screen and (max-width: 400px){
         height: 80%;
@@ -54,6 +48,7 @@ export const FormContent = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-top:1rem;
 
     @media screen and (max-width: 400px){
         padding: 10px;
