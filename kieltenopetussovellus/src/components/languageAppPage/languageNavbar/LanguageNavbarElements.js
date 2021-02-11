@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const LanguageNav = styled.div`
@@ -40,7 +41,7 @@ export const NavBtnWrapper = styled.div`
     }
 `;
 
-export const NavBtn = styled.div`
+export const NavBtn = styled(NavLink)`
     border-radius: 50px;
     background: #FFC67C;
     white-space: nowrap;
@@ -50,6 +51,7 @@ export const NavBtn = styled.div`
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     margin: 5px;
+    text-decoration: none;
 
     &:hover{
         transition: all 0.2s ease-in-out;

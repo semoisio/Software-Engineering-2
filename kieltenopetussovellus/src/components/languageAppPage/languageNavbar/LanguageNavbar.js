@@ -7,17 +7,16 @@ import {
     NavBtnWrapper,
     MobileIcon
 } from './LanguageNavbarElements';
-import {pages} from '../PageHandler';
 
-const LanguageNavbar = ({toggle,switchPage }) => {
+const LanguageNavbar = ({toggle }) => {
     return (
         <LanguageNav>
             <Logo>GroupO</Logo>
             <NavBtnWrapper>
-                <NavBtn onClick={() =>{switchPage(pages.searchAndListen)}} data-testid="navBtnSearch">Search and Listen</NavBtn>
-                <NavBtn onClick={() =>{switchPage(pages.newRecording)}} data-testid="navBtnRecording">New recording</NavBtn>
-                <NavBtn onClick={() =>{switchPage(pages.profile)}} data-testid="navBtnProfile">Profile</NavBtn>
-                <NavBtn onClick={() =>{switchPage(pages.signOut)}} data-testid="navBtnSignout">Sign out</NavBtn>
+                <NavBtn to="/" data-testid="navBtnSearch">Search and Listen</NavBtn>
+                <NavBtn to="/newreocording" data-testid="navBtnRecording">New recording</NavBtn>
+                <NavBtn to="/profile" data-testid="navBtnProfile">Profile</NavBtn>
+                <NavBtn to="/signout" data-testid="navBtnSignout">Sign out</NavBtn>
             </NavBtnWrapper>
             <MobileIcon onClick={toggle}>
                 <FaBars />

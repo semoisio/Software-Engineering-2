@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import {FaTimes} from 'react-icons/fa';
+import { NavLink } from 'react-router-dom';
 
 export const LanguageSidebarContainer = styled.aside`
     position: fixed;
@@ -44,7 +45,7 @@ export const SideBtnWrap = styled.div`
     justify-content: center;
 `;
 
-export const SideNavBtn = styled.div`
+export const SideNavBtn = styled(NavLink)`
     display:flex;
     justify-content:center;
     border-radius: 50px;
@@ -56,6 +57,7 @@ export const SideNavBtn = styled.div`
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     margin: 5px;
+    text-decoration: none;
 
     &:hover{
         transition: all 0.2s ease-in-out;
