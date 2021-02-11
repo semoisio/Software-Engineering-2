@@ -10,6 +10,7 @@ import Search from './searchElement/Search';
 import NewRecording from './newRocording/NewRecording';
 import Profile from './profile/Profile';
 import SignOut from './signout/SignOut';
+import Errorpage from '../errorPage/Errorpage';
 
 /**Landing page after signing in */
 const LanguageAppHome = () => {
@@ -35,6 +36,9 @@ const LanguageAppHome = () => {
                         <Route path="/newreocording" component={NewRecording} />
                         <Route path="/profile" component={Profile} />
                         <Route path="/signout" component={SignOut} />
+
+                        /**Tämä aina viimeiseksi. Ohjaa virhe sivulle */
+                        <Route path="/" component={Errorpage} />
                     </Switch>
                 </ElementsContainer>
             </Router>
