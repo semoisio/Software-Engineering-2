@@ -5,6 +5,7 @@ import React from 'react';
 import SignUp from './components/signUp/SignUp';
 import Errorpage from './components/errorPage/Errorpage';
 import SignIn from './components/signIn/SignIn';
+import LanguageAppHome from './components/languageAppPage/LanguageAppHome';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
                 <Route exact path="/" component={HomePage} />
                 <Route path="/signup" component={SignUp} />
                 <Route path="/signin" component={SignIn} />
+                <Route path="/languageapp" component={LanguageAppHome} />
 
                 /**Tämä aina viimeiseksi. Ohjaa virhe sivulle */
                 <Route path="/" component={Errorpage} /> 

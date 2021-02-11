@@ -25,7 +25,7 @@ test('renders signup component after clicking signup button', async () => {
 
     render(<App />);
 
-    fireEvent.click(screen.getByTestId('signupicon'));
+    fireEvent.click(screen.getByTestId('navbarLogo'));
     const element = screen.getByTestId("homepage");
     expect(element).toBeInTheDocument();
   });
