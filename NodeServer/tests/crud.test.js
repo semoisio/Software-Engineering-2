@@ -1,10 +1,10 @@
 const {createOne, createMany, findOne, findMany, updateOne, updateMany, deleteOne, deleteMany} = require('../database/crud');
 const MongoClient = require('mongodb').MongoClient;
 
-var user = "user_basic";
-var pw = "kevat21basic";
-var db = "testi";
-var collection = "testicol";
+let user = "user_basic";
+let pw = "kevat21basic";
+let db = "testi";
+let collection = "testicol";
 
 const uri = "mongodb+srv://"+user+":"+pw+"@kielikanta.izgqz.mongodb.net/?retryWrites=true&w=majority";
 

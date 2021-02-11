@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Navbar from '../homePageNavbar/Navbar';
 import SideBar from '../homePageNavbar/SideBar';
+
 import {
     Container,
     FormWrap,
@@ -19,10 +21,13 @@ function SignUp() {
     // This state keeps track is sidebaropen or not
     const [isOpen, setIsOpen] = useState(false);
 
+    // access to browser history
+    const history = useHistory();
+
     /**
      * Toggle function for showing and hiding sidebar
      */
-    const toggle = () =>{
+    const toggle = () => {
         setIsOpen(!isOpen);
     };
     // This states keep track values of form
@@ -31,44 +36,60 @@ function SignUp() {
     const [email, setEmail] = useState("");
     const [learning, setLearning] = useState("");
     const [infoText, setInfotext] = useState("");
+    const [confPassword, setconfPassword] = useState("");
 
-    // This functions changes states if user types in something
+    // These functions change states if user types in something
     const usernameChanged = (event) => {
         setUsername(event.target.value);
+        setInfotext("");
     };
     const passwordChanged = (event) => {
         setPassword(event.target.value);
+        setInfotext("");
     };
     const emailChanged = (event) => {
         setEmail(event.target.value);
+        setInfotext("");
     };
     const learningChanged = (event) => {
         setLearning(event.target.value);
+        setInfotext("");
+    };
+    const confPasswordChanged = (event) => {
+        setconfPassword(event.target.value);
+        setInfotext("");
     };
 
     const SubmitRegister = async (e) => {
         e.preventDefault();
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ "username": username, "password": password, "email": email, "learning": learning })
-        };
-        const result = await fetch("http://127.0.0.1:3001/user", requestOptions);
-        let response = result.json();
-        if (response.status === "OK") {
-            setInfotext("success");
+        // confirm password
+        if (password !== confPassword) {
+            setInfotext("Check password");
         }
         else {
-            setInfotext("failure");
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ "username": username, "password": password, "email": email, "learning": learning })
+            };
+            const result = await fetch("http://127.0.0.1:3001/user", requestOptions);
+            let response = await result.json();
+            if (response.status === "OK") {
+                // redirect to signin
+                history.push('/signupsuccess');
+            }
+            else {
+                setInfotext(response.msg);
+            }
         }
     };
 
     return (
         <>
             <Container data-testid="signupcontainer">
+                <Navbar data-testid="navbar" toggle={toggle} />
+                <SideBar data-testid="sidebar" isOpen={isOpen} toggle={toggle} />
                 <FormWrap data-testid="signupformwrap">
-                <Navbar data-testid="navbar" toggle={toggle}/>
-                <SideBar data-testid="sidebar" isOpen={isOpen} toggle={toggle}/>
                     <FormContent data-testid="signupformcontent">
                         <Form action="" data-testid="signupform" onSubmit={(e) => SubmitRegister(e)}>
                             <FormH1 data-testid="signupformh1">Create user</FormH1>
@@ -76,12 +97,14 @@ function SignUp() {
                             <FormInput type="text" required value={username} onChange={(e) => { usernameChanged(e) }} data-testid="signupforminput1" />
                             <FormLabel htmlFor="for">Password</FormLabel>
                             <FormInput type="password" required value={password} onChange={(e) => { passwordChanged(e) }} />
+                            <FormLabel htmlFor="for">Confirm password</FormLabel>
+                            <FormInput type="password" required value={confPassword} onChange={(e) => { confPasswordChanged(e) }} />
                             <FormLabel htmlFor="for">Email</FormLabel>
                             <FormInput type="email" required value={email} onChange={(e) => { emailChanged(e) }} />
                             <FormLabel htmlFor="for">I want to learn</FormLabel>
                             <FormInput type="text" required value={learning} onChange={(e) => { learningChanged(e) }} />
                             <FormButton type="submit">Register</FormButton>
-                            <p style={{ color: "red" }}>{infoText}</p>
+                            <p style={{ color: "white" }}>{infoText}</p>
                         </Form>
                     </FormContent>
 

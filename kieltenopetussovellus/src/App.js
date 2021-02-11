@@ -6,6 +6,7 @@ import SignUp from './components/signUp/SignUp';
 import Errorpage from './components/errorPage/Errorpage';
 import SignIn from './components/signIn/SignIn';
 import LanguageAppHome from './components/languageAppPage/LanguageAppHome';
+import SignUpSuccess from './components/signUp/SignUpSuccess';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Switch>
                 <Route exact path="/" component={HomePage} />
                 <Route path="/signup" component={SignUp} />
+                <Route path="/signupsuccess" component={SignUpSuccess} />
                 <Route path="/signin" component={SignIn} />
                 <Route path="/languageapp" component={LanguageAppHome} />
 
