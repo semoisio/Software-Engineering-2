@@ -7,7 +7,7 @@ import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 import LanguageNavbar from './languageNavbar/LanguageNavbar';
 import LanguageSideBar from './languageNavbar/LanguageSideBar';
 import Search from './searchElement/Search';
-import NewRecording from './newRocording/NewRecording';
+import NewRecording from './newRecording/NewRecording';
 import Profile from './profile/Profile';
 import SignOut from './signout/SignOut';
 import Errorpage from '../errorPage/Errorpage';
@@ -33,7 +33,7 @@ const LanguageAppHome = () => {
                 <ElementsContainer>
                     <Switch>
                         <Route exact path="/" component={Search} />
-                        <Route path="/newreocording" component={NewRecording} />
+                        <Route path="/newrecording" component={NewRecording} />
                         <Route path="/profile" component={Profile} />
                         <Route path="/signout" component={SignOut} />
 

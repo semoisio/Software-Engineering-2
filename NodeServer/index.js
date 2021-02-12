@@ -36,7 +36,9 @@ app.use(cors);
 const userRoutes = require('./routes/userRoutes');
 app.use(userRoutes);
 
-
+// audio routes
+const audioRoutes = require('./routes/audioRoutes');
+app.use(audioRoutes);
 
 //Asetetaan serveri kuuntelemaan määriteltyäreittiä
 app.listen(port, hostname, () => {

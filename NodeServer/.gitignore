@@ -11,6 +11,9 @@
 # production
 /build
 
+# audio files
+*.webm
+
 # misc
 .DS_Store
 .env.local

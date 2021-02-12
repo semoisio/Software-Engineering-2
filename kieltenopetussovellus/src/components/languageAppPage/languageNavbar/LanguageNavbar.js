@@ -14,7 +14,7 @@ const LanguageNavbar = ({toggle }) => {
             <Logo>GroupO</Logo>
             <NavBtnWrapper>
                 <NavBtn to="/" data-testid="navBtnSearch">Search and Listen</NavBtn>
-                <NavBtn to="/newreocording" data-testid="navBtnRecording">New recording</NavBtn>
+                <NavBtn to="/newrecording" data-testid="navBtnRecording">New recording</NavBtn>
                 <NavBtn to="/profile" data-testid="navBtnProfile">Profile</NavBtn>
                 <NavBtn to="/signout" data-testid="navBtnSignout">Sign out</NavBtn>
             </NavBtnWrapper>
