@@ -46,7 +46,7 @@ export const NavBtn = styled(NavLink)`
     background: #FFC67C;
     white-space: nowrap;
     padding: 10px 27px;
-    color: #010606;
+    color: #FFFFFF;
     font-size: 16px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
@@ -56,7 +56,7 @@ export const NavBtn = styled(NavLink)`
     &:hover{
         transition: all 0.2s ease-in-out;
         background: #fff;
-        color: #68EDCB;
+        background: #68EDCB;
     }
 `;
 

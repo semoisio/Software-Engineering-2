@@ -16,7 +16,7 @@ const LanguageSideBar = ({ isOpen, toggle }) => {
             </Icon>
             <SideBtnWrap>
                 <SideNavBtn to="/"  onClick={toggle}>Search and Listen</SideNavBtn>
-                <SideNavBtn to="/newreocording" onClick={toggle}>New recording</SideNavBtn>
+                <SideNavBtn to="/newrecording" onClick={toggle}>New recording</SideNavBtn>
                 <SideNavBtn to="/profile" onClick={toggle}>Profile</SideNavBtn>
                 <SideNavBtn to="/signout" onClick={toggle}>Sign out</SideNavBtn>
             </SideBtnWrap>
