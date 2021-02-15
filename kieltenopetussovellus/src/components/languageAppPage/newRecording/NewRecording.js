@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { ReactMic } from 'react-mic';
 import { RecordingContainer } from './NewRecordingElements';
+const fs = require('fs');
 
 const NewRecording = () => {
   const [recording, setRecording] = useState(false);
   const [recordedAudio, setRecordedAudio] = useState("");
-  const [data, setData] = useState([]);
+  const [username, setUsername] = useState("username");
+  const [language, setLanguage] = useState("language");
+  const [title, setTitle] = useState("title");
+  const [desc, setDesc] = useState("description");
 
   const startRecording = () => {
     setRecording(true);
@@ -15,31 +19,51 @@ const NewRecording = () => {
     setRecording(false);
   }
 
-  const onData = (recordedBlob) => {
-    console.log('chunk of real-time data is: ', recordedBlob);
-    setData(data.concat([recordedBlob]));
+  const onData = () => {
+
   }
 
   const onStop = (recordedBlob) => {
-    console.log('recordedBlob is: ', recordedBlob);
     setRecordedAudio(recordedBlob);
   }
 
   const uploadAudio = async () => {
-    // get blob from url
-    let blob = await fetch(recordedAudio.blobURL).then(r => r.blob());
+    console.log("clicked upload");
+    if (recordedAudio) {
+      // get blob from url
+      let blob = await fetch(recordedAudio.blobURL).then(r => r.blob());
+      // create formdata from blob
+      var file = new File([blob], "test", { type: "audio/webm" });
+      let fd = new FormData();
+      fd.append('audio', file);
+      fd.append('username', username);
+      fd.append('language', language);
+      fd.append('title', title);
+      fd.append('desc', desc);
 
-    // create formdata from blob
-    var file = new File([blob], "test", { type: "audio/webm" });
-    let fd = new FormData();
-    fd.append('audio', file);
+      // send formdata to server
+      const requestOptions = {
+        method: 'POST',
+        body: fd
+      };
+      const result = await fetch("http://127.0.0.1:3001/audio", requestOptions);
+      let response = await result.json();
 
-    // send formdata to server
-    const requestOptions = {
-      method: 'POST',
-      body: fd
-    };
-    const result = await fetch("http://127.0.0.1:3001/audio", requestOptions);
+      // just for testing, get data from server
+      const getAudio = await fetch("http://127.0.0.1:3001/audio" + "?title=title").then(r => r.blob());
+      // paste url to browser to confirm
+      console.log(URL.createObjectURL(getAudio));
+      
+      if (response.status === "OK") {
+        console.log("ok")
+      }
+      else {
+        console.log("notok")
+      }
+    }
+    else {
+      console.log("Audio not ready");
+    }
   }
 
   return (
@@ -48,7 +72,7 @@ const NewRecording = () => {
         record={recording}
         className="sound-wave"
         onStop={(e) => onStop(e)}
-        onData={(e) => onData(e)}
+        onData={() => onData()}
         strokeColor="#000000"
         backgroundColor="#FF4081" />
       <button onClick={() => startRecording()} type="button">Start</button>
