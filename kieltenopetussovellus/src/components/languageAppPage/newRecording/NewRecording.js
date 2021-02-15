@@ -50,10 +50,13 @@ const NewRecording = () => {
       let response = await result.json();
 
       // just for testing, get data from server
-      const getAudio = await fetch("http://127.0.0.1:3001/audio" + "?title=title").then(r => r.blob());
+      const getAudio = await fetch("http://127.0.0.1:3001/audio" + "?title=title&file=true").then(r => r.blob());
       // paste url to browser to confirm
       console.log(URL.createObjectURL(getAudio));
-      
+
+      // testing audio search
+      const findAudio = await fetch("http://127.0.0.1:3001/audio" + "?title=title");
+      console.log(await findAudio.json());
       if (response.status === "OK") {
         console.log("ok")
       }
