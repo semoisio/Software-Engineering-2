@@ -4,11 +4,10 @@ import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 export const SearchAndListenContainer = styled.div`
     display:flex;
     flex-wrap: wrap;
-    min-height:100vh;
+    min-height:80vh;
 `;
 
 export const SearchContainer = styled.div`
-    //background:black;
     min-height:80vh;
     width:30%;
     display:flex;
@@ -25,10 +24,10 @@ export const SearchContainer = styled.div`
 `;
 
 export const ListenContainer = styled.div`
-    background:white;
-    min-height:80vh;
+    height:80vh;
     width:70%;
-
+    transition: all 1s;
+    overflow: auto;
     @media screen and (max-width: 768px){
         width:100%;
     }
