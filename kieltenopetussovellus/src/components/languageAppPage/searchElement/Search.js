@@ -20,7 +20,8 @@ import {
 } from './SearchElements';
 import AudioContainer from './AudioContainer';
 import audioimage from '../../../images/AudioWave.jpg';
-import audiotest from '../../../images/testi.webm'
+
+
 const options = [
     { value: 'chocolate', label: 'Chocolate' },
     { value: 'strawberry', label: 'Strawberry' },
@@ -94,7 +95,7 @@ const Search = () => {
     });
     return (
         <SearchAndListenContainer data-testid="searchContainer">
-            <OpenSearchIconContainer isOpen={isOpen} onClick={toggle}>
+            <OpenSearchIconContainer  isOpen={isOpen} onClick={toggle}>
                 <SearchText>Open search</SearchText>
                 <OpenIcon onClick={toggle} />
             </OpenSearchIconContainer>
@@ -127,7 +128,7 @@ const Search = () => {
                 </Form>
             </SearchContainer>
             <ListenContainer>
-                {audioInside}          
+                {audioInside}  
             </ListenContainer>
         </SearchAndListenContainer>
     )

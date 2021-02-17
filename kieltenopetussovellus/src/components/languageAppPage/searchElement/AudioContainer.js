@@ -6,7 +6,6 @@ import {
     AudioTitle,
     AudioDescription
 }from './AudioContainerElements';
-import audio from '../../../images/testi.webm'
 
 const AudioContainer = (props) => {
     return (
