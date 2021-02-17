@@ -61,5 +61,35 @@ module.exports = {
     findOneUser: async (params) => {
         const client = new MongoClient(uri, { useUnifiedTopology: true });
         return await crud.findOne(client, db, collection, params);
+    },
+
+    
+    loginUser: async (req, res) => {
+        
+        try{
+            if (!req.body.username || !req.body.password) {
+                res.json({ status: "NOT OK", msg: "--Check fields--" });
+                console.log("check fields")
+            }else{
+                const client = new MongoClient(uri, { useUnifiedTopology: true });
+                const checkName = await crud.findOne(client, db, collection, { username: req.body.username });
+                console.log("login else")
+                if (!checkName) {
+                    res.json({ status: "NOT OK", msg: "Username not found" });
+                }
+                if(!bcrypt.compareSync(req.body.password, client.password)){
+                    res.json({ status: "NOT OK", msg: "Password incorrect" });
+                }
+                else{
+                    res.json({ status: "OK", msg: "Login successful" });
+                }
+            }
+
+        }
+        catch (error){
+            res.json({ status: "NOT OK", msg: "Tilanne erittäin SOS" });
+        }
+        
+
     }
 }

@@ -28,6 +28,7 @@ function SignIn() {
     // Tracks values of form
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [infoText, setInfotext] = useState("");
 
     // Tracks user input
     const usernameChanged = (event) => {
@@ -35,6 +36,25 @@ function SignIn() {
     };
     const passwordChanged = (event) => {
         setPassword(event.target.value);
+    };
+
+    const SubmitLogin = async (e) => {
+        e.preventDefault();
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ "username": username, "password": password })
+        };
+        const result = await fetch("http://127.0.0.1:3001/user", requestOptions);
+        let response = await result.json();
+        if (response.status === "OK") {
+            console.log('awooga')
+        }
+        else {
+            setInfotext(response.msg);
+            console.log('submit fail')
+        }
+        
     };
 
 
@@ -45,13 +65,14 @@ function SignIn() {
                     <Navbar data-testid="navbar" toggle={toggle} />
                     <SideBar data-testid="sidebar" isOpen={isOpen} toggle={toggle} />
                     <FormContent data-testid="signinformcontent">
-                        <Form action="#" data-testid="signinform">
+                        <Form action="" data-testid="signinform" onSubmit={(e) => SubmitLogin(e)}>
                             <FormH1 data-testid="signinformh1">User login</FormH1>
                             <FormLabel htmlFor="for" data-testid="signinformlabel1">Username</FormLabel>
                             <FormInput type="text" required value={username} onChange={(e) => { usernameChanged(e) }} />
                             <FormLabel htmlFor="for">Password</FormLabel>
                             <FormInput type="password" required value={password} onChange={(e) => { passwordChanged(e) }} />
                             <FormButton type="submit">Login</FormButton>
+                            <p style={{ color: "white" }}>{infoText}</p>
                         </Form>
 
                     </FormContent>
