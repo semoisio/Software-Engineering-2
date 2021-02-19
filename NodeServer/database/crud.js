@@ -88,18 +88,22 @@ async function findOne(client, db, collection, params) {
  * @param {Object} sort - Sorting parameters
  * @param {Object} limit - Limiting parameters
  * */
-async function findMany(client, db, collection, params, sort, limit) {
+async function findMany(client, db, collection, params, limit, sort) {
     try {
         await client.connect();
         // clean input of keys starting with $-sign
         var clean = sanitize(params);
-        const result = await client.db(db).collection(collection).find(clean).toArray();
+        let result = null;
+        
         if (limit) {
-            result.limit(limit);
+            //result.limit(limit);
+            result = await client.db(db).collection(collection).find(clean).limit(limit).toArray();
+        }else{
+            result = await client.db(db).collection(collection).find(clean).toArray();
         }
-        if (sort) {
-            result.sort(sort);
-        }
+        // if (sort) {
+        //     result.sort(sort);
+        // }
         if (result.length > 0) {
             console.log("Found documents");
             return result;
@@ -108,6 +112,7 @@ async function findMany(client, db, collection, params, sort, limit) {
             console.log("No documents found");
     }
     catch (e) {
+        console.log(e);
         console.log("Something went wrong while searching for documents");
     }
     finally {
