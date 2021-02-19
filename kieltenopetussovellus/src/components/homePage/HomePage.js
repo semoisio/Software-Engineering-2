@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Navbar from '../homePageNavbar/Navbar'
 import SideBar from '../homePageNavbar/SideBar';
 import {HomePageWrapper} from './HomePageElements';
-import IntroPage from './IntroPage';
+import IntroPageJS from './IntroPageJS';
 
 /**
  * Homepage 
@@ -20,7 +20,7 @@ function HomePage(){
 
     return(
         <HomePageWrapper data-testid="homepage">
-            <IntroPage/>
+            <IntroPageJS/>
         </HomePageWrapper>
     );
 }
