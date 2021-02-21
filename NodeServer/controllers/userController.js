@@ -58,38 +58,46 @@ module.exports = {
         }
     },
 
+    /*
     findOneUser: async (params) => {
         const client = new MongoClient(uri, { useUnifiedTopology: true });
         return await crud.findOne(client, db, collection, params);
-    },
+    },*/
 
-    
+
     loginUser: async (req, res) => {
-        
-        try{
-            if (!req.body.username || !req.body.password) {
+
+        try {
+            // checks that fields are not empty
+            if (!req.query.username || !req.query.password) {
                 res.json({ status: "NOT OK", msg: "--Check fields--" });
                 console.log("check fields")
-            }else{
+            } else {
+                // finds user based on username
                 const client = new MongoClient(uri, { useUnifiedTopology: true });
-                const checkName = await crud.findOne(client, db, collection, { username: req.body.username });
-                console.log("login else")
+                const checkName = await crud.findOne(client, db, collection, { username: req.query.username });
+                console.log(checkName)
+                // checks if username exists
                 if (!checkName) {
                     res.json({ status: "NOT OK", msg: "Username not found" });
                 }
-                if(!bcrypt.compareSync(req.body.password, client.password)){
-                    res.json({ status: "NOT OK", msg: "Password incorrect" });
+                else {
+                    // decrypts stored password and compares it to the input 
+                    if (!bcrypt.compareSync(req.query.password, checkName.password)) {
+                        res.json({ status: "NOT OK", msg: "Password incorrect" });
+                    }
+                    else {
+                        res.json({ status: "OK", msg: "Login successful" });
+                    }
                 }
-                else{
-                    res.json({ status: "OK", msg: "Login successful" });
-                }
+
             }
 
         }
-        catch (error){
+        catch (error) {
             res.json({ status: "NOT OK", msg: "Tilanne erittäin SOS" });
         }
-        
+
 
     }
 }
