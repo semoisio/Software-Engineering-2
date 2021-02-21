@@ -4,11 +4,7 @@ import { NavLink } from 'react-router-dom';
 //Container for the whole page
 export const Container = styled.nav`
     min-height: 100vh;
-    background: linear-gradient( 
-        108deg, 
-        rgba(1,147,86,1) 0%,
-        rgba(10,201,122,1) 100%
-    );
+    background: linear-gradient(to top, #f0ffef, #e5fae3, #daf5d8, #cef0cc, #c3ebc1);
 `;
 
 //Wrapper for content
@@ -57,7 +53,7 @@ export const FormContent = styled.div`
 
 // Form
 export const Form = styled.form`
-    background: #010101;
+    //background: #FBFBFB;
     max-width: 400px;
     height: auto;
     width: 100%;
@@ -67,7 +63,7 @@ export const Form = styled.form`
     margin: 0 auto;
     padding: 80px 32px;
     border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.9);
+    //box-shadow: 0 1px 3px rgba(0,0,0,0.9);
     
     @media screen and (max-width: 400px){
         padding: 10px 10px;
@@ -85,7 +81,7 @@ export const Form = styled.form`
 // Headline for form
 export const FormH1 = styled.h1`
     margin-bottom: 40px;
-    color: #fff;
+    color: black;
     font-size: 20px;
     font-weight: 400;
     text-align: center;
@@ -95,7 +91,7 @@ export const FormH1 = styled.h1`
 export const FormLabel = styled.label`
     margin-bottom: 8px;
     font-size: 14px;
-    color: #fff;
+    color: black;
 `;
 
 // Styles for inputs
@@ -108,19 +104,14 @@ export const FormInput = styled.input`
 
 //Styles for form button
 export const FormButton = styled.button`
-    background: #01bf71;
-    padding: 16px 0;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    font-size: 20px;
-    cursor: pointer;
+    width: 50%;
+    align-self: center;
 `;
 
 // If needed text area
 export const Text = styled.span`
     text-align: center;
     margin-top: 24px;
-    color: #fff;
+    color: #FE8A7E;
     font-size: 14px;
 `;

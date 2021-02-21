@@ -10,8 +10,8 @@ export const IntroPageContainer = styled.div`
 	justify-content: center;
 	width: 100%;
 	min-height: 100vh;
-	//position: relative;
-	background-image: linear-gradient(to right top, #e0ffcd, #c9fbc7, #aef6c5, #8ff2c6, #68edcb);
+	background-image: linear-gradient(to top, #f0ffef, #e5fae3, #daf5d8, #cef0cc, #c3ebc1);
+
 `;
 
 export const IntroPageMain = styled.div`
@@ -36,10 +36,10 @@ export const IntroLogoImg = styled.img`
 `;
 
 export const IntroH1 = styled.h1`
-    margin-bottom: 10px;
+    
+	margin-bottom: 10px;
 	color: white;
 	font-size: 60px;
-	font-family: Verdana;
 	text-align: center;
 	padding: 10px;
 	text-shadow: 2px 2px 4px #000000;
@@ -56,7 +56,6 @@ export const IntroText = styled.p`
 	overflow-wrap: break-word;
 	width: 60%;
 	margin: auto;
-	font-family: Verdana, Geneva, Tahoma, sans-serif;
 	color: black;
 
 	@media screen and (max-width: 768px){
@@ -77,33 +76,30 @@ export const NavBtn = styled.nav`
 
 // Buttonit
 export const IntroButton = styled(NavLink)`
-    background-color: #FF995E;
+    background-color: #FFDA83;
 	box-shadow: 0px 2px 4px #000000;
-	padding: 12px;
+	padding: 0.5rem 1rem;
 	width: 10%;
 	border: none;
     border-radius: 3px;
-    //padding: 15px 60px;
 	text-decoration: none;
-	color: white;
-	//font-family: Verdana, Geneva, Tahoma, sans-serif;
-	text-shadow: 1px 1px 2px #000000;
-	//font-size: small;
+	font-weight: bold;
+	//font-variant-caps: small-caps;
+	color: #3E4A3D;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
 
-	//display: inline-block;
 	text-align: center;
 	margin: 10px;
 
     &:hover{
-        background-color: #1CE4B0;
+        transition: all 0.1s ease-in-out;
+		opacity: 70%;
     }
-	//@media screen and (max-width: 768px){
-    //    font-size: 30px;
-    //}
 `;
 
 export const Footer = styled.footer`
-    background:#E0FFCD;
+    background:#3E4A3D;
 	padding: 15px;
 	width: 100%;
 	height: auto;
@@ -112,20 +108,17 @@ export const Footer = styled.footer`
 	flex-direction:row;
 	flex-wrap:nowrap;
 	justify-content:space-around;
-	//position: absolute;
-	//bottom: 0;
 	margin-top: auto;
 `;
 
 export const FooterLink = styled(NavLink)`
-    color: black;
-	font-family: Verdana, Geneva, Tahoma, sans-serif;
-	font-size: 14px;
+    color: #fff;
+	font-size: small;
 	text-decoration: none;
 
     &:hover{
         text-decoration: none;
-	    color: #fff;
+	    color: #FFDA83;
 	    text-shadow: 1px 1px 2px #000000;
     }
 `;

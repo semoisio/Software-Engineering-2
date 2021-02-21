@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Footer, FooterLink } from '../homePage/IntroPageElementsJS';
 import Navbar from '../homePageNavbar/Navbar';
 import SideBar from '../homePageNavbar/SideBar';
 
@@ -11,7 +12,7 @@ import {
     FormH1,
     FormLabel,
     FormInput,
-    FormButton,
+    FormButton
 
 } from './SignInElements';
 
@@ -78,6 +79,11 @@ function SignIn() {
                     </FormContent>
                 </FormWrap>
             </Container>
+            <Footer>
+				<FooterLink to='/'>Terms and Conditions</FooterLink>
+				<FooterLink to='/'>Privacy Policy</FooterLink>
+				<FooterLink to='/'>About us</FooterLink>
+		    </Footer>
         </>
     )
 }

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Navbar from '../homePageNavbar/Navbar';
 import SideBar from '../homePageNavbar/SideBar';
+import { Footer, FooterLink } from '../homePage/IntroPageElementsJS';
 
 import {
     Container,
@@ -93,16 +94,16 @@ function SignUp() {
                     <FormContent data-testid="signupformcontent">
                         <Form action="" data-testid="signupform" onSubmit={(e) => SubmitRegister(e)}>
                             <FormH1 data-testid="signupformh1">Create user</FormH1>
+                            <FormLabel htmlFor="for">I want to learn</FormLabel>
+                            <FormInput type="text" required value={learning} onChange={(e) => { learningChanged(e) }} />
                             <FormLabel htmlFor="for" data-testid="signupformlabel1">Username</FormLabel>
                             <FormInput type="text" required value={username} onChange={(e) => { usernameChanged(e) }} data-testid="signupforminput1" />
+                            <FormLabel htmlFor="for">Email</FormLabel>
+                            <FormInput type="email" required value={email} onChange={(e) => { emailChanged(e) }} />
                             <FormLabel htmlFor="for">Password</FormLabel>
                             <FormInput type="password" required value={password} onChange={(e) => { passwordChanged(e) }} />
                             <FormLabel htmlFor="for">Confirm password</FormLabel>
                             <FormInput type="password" required value={confPassword} onChange={(e) => { confPasswordChanged(e) }} />
-                            <FormLabel htmlFor="for">Email</FormLabel>
-                            <FormInput type="email" required value={email} onChange={(e) => { emailChanged(e) }} />
-                            <FormLabel htmlFor="for">I want to learn</FormLabel>
-                            <FormInput type="text" required value={learning} onChange={(e) => { learningChanged(e) }} />
                             <FormButton type="submit">Register</FormButton>
                             <p style={{ color: "white" }}>{infoText}</p>
                         </Form>
@@ -110,6 +111,11 @@ function SignUp() {
 
                 </FormWrap>
             </Container>
+            <Footer>
+				<FooterLink to='/'>Terms and Conditions</FooterLink>
+				<FooterLink to='/'>Privacy Policy</FooterLink>
+				<FooterLink to='/'>About us</FooterLink>
+		    </Footer>
         </>
     )
 }
