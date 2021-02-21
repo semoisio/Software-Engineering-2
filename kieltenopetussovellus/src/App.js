@@ -8,9 +8,11 @@ import SignIn from './components/signIn/SignIn';
 import LanguageAppHome from './components/languageAppPage/LanguageAppHome';
 import SignUpSuccess from './components/signUp/SignUpSuccess';
 
+
 function App() {
   
-  const [isLoggedin, setIsloggedin] = useState(true);
+  const [isLoggedin, setIsloggedin] = useState(false);
+  
 
   let page = null;
   
@@ -23,8 +25,7 @@ function App() {
           <Route exact path="/" component={HomePage} />
           <Route path="/signup" component={SignUp} />
           <Route path="/signupsuccess" component={SignUpSuccess} />
-          <Route path="/signin" component={SignIn} />
-  
+          <Route path="/signin"><SignIn setIsloggedin={setIsloggedin}/></Route>
           /**Tämä aina viimeiseksi. Ohjaa virhe sivulle */
           <Route path="/" component={Errorpage} />
         </Switch>
