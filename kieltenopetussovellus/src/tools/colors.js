@@ -1,0 +1,1 @@
+export const background = "linear-gradient(to top, #f0ffef, #e5fae3, #daf5d8, #cef0cc, #c3ebc1);";
