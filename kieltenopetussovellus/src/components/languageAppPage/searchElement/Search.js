@@ -39,7 +39,7 @@ const Search = () => {
     //Select component genre
     const [selectedGenre, setSelectedGenre] = useState({value:""});
     //Select component language
-    const [selectedLanguage, setSelectedLanguage] = useState("");
+    const [selectedLanguage, setSelectedLanguage] = useState({value:""});
 
     //radio button
     const [selectedDifficulty, setSelectedDifficulty] = useState("");
