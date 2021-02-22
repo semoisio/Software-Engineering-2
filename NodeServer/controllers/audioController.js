@@ -1,6 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 const crud = require('../database/crud');
 const fs = require('fs');
+var ObjectId = require('mongodb').ObjectID;
 
 var user = "user_basic";
 var pw = "kevat21basic";
@@ -27,12 +28,12 @@ const createStream = (path, res) => {
 const fileToClient = async (req, res) => {
     try {
         const c = req.query;
-        if (!c.title) {
+        if (!c.id) {
             res.json({ status: "NOT OK", msg: "Give title" });
         }
         else {
             const client = new MongoClient(uri, { useUnifiedTopology: true });
-            const audio = await crud.findOne(client, db, collection, { title: c.title });
+            const audio = await crud.findOne(client, db, collection, {"_id": new ObjectId(c.id) });
             if (audio) {
                 createStream(audio.path, res);
             }
@@ -69,7 +70,7 @@ module.exports = {
             // file is saved in upload.single and path is in req.file.path
             const c = req.body;
             // check that fields are not empty
-            if (!c.username || !c.language || !c.title || !c.desc || !req.file.path) {
+            if (!c.username || !c.language || !c.title || !c.desc || !c.genre || !c.difficulty || !req.file.path) {
                 return { status: "NOT OK", msg: "Check fields" };
             }
             else {
@@ -79,6 +80,8 @@ module.exports = {
                     language: c.language,
                     title: c.title,
                     desc: c.desc,
+                    genre: c.genre,
+                    difficulty: c.difficulty,
                     path: req.file.path
                 });
                 if (newAudio) {

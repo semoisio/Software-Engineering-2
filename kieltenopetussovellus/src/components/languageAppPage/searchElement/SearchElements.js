@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 
 export const SearchAndListenContainer = styled.div`
@@ -14,11 +14,17 @@ export const SearchContainer = styled.div`
     transition: all 1s;
 
     @media screen and (max-width: 768px){
-        display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
-        //align-items:flex-start;
+        position: fixed;
+        z-index: 998;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        opacity: ${({isOpen}) => (isOpen ? '100%' : '0')}; 
+        top: ${({isOpen}) => (isOpen ? '80px' : '-100%')};
         flex-direction:column;
         width: 100%;
-        transition: all 1s;
+        transition: 0.3s ease-in-out;
+        background: #FBFBFB;
     }
    
 `;
@@ -28,6 +34,8 @@ export const ListenContainer = styled.div`
     width:70%;
     transition: all 1s;
     overflow: auto;
+    display:flex;
+    flex-direction: column;
     @media screen and (max-width: 768px){
         width:100%;
     }
@@ -35,11 +43,14 @@ export const ListenContainer = styled.div`
 
 export const OpenSearchIconContainer = styled.div`
     display: none;
-    color: #FFFFFF;
+    color: #000;
     cursor: pointer;
+    align-items:center;
+    justify-content:center;
+    width: 100%;
 
     @media screen and (max-width: 768px){
-        display: ${({ isOpen }) => (isOpen ? 'none' : 'flex')};
+        display: flex;
         justify-content:center;
         align-items:center;
     }
@@ -59,7 +70,7 @@ export const OpenIcon = styled(AiFillCaretDown)`
 
 export const CloseSearchIconContainer = styled.div`
     display: none;
-    color: #FFFFFF;
+    color: #000;
     cursor: pointer;
 
     @media screen and (max-width: 768px){
@@ -88,7 +99,7 @@ export const Form = styled.form`
 // Headline for form
 export const FormH1 = styled.h1`
     margin-bottom: 15px;
-    color: #fff;
+    color: #000;
     font-size: 20px;
     font-weight: 400;
     text-align: center;
@@ -98,7 +109,7 @@ export const FormH1 = styled.h1`
 export const FormLabel = styled.label`
     margin-bottom: 8px;
     font-size: 14px;
-    color: #fff;
+    color: #000;
     margin-left:1rem;
 `;
 
@@ -140,4 +151,14 @@ export const FormButton = styled.button`
     &:hover{
         background: #68EDCB;
     }
+`;
+
+export const LoaderContainer = styled.div`
+    display:flex;
+    width:100%;
+    justify-content:center;
+`;
+export const LoaderText = styled.h1`
+    margin-top: 0;
+    margin-right: 1rem;
 `;
