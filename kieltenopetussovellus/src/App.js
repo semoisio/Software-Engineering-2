@@ -12,7 +12,6 @@ import SignUpSuccess from './components/signUp/SignUpSuccess';
 function App() {
   
   const [isLoggedin, setIsloggedin] = useState(false);
-  
 
   let page = null;
   
