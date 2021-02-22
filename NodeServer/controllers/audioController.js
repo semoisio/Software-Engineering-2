@@ -1,6 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 const crud = require('../database/crud');
 const fs = require('fs');
+var ObjectId = require('mongodb').ObjectID;
 
 var user = "user_basic";
 var pw = "kevat21basic";
@@ -27,12 +28,12 @@ const createStream = (path, res) => {
 const fileToClient = async (req, res) => {
     try {
         const c = req.query;
-        if (!c.title) {
+        if (!c.id) {
             res.json({ status: "NOT OK", msg: "Give title" });
         }
         else {
             const client = new MongoClient(uri, { useUnifiedTopology: true });
-            const audio = await crud.findOne(client, db, collection, { title: c.title });
+            const audio = await crud.findOne(client, db, collection, {"_id": new ObjectId(c.id) });
             if (audio) {
                 createStream(audio.path, res);
             }
