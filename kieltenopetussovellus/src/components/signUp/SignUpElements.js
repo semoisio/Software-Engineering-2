@@ -96,6 +96,11 @@ export const FormH1 = styled.h1`
     text-align: center;
 `;
 
+export const SelectContainer = styled.div`
+    margin-bottom: 15px;
+    margin-bottom: 32px;
+`;
+
 // Labels for diffrent form elements
 export const FormLabel = styled.label`
     margin-bottom: 8px;

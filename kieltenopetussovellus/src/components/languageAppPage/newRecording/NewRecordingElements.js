@@ -62,20 +62,20 @@ export const InfoContainer = styled.div`
 //Recording buttons
 export const RecordButton = styled.button`
     width:20%;
-    background: #FFC67C;
+    /* background: #FFC67C;
     padding: 16px 0;
     border: none;
     border-radius: 4px;
     color: #fff;
-    font-size: 20px;
+    font-size: 20px; */
     margin-left:1rem;
     margin-right:1rem;
     margin-bottom:15px;
-    cursor: pointer;
+    /* cursor: pointer;
 
     &:hover{
         background: #68EDCB;
-    }
+    } */
 `;
 
 // Info form
@@ -89,9 +89,9 @@ export const RecordingForm = styled.form`
 // Headline for form
 export const FormH1 = styled.h1`
     margin-bottom: 15px;
-    color: #fff;
+    /* color: #fff;
     font-size: 20px;
-    font-weight: 400;
+    font-weight: 400; */
     text-align: center;
 `;
 
@@ -99,7 +99,7 @@ export const FormH1 = styled.h1`
 export const FormLabel = styled.label`
     margin-bottom: 8px;
     font-size: 14px;
-    color: #fff;
+    //color: #fff;
     margin-left:1rem;
 `;
 
@@ -137,18 +137,18 @@ export const RadioBtnContainer = styled.div`
 //Styles for form button
 export const FormButton = styled.button`
     width:20%;
-    background: #FFC67C;
+    /* background: #FFC67C;
     padding: 16px 0;
     border: none;
     border-radius: 4px;
     color: #fff;
-    font-size: 20px;
+    font-size: 20px; */
     margin-left:1rem;
     margin-right:1rem;
     margin-bottom: 15px;
-    cursor: pointer;
+    /* cursor: pointer;
 
     &:hover{
         background: #68EDCB;
-    }
+    } */
 `;

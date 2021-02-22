@@ -16,6 +16,7 @@ import {
   FormDesc,
   RecordingMic
 } from './NewRecordingElements';
+import { languageOptions, difficultyOptions } from '../../../tools/defaultOptions';
 const fs = require('fs');
 
 
@@ -28,17 +29,6 @@ const NewRecording = () => {
   const [desc, setDesc] = useState("");
   const [genre, setGenre] = useState("");
   const [difficulty, setDifficulty] = useState("");
-
-  const languageOptions = [
-    { value: "en", label: "English" },
-    { value: "fi", label: "Finnish" }
-  ];
-
-  const difficultyOptions = [
-    { value: "beginner", label: "Beginner" },
-    { value: "intermediate", label: "Intermediate" },
-    { value: "expert", label: "Expert" }
-  ];
 
   const languageChanged = (e) => {
     setLanguage(e);

@@ -9,6 +9,8 @@ import {
     FormWrap,
     FormContent,
     Form,
+    FormLabel,
+    FormButton
 } from './SignUpElements';
 
 function SignUpSuccess() {
@@ -25,6 +27,10 @@ function SignUpSuccess() {
         setIsOpen(!isOpen);
     };
 
+    const redirectSignIn = () => {
+        history.push('/signin');
+    };
+
     return (
         <>
             <Container data-testid="signupcontainer">
@@ -33,8 +39,8 @@ function SignUpSuccess() {
                 <FormWrap data-testid="signupsuccessformwrap">
                     <FormContent data-testid="signupsuccessformcontent">
                         <Form action="" data-testid="signupsuccessform">
-                            <p style={{ color: "white" }}>Account created successfully, you can now sign in.</p>
-                            <NavBtnLink to="/signin">Sign in</NavBtnLink>
+                        <FormLabel htmlFor="for">Account created successfully, you can now sign in.</FormLabel>
+                            <FormButton onClick={() => redirectSignIn}>Sign in</FormButton>
                         </Form>
                     </FormContent>
                 </FormWrap>

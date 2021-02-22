@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom';
 import Navbar from '../homePageNavbar/Navbar';
 import SideBar from '../homePageNavbar/SideBar';
 import { Footer, FooterLink } from '../homePage/IntroPageElementsJS';
+import { languageOptions } from '../../tools/defaultOptions';
+import Select from 'react-select';
 
 import {
     Container,
@@ -15,7 +17,8 @@ import {
     FormInput,
     FormButton,
     Text,
-    LinkContainer
+    LinkContainer,
+    SelectContainer
 } from './SignUpElements';
 
 function SignUp() {
@@ -35,7 +38,7 @@ function SignUp() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
-    const [learning, setLearning] = useState("");
+    const [learning, setLearning] = useState(languageOptions[0]);
     const [infoText, setInfotext] = useState("");
     const [confPassword, setconfPassword] = useState("");
 
@@ -53,7 +56,7 @@ function SignUp() {
         setInfotext("");
     };
     const learningChanged = (event) => {
-        setLearning(event.target.value);
+        setLearning(event);
         setInfotext("");
     };
     const confPasswordChanged = (event) => {
@@ -71,7 +74,7 @@ function SignUp() {
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ "username": username, "password": password, "email": email, "learning": learning })
+                body: JSON.stringify({ "username": username, "password": password, "email": email, "learning": learning.value })
             };
             const result = await fetch("http://127.0.0.1:3001/user", requestOptions);
             let response = await result.json();
@@ -95,7 +98,13 @@ function SignUp() {
                         <Form action="" data-testid="signupform" onSubmit={(e) => SubmitRegister(e)}>
                             <FormH1 data-testid="signupformh1">Create user</FormH1>
                             <FormLabel htmlFor="for">I want to learn</FormLabel>
-                            <FormInput type="text" required value={learning} onChange={(e) => { learningChanged(e) }} />
+                            <SelectContainer>
+                            <Select
+                                value={learning}
+                                onChange={learningChanged}
+                                options={languageOptions}
+                            />
+                            </SelectContainer>
                             <FormLabel htmlFor="for" data-testid="signupformlabel1">Username</FormLabel>
                             <FormInput type="text" required value={username} onChange={(e) => { usernameChanged(e) }} data-testid="signupforminput1" />
                             <FormLabel htmlFor="for">Email</FormLabel>
@@ -104,18 +113,18 @@ function SignUp() {
                             <FormInput type="password" required value={password} onChange={(e) => { passwordChanged(e) }} />
                             <FormLabel htmlFor="for">Confirm password</FormLabel>
                             <FormInput type="password" required value={confPassword} onChange={(e) => { confPasswordChanged(e) }} />
-                            <FormButton type="submit">Register</FormButton>
-                            <p style={{ color: "white" }}>{infoText}</p>
+                            <FormLabel htmlFor="for">{infoText}</FormLabel>
+                            <FormButton type="submit">Sign up</FormButton>
                         </Form>
                     </FormContent>
 
                 </FormWrap>
             </Container>
             <Footer>
-				<FooterLink to='/'>Terms and Conditions</FooterLink>
-				<FooterLink to='/'>Privacy Policy</FooterLink>
-				<FooterLink to='/'>About us</FooterLink>
-		    </Footer>
+                <FooterLink to='/'>Terms and Conditions</FooterLink>
+                <FooterLink to='/'>Privacy Policy</FooterLink>
+                <FooterLink to='/'>About us</FooterLink>
+            </Footer>
         </>
     )
 }

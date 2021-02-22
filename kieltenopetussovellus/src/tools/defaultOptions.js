@@ -5,3 +5,14 @@ export const genreOptions = [
     { value: 'everydaysituations', label: 'Every day situations' },
     { value: 'other', label: 'Other' }
 ];
+
+export const languageOptions = [
+    { value: "en", label: "English" },
+    { value: "fi", label: "Finnish" }
+  ];
+
+export const difficultyOptions = [
+    { value: "beginner", label: "Beginner" },
+    { value: "intermediate", label: "Intermediate" },
+    { value: "expert", label: "Expert" }
+  ];
