@@ -137,19 +137,19 @@ export const RadioBtnContainer = styled.div`
 
 //Styles for form button
 export const FormButton = styled.button`
-    background: #FFC67C;
-    padding: 16px 0;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    font-size: 20px;
+    //background: #FFC67C;
+    //padding: 16px 0;
+    //border: none;
+    //border-radius: 4px;
+    //color: #fff;
+    //font-size: 20px;
     margin-left:1rem;
     margin-right:1rem;
     margin-bottom: 15px;
-    cursor: pointer;
+    //cursor: pointer;
 
     &:hover{
-        background: #68EDCB;
+        //background: #68EDCB;
     }
 `;
 

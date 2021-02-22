@@ -27,16 +27,7 @@ import {
 import AudioContainer from './AudioContainer';
 import audioimage from '../../../images/AudioWave.jpg';
 import notFound from '../../../images/notFound.png';
-
-
-const options = [
-    { value: 'none', label: 'None' },
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-];
-
-
+import {genreOptions} from '../../../tools/defaultOptions';
 
 const Search = () => {
     const [isOpen, setIsopen] = useState(false);
@@ -167,7 +158,7 @@ const Search = () => {
                         <Select
                             value={selectedGenre}
                             onChange={handleSelectClick}
-                            options={options}
+                            options={genreOptions}
                         />
                     </SelectContainer>
                     <FormLabel htmlFor="for" >Difficulty</FormLabel>

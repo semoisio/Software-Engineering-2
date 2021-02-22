@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {background} from '../../colors/colors'
+import {background} from '../../tools/colors'
 
 export const LanguageContainer = styled.div`
     min-height: 100vh;
