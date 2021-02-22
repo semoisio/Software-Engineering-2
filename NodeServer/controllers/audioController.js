@@ -70,7 +70,7 @@ module.exports = {
             // file is saved in upload.single and path is in req.file.path
             const c = req.body;
             // check that fields are not empty
-            if (!c.username || !c.language || !c.title || !c.desc || !req.file.path) {
+            if (!c.username || !c.language || !c.title || !c.desc || !c.genre || !c.difficulty || !req.file.path) {
                 return { status: "NOT OK", msg: "Check fields" };
             }
             else {
@@ -80,6 +80,8 @@ module.exports = {
                     language: c.language,
                     title: c.title,
                     desc: c.desc,
+                    genre: c.genre,
+                    difficulty: c.difficulty,
                     path: req.file.path
                 });
                 if (newAudio) {

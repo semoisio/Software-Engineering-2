@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 
 export const Nav = styled.nav`
-    background: #000;
+    background: #8DB38B;
     height: 80px;
     //margin-top: -80px;
     display: flex;
@@ -28,6 +28,7 @@ export const NavbarContainer = styled.div`
     max-width: 1500px;
 `;
 
+// LOGO
 export const NavLogo = styled(NavLink)`
     color: white;
     justify-self: flex-start;
@@ -72,12 +73,14 @@ export const NavMenu = styled.ul`
     }
 `;
 
+// Home painikkeen tausta-div
 export const NavItem = styled.li`
     display: flex;
     font-size: 1.2rem;
     height: 80px;
 `;
 
+// Home-painike
 export const NavLinks = styled(NavLink)`
     color: #fff;
     display: flex;
@@ -94,33 +97,35 @@ export const NavLinks = styled(NavLink)`
     }
 `;
 
+// Buttonien tausta-div
 export const NavBtn = styled.nav`
     display: flex;
     align-items: center;
+    font-size: 1.2rem;
+    height: 80px;
+
 
     @media screen and (max-width: 768px){
         display: none;
     }
 `;
 
+//Buttonien muotoilu
 export const NavBtnLink = styled(NavLink)`
-    border-radius: 50px;
-    background: #01bf71;
-    white-space: nowrap;
-    padding: 10px 27px;
-    color: #010606;
-    font-size: 16px;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
+    color: #fff;
+    text-shadow: 1px 1px 2px #000000;
+    display: flex;
+    align-items: center;
     text-decoration: none;
-    margin: 5px;
+    padding: 1.8rem 1rem;
+    cursor: pointer;
 
+    &:active{
+        border-bottom: 3px solid #01bf71;
+    }
     &:hover{
         transition: all 0.2s ease-in-out;
-        background: #fff;
-        color: #010606;
+        background: #C3EBC1;
     }
 `;
 

@@ -1,3 +1,4 @@
+/** 
 import React, { useState, useEffect } from 'react';
 import './IntroPageElements.css';
 import { NavLink } from 'react-router-dom'
@@ -28,3 +29,4 @@ function IntroPage () {
 }
 
 export default IntroPage;
+*/

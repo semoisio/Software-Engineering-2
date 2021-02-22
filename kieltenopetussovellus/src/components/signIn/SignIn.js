@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Footer, FooterLink } from '../homePage/IntroPageElementsJS';
 import Navbar from '../homePageNavbar/Navbar';
 import SideBar from '../homePageNavbar/SideBar';
 
@@ -11,12 +12,12 @@ import {
     FormH1,
     FormLabel,
     FormInput,
-    FormButton,
+    FormButton
 
 } from './SignInElements';
 
-function SignIn() {
-    // This state keeps track is sidebaropen or not
+const SignIn=(props) =>{
+    // This state keeps track if sidebar is open or not
     const [isOpen, setIsOpen] = useState(false);
 
     /**
@@ -38,17 +39,18 @@ function SignIn() {
         setPassword(event.target.value);
     };
 
+    // Login function
     const SubmitLogin = async (e) => {
         e.preventDefault();
         const requestOptions = {
-            method: 'POST',
+            method: 'GET',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ "username": username, "password": password })
         };
-        const result = await fetch("http://127.0.0.1:3001/user", requestOptions);
+        const result = await fetch("http://127.0.0.1:3001/user?username="+username + '&password=' + password, requestOptions);
         let response = await result.json();
         if (response.status === "OK") {
-            console.log('awooga')
+            props.setIsloggedin(true)
+            console.log('login success')
         }
         else {
             setInfotext(response.msg);
@@ -78,6 +80,11 @@ function SignIn() {
                     </FormContent>
                 </FormWrap>
             </Container>
+            <Footer>
+				<FooterLink to='/'>Terms and Conditions</FooterLink>
+				<FooterLink to='/'>Privacy Policy</FooterLink>
+				<FooterLink to='/'>About us</FooterLink>
+		    </Footer>
         </>
     )
 }
