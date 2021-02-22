@@ -1,26 +1,82 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ReactMic } from 'react-mic';
-import { RecordingContainer } from './NewRecordingElements';
+import Select from 'react-select';
+import {
+  RecordButton,
+  RecordingContainer,
+  NewRecordingContainer,
+  InfoContainer,
+  RecordingButtonContainer,
+  RecordingForm,
+  FormLabel,
+  FormInput,
+  FormH1,
+  FormButton,
+  SelectContainer,
+  FormDesc,
+  RecordingMic
+} from './NewRecordingElements';
 const fs = require('fs');
+
 
 const NewRecording = () => {
   const [recording, setRecording] = useState(false);
-  const [recordedAudio, setRecordedAudio] = useState("");
-  const [username, setUsername] = useState("username");
-  const [language, setLanguage] = useState("language");
-  const [title, setTitle] = useState("title");
-  const [desc, setDesc] = useState("description");
+  const [recordedAudio, setRecordedAudio] = useState(null);
+  const [username, setUsername] = useState("");
+  const [language, setLanguage] = useState("");
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
+  const [genre, setGenre] = useState("");
+  const [difficulty, setDifficulty] = useState("");
+
+  const languageOptions = [
+    { value: "en", label: "English" },
+    { value: "fi", label: "Finnish" }
+  ];
+
+  const difficultyOptions = [
+    { value: "beginner", label: "Beginner" },
+    { value: "intermediate", label: "Intermediate" },
+    { value: "expert", label: "Expert" }
+  ];
+
+  const languageChanged = (e) => {
+    setLanguage(e);
+  }
+
+  const usernameChanged = (e) => {
+    setUsername(e.target.value);
+  }
+
+  const titleChanged = (e) => {
+    setTitle(e.target.value);
+  }
+
+  const descChanged = (e) => {
+    setDesc(e.target.value);
+  }
+
+  const genreChanged = (e) => {
+    setGenre(e.target.value);
+  }
+
+  const difficultyChanged = (e) => {
+    setDifficulty(e);
+  }
 
   const startRecording = () => {
-    setRecording(true);
+    if (recordedAudio) {
+      if (window.confirm("Previous audio will be lost if you start recording. Continue?")) {
+        setRecording(true);
+      }
+    }
+    else {
+      setRecording(true);
+    }
   }
 
   const stopRecording = () => {
     setRecording(false);
-  }
-
-  const onData = () => {
-
   }
 
   const onStop = (recordedBlob) => {
@@ -28,105 +84,110 @@ const NewRecording = () => {
   }
 
   const uploadAudio = async () => {
-    console.log("clicked upload");
-    if (recordedAudio) {
-      // get blob from url
-      let blob = await fetch(recordedAudio.blobURL).then(r => r.blob());
-      // create formdata from blob
-      var file = new File([blob], "test", { type: "audio/webm" });
-      let fd = new FormData();
-      fd.append('audio', file);
-      fd.append('username', username);
-      fd.append('language', language);
-      fd.append('title', title);
-      fd.append('desc', desc);
+    // while not recordin
+    if (!recording) {
 
-      // send formdata to server
-      const requestOptions = {
-        method: 'POST',
-        body: fd
-      };
-      const result = await fetch("http://127.0.0.1:3001/audio", requestOptions);
-      let response = await result.json();
+      // check that audio is ready
+      if (recordedAudio) {
 
-      // just for testing, get data from server
-      const getAudio = await fetch("http://127.0.0.1:3001/audio" + "?title=title&file=true").then(r => r.blob());
-      // paste url to browser to confirm
-      console.log(URL.createObjectURL(getAudio));
+        // check that fields are given
+        if (language && username.length > 0 && title.length > 0 && desc.length > 0 && genre.length > 0 && difficulty) {
 
-      // testing audio search
-      const findAudio = await fetch("http://127.0.0.1:3001/audio" + "?title=title");
-      console.log(await findAudio.json());
-      if (response.status === "OK") {
-        console.log("ok")
+          // get blob from url
+          let blob = await fetch(recordedAudio.blobURL).then(r => r.blob());
+
+          // create formdata from blob
+          var file = new File([blob], "test", { type: "audio/webm" });
+          let fd = new FormData();
+          fd.append('audio', file);
+          fd.append('username', username);
+          fd.append('language', language.value);
+          fd.append('title', title);
+          fd.append('desc', desc);
+          fd.append('genre', genre);
+          fd.append('difficulty', difficulty.value);
+
+          // send formdata to server
+          const requestOptions = {
+            method: 'POST',
+            body: fd
+          };
+          const result = await fetch("http://127.0.0.1:3001/audio", requestOptions);
+          let response = await result.json();
+
+          if (response.status === "OK") {
+            window.alert("Audio uploaded successfully.");
+          }
+          else {
+            window.alert(response.msg);
+          }
+        }
+        else {
+          window.alert("Please fill audio information.");
+        }
       }
+
       else {
-        console.log("notok")
+        window.alert("Please record audio first.");
       }
     }
     else {
-      console.log("Audio not ready");
+      window.alert("Please stop recording.");
     }
   }
 
   return (
-    <RecordingContainer data-testid="recordingContainer">
-      <ReactMic
-        record={recording}
-        className="sound-wave"
-        onStop={(e) => onStop(e)}
-        onData={() => onData()}
-        strokeColor="#000000"
-        backgroundColor="#FF4081" />
-      <button onClick={() => startRecording()} type="button">Start</button>
-      <button onClick={() => stopRecording()} type="button">Stop</button>
+    <NewRecordingContainer data-testid="recordingContainer">
+      <RecordingContainer>
+        <FormH1>Record audio</FormH1>
+          <RecordingMic
+            style="width: 100%"
+            record={recording}
+            className="sound-wave"
+            onStop={(e) => onStop(e)}
+            strokeColor="#1CE4B0"
+            backgroundColor="#FFFFFF"/>
+        <RecordingButtonContainer>
+          <RecordButton onClick={() => startRecording()} type="button">Start</RecordButton>
+          <RecordButton onClick={() => stopRecording()} type="button">Stop</RecordButton>
+        </RecordingButtonContainer>
+      </RecordingContainer>
+      <InfoContainer>
+        <RecordingForm>
+          <FormH1>Audio information</FormH1>
+          <FormLabel htmlFor="for" >Language</FormLabel>
+          <SelectContainer>
+            <Select
+              value={language}
+              onChange={languageChanged}
+              options={languageOptions}
+            />
+          </SelectContainer>
+          <FormLabel htmlFor="for" >Username</FormLabel>
+          <FormInput type="text" value={username} onChange={(e) => usernameChanged(e)}></FormInput>
 
-      <button onClick={() => uploadAudio()} type="button">Upload</button>
-    </RecordingContainer>
+          <FormLabel htmlFor="for" >Title</FormLabel>
+          <FormInput type="text" value={title} onChange={(e) => titleChanged(e)}></FormInput>
+
+          <FormLabel htmlFor="for" >Description</FormLabel>
+          <FormDesc type="textarea" value={desc} onChange={(e) => descChanged(e)}></FormDesc>
+
+          <FormLabel htmlFor="for" >Genre</FormLabel>
+          <FormInput type="text" value={genre} onChange={(e) => genreChanged(e)}></FormInput>
+
+          <FormLabel htmlFor="for" >Difficulty</FormLabel>
+          <SelectContainer>
+            <Select
+              value={difficulty}
+              onChange={difficultyChanged}
+              options={difficultyOptions}
+            />
+          </SelectContainer>
+          <FormButton onClick={() => uploadAudio()} type="button">Upload</FormButton>
+        </RecordingForm>
+      </InfoContainer>
+    </NewRecordingContainer>
   )
 }
 
 export default NewRecording
-
-/*
-export default class NewRecording extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        record: false
-      }
-    }
-
-    startRecording = () => {
-      this.setState({ record: true });
-    }
-
-    stopRecording = () => {
-      this.setState({ record: false });
-    }
-
-    onData(recordedBlob) {
-      console.log('chunk of real-time data is: ', recordedBlob);
-    }
-
-    onStop(recordedBlob) {
-      console.log('recordedBlob is: ', recordedBlob);
-    }
-
-    render() {
-      return (
-        <div>
-          <ReactMic
-            record={this.state.record}
-            className="sound-wave"
-            onStop={this.onStop}
-            onData={this.onData}
-            strokeColor="#000000"
-            backgroundColor="#FF4081" />
-          <button onClick={this.startRecording} type="button">Start</button>
-          <button onClick={this.stopRecording} type="button">Stop</button>
-        </div>
-      );
-    }
-  }
-*/
