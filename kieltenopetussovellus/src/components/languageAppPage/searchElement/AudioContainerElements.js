@@ -41,6 +41,7 @@ export const AudioTextContainer = styled.div`
     display: flex;
     flex-direction:column;
     align-items:center;
+    justify-content:center;
     margin-right: 2rem;
     margin-left: 2rem;
     width: 200px;
@@ -51,7 +52,7 @@ export const AudioTitle = styled.h2`
 `;
 
 export const AudioDescription = styled.p`
-width: 100%;
+    //width: 100%;
     
 `;
 

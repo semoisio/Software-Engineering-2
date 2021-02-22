@@ -27,7 +27,7 @@ import {
 import AudioContainer from './AudioContainer';
 import audioimage from '../../../images/AudioWave.jpg';
 import notFound from '../../../images/notFound.png';
-import {genreOptions} from '../../../tools/defaultOptions';
+import {genreOptions,languageOptions} from '../../../tools/defaultOptions';
 
 const Search = () => {
     const [isOpen, setIsopen] = useState(false);
@@ -36,9 +36,11 @@ const Search = () => {
     const [error, setError] = useState(false);
     const [searching, setSearching] = useState(false);
 
-    //Select component
-    const [selectedGenre, setSelectedGenre] = useState("");
-    const [selectedGenreString, setSelectedGenreString] = useState("");
+    //Select component genre
+    const [selectedGenre, setSelectedGenre] = useState({value:""});
+    //Select component language
+    const [selectedLanguage, setSelectedLanguage] = useState("");
+
     //radio button
     const [selectedDifficulty, setSelectedDifficulty] = useState("");
     //audio search input
@@ -47,10 +49,11 @@ const Search = () => {
     const toggle = () => {
         setIsopen(!isOpen);
     }
-
-    const handleSelectClick = (param) => {
+    const handleSelectClickLanguage = (param) => {
+        setSelectedLanguage(param);
+    }
+    const handleSelectClickGenre = (param) => {
         setSelectedGenre(param);
-        setSelectedGenreString(param.value);
     }
     const radioButtonChanged = (value) => {
         setSelectedDifficulty(value);
@@ -66,12 +69,11 @@ const Search = () => {
         e.preventDefault();
     }
 
-
     useEffect(() => {
         const haeAudio = async () => {
             setSearching(true);
-            const queryKeys = ["title", "difficulty", "genre"];
-            const uncheckedQuery = [audioTitle, selectedDifficulty, selectedGenreString];
+            const queryKeys = ["title", "difficulty", "genre", "language"];
+            const uncheckedQuery = [audioTitle, selectedDifficulty, selectedGenre.value, selectedLanguage.value];
 
             let query = buildQuery(uncheckedQuery, queryKeys);
             const url = "http://127.0.0.1:3001/audio" + query
@@ -153,11 +155,19 @@ const Search = () => {
                     <FormH1>Search audio</FormH1>
                     <FormLabel htmlFor="for" >Search</FormLabel>
                     <FormInput type="text" value={audioTitle} onChange={(e) => { audioChanged(e) }} />
+                    <FormLabel htmlFor="for" >Language</FormLabel>
+                    <SelectContainer>
+                        <Select
+                            value={selectedLanguage}
+                            onChange={handleSelectClickLanguage}
+                            options={languageOptions}
+                        />
+                    </SelectContainer>
                     <FormLabel htmlFor="for" >Genre</FormLabel>
                     <SelectContainer>
                         <Select
                             value={selectedGenre}
-                            onChange={handleSelectClick}
+                            onChange={handleSelectClickGenre}
                             options={genreOptions}
                         />
                     </SelectContainer>

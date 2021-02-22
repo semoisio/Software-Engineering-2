@@ -17,7 +17,7 @@ export const SearchContainer = styled.div`
         position: fixed;
         z-index: 998;
         width: 100%;
-        height: 100%;
+        height: 87%;
         display: flex;
         opacity: ${({isOpen}) => (isOpen ? '100%' : '0')}; 
         top: ${({isOpen}) => (isOpen ? '80px' : '-100%')};
@@ -25,12 +25,13 @@ export const SearchContainer = styled.div`
         width: 100%;
         transition: 0.3s ease-in-out;
         background: #FBFBFB;
+        overflow:auto;
     }
    
 `;
 
 export const ListenContainer = styled.div`
-    height:80vh;
+    height:90vh;
     width:70%;
     transition: all 1s;
     overflow: auto;
@@ -157,6 +158,9 @@ export const LoaderContainer = styled.div`
     display:flex;
     width:100%;
     justify-content:center;
+    align-items:center;
+    margin-top: auto;
+    margin-bottom:auto;
 `;
 export const LoaderText = styled.h1`
     margin-top: 0;
