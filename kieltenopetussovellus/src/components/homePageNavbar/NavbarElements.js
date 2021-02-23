@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
-
+// Yläpalkki (header)
 export const Nav = styled.nav`
-    background: #8DB38B;
-    height: 80px;
+    background: linear-gradient(to right top, #08ffbf, #07ecb5, #0ed9ab, #16c6a0, #1eb495);
+    height: 85px;
     //margin-top: -80px;
     display: flex;
     justify-content: space-between;
@@ -18,6 +18,8 @@ export const Nav = styled.nav`
         transition: 0.8s all ease;
     }
 `;
+
+//Yläpalkin alusta-div
 export const NavbarContainer = styled.div`
     display: flex;
     justify-content: space-between;
@@ -25,7 +27,7 @@ export const NavbarContainer = styled.div`
     z-index: 1;
     width: 100%;
     padding: 0 24px;
-    max-width: 1500px;
+    max-width: 100%;
 `;
 
 // LOGO
@@ -73,7 +75,7 @@ export const NavMenu = styled.ul`
     }
 `;
 
-// Home painikkeen tausta-div
+//Home painikkeen tausta-div
 export const NavItem = styled.li`
     display: flex;
     font-size: 1.2rem;
@@ -90,14 +92,14 @@ export const NavLinks = styled(NavLink)`
     cursor: pointer;
 
     &:active{
-        border-bottom: 3px solid #01bf71;
+        border-bottom: 3px solid #FFC67C;
     }
     &:hover{
         opacity: 80%;
     }
 `;
 
-// Buttonien tausta-div
+//Yläpalkin buttonien tausta-div
 export const NavBtn = styled.nav`
     display: flex;
     align-items: center;
@@ -110,22 +112,28 @@ export const NavBtn = styled.nav`
     }
 `;
 
-//Buttonien muotoilu
+//Yläpalkin Buttonit
 export const NavBtnLink = styled(NavLink)`
     color: #fff;
-    text-shadow: 1px 1px 2px #000000;
+    text-shadow: 1px 1px 2px #626262;
     display: flex;
     align-items: center;
     text-decoration: none;
+    //font-variant-caps: small-caps;
     padding: 1.8rem 1rem;
     cursor: pointer;
 
     &:active{
-        border-bottom: 3px solid #01bf71;
+        border-bottom: 3px solid #FFC67C;
+        background: #C3EBC1;
     }
     &:hover{
         transition: all 0.2s ease-in-out;
-        background: #C3EBC1;
+        background: #1EB495;
     }
+    &.${props => props.activeClassName} {
+        background: #1EB495;
+  }
 `;
+
 

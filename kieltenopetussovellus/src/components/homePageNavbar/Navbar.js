@@ -32,8 +32,8 @@ const Navbar = ({toggle}) => {
                         </NavItem>
                     </NavMenu>
                     <NavBtn data-testid="navbarBtn">
-                        <NavBtnLink to="/signin" data-testid="navbarBtnLink1">Sign In</NavBtnLink>
-                        <NavBtnLink to="/signup" data-testid="navbarBtnLink2">Sign Up</NavBtnLink>
+                        <NavBtnLink activeClassName="active" to="/signin" data-testid="navbarBtnLink1">Sign in</NavBtnLink>
+                        <NavBtnLink activeClassName="active" to="/signup" data-testid="navbarBtnLink2">Sign up</NavBtnLink>
                     </NavBtn>
                 </NavbarContainer>
             </Nav>
