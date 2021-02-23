@@ -10,7 +10,7 @@ export const IntroPageContainer = styled.div`
 	justify-content: center;
 	width: 100%;
 	min-height: 100vh;
-	background-image: linear-gradient(to top, #f0ffef, #e5fae3, #daf5d8, #cef0cc, #c3ebc1);
+	background-image: linear-gradient(to right top, #e0ffcd, #c9fbc7, #aef6c5, #8ff2c6, #68edcb);;
 
 `;
 
@@ -23,6 +23,8 @@ export const IntroPageMain = styled.div`
 	flex-wrap:wrap;
 	justify-content: center;
 	text-align: center;
+	margin-top: auto;
+    margin-bottom:auto;
 `;
 
 export const IntroLogoDiv = styled.div`
@@ -36,7 +38,6 @@ export const IntroLogoImg = styled.img`
 `;
 
 export const IntroH1 = styled.h1`
-    
 	margin-bottom: 10px;
 	color: white;
 	font-size: 60px;
@@ -50,7 +51,6 @@ export const IntroH1 = styled.h1`
 `;
 
 export const IntroText = styled.p`
-
 	text-align: center;
 	padding: 10px;
 	overflow-wrap: break-word;
@@ -76,16 +76,18 @@ export const NavBtn = styled.nav`
 
 // Buttonit
 export const IntroButton = styled(NavLink)`
-    background-color: #FFDA83;
+    background-color: #FF995E;
 	box-shadow: 0px 2px 4px #000000;
-	padding: 0.5rem 1rem;
+	padding: 1rem 1rem;
 	width: 10%;
 	border: none;
-    border-radius: 3px;
+    border-radius: 10px;
 	text-decoration: none;
-	font-weight: bold;
+	font-size: medium;
+	//font-weight: bold;
 	//font-variant-caps: small-caps;
-	color: #3E4A3D;
+	color: #ffffff;
+	text-shadow: 1px 1px 2px #000000;
 	cursor: pointer;
 	transition: all 0.2s ease-in-out;
 
@@ -94,12 +96,12 @@ export const IntroButton = styled(NavLink)`
 
     &:hover{
         transition: all 0.1s ease-in-out;
-		opacity: 70%;
+		background-color: #FFC67C;
     }
 `;
 
 export const Footer = styled.footer`
-    background:#3E4A3D;
+    background:#1EB495;
 	padding: 15px;
 	width: 100%;
 	height: auto;
@@ -115,10 +117,11 @@ export const FooterLink = styled(NavLink)`
     color: #fff;
 	font-size: small;
 	text-decoration: none;
+	text-shadow: 1px 1px 2px #000000;
 
     &:hover{
         text-decoration: none;
-	    color: #FFDA83;
+	    color: #FFC67C;
 	    text-shadow: 1px 1px 2px #000000;
     }
 `;
