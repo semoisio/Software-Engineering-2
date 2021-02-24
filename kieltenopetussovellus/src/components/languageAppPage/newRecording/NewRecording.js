@@ -14,9 +14,10 @@ import {
   FormButton,
   SelectContainer,
   FormDesc,
-  RecordingMic
+  RecordingMic,
+  AudioPlayer,
 } from './NewRecordingElements';
-import { languageOptions, difficultyOptions } from '../../../tools/defaultOptions';
+import { genreOptions, languageOptions, difficultyOptions } from '../../../tools/defaultOptions';
 const fs = require('fs');
 
 
@@ -47,7 +48,7 @@ const NewRecording = () => {
   }
 
   const genreChanged = (e) => {
-    setGenre(e.target.value);
+    setGenre(e);
   }
 
   const difficultyChanged = (e) => {
@@ -81,7 +82,7 @@ const NewRecording = () => {
       if (recordedAudio) {
 
         // check that fields are given
-        if (language && username.length > 0 && title.length > 0 && desc.length > 0 && genre.length > 0 && difficulty) {
+        if (language && username.length > 0 && title.length > 0 && desc.length > 0 && genre && difficulty) {
 
           // get blob from url
           let blob = await fetch(recordedAudio.blobURL).then(r => r.blob());
@@ -94,7 +95,7 @@ const NewRecording = () => {
           fd.append('language', language.value);
           fd.append('title', title);
           fd.append('desc', desc);
-          fd.append('genre', genre);
+          fd.append('genre', genre.value);
           fd.append('difficulty', difficulty.value);
 
           // send formdata to server
@@ -107,6 +108,13 @@ const NewRecording = () => {
 
           if (response.status === "OK") {
             window.alert("Audio uploaded successfully.");
+            setRecordedAudio(null);
+            setLanguage(null);
+            setUsername("");
+            setTitle("");
+            setDesc("");
+            setGenre(null);
+            setDifficulty(null);
           }
           else {
             window.alert(response.msg);
@@ -130,52 +138,64 @@ const NewRecording = () => {
     <NewRecordingContainer data-testid="recordingContainer">
       <RecordingContainer>
         <FormH1>Record audio</FormH1>
-          <RecordingMic
-            style="width: 100%"
-            record={recording}
-            className="sound-wave"
-            onStop={(e) => onStop(e)}
-            strokeColor="#1CE4B0"
-            backgroundColor="#FFFFFF"/>
+        <RecordingMic
+          style="width: 100%"
+          record={recording}
+          className="sound-wave"
+          onStop={(e) => onStop(e)}
+          strokeColor="#1CE4B0"
+          backgroundColor="#FFFFFF" />
         <RecordingButtonContainer>
           <RecordButton onClick={() => startRecording()} type="button">Start</RecordButton>
           <RecordButton onClick={() => stopRecording()} type="button">Stop</RecordButton>
         </RecordingButtonContainer>
       </RecordingContainer>
-      <InfoContainer>
-        <RecordingForm>
-          <FormH1>Audio information</FormH1>
-          <FormLabel htmlFor="for" >Language</FormLabel>
-          <SelectContainer>
-            <Select
-              value={language}
-              onChange={languageChanged}
-              options={languageOptions}
-            />
-          </SelectContainer>
-          <FormLabel htmlFor="for" >Username</FormLabel>
-          <FormInput type="text" value={username} onChange={(e) => usernameChanged(e)}></FormInput>
+      {
+        recordedAudio ?
+          <InfoContainer>
+            <RecordingForm>
+              <FormH1>Audio information</FormH1>
+              <AudioPlayer controls>
+                <source src={recordedAudio.blobURL} />
+              </AudioPlayer>
+              <FormLabel htmlFor="for" >Language</FormLabel>
+              <SelectContainer>
+                <Select
+                  value={language}
+                  onChange={languageChanged}
+                  options={languageOptions}
+                />
+              </SelectContainer>
+              <FormLabel htmlFor="for" >Username</FormLabel>
+              <FormInput type="text" value={username} onChange={(e) => usernameChanged(e)}></FormInput>
 
-          <FormLabel htmlFor="for" >Title</FormLabel>
-          <FormInput type="text" value={title} onChange={(e) => titleChanged(e)}></FormInput>
+              <FormLabel htmlFor="for" >Title</FormLabel>
+              <FormInput type="text" value={title} onChange={(e) => titleChanged(e)}></FormInput>
 
-          <FormLabel htmlFor="for" >Description</FormLabel>
-          <FormDesc type="textarea" value={desc} onChange={(e) => descChanged(e)}></FormDesc>
+              <FormLabel htmlFor="for" >Description</FormLabel>
+              <FormDesc type="textarea" value={desc} onChange={(e) => descChanged(e)}></FormDesc>
 
-          <FormLabel htmlFor="for" >Genre</FormLabel>
-          <FormInput type="text" value={genre} onChange={(e) => genreChanged(e)}></FormInput>
+              <FormLabel htmlFor="for" >Genre</FormLabel>
+              <SelectContainer>
+                <Select
+                  value={genre}
+                  onChange={genreChanged}
+                  options={genreOptions}
+                />
+              </SelectContainer>
 
-          <FormLabel htmlFor="for" >Difficulty</FormLabel>
-          <SelectContainer>
-            <Select
-              value={difficulty}
-              onChange={difficultyChanged}
-              options={difficultyOptions}
-            />
-          </SelectContainer>
-          <FormButton onClick={() => uploadAudio()} type="button">Upload</FormButton>
-        </RecordingForm>
-      </InfoContainer>
+              <FormLabel htmlFor="for" >Difficulty</FormLabel>
+              <SelectContainer>
+                <Select
+                  value={difficulty}
+                  onChange={difficultyChanged}
+                  options={difficultyOptions}
+                />
+              </SelectContainer>
+              <FormButton onClick={() => uploadAudio()} type="button">Upload</FormButton>
+            </RecordingForm>
+          </InfoContainer> : null
+      }
     </NewRecordingContainer>
   )
 }

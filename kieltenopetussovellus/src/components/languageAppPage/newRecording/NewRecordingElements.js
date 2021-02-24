@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import React from 'react';
 import { ReactMic } from 'react-mic';
 
 // Container for all of the components
@@ -32,7 +33,7 @@ export const RecordingContainer = styled.div`
 
 // React mic
 export const RecordingMic = styled(ReactMic)`
-    height: 100%;
+    //height:100%;
     margin-right:1rem;
     margin-left:1rem;
     margin-bottom:15px;
@@ -76,6 +77,13 @@ export const RecordButton = styled.button`
     &:hover{
         background: #68EDCB;
     } */
+`;
+
+export const AudioPlayer = styled.audio`
+    width: auto;
+    margin-right:1rem;
+    margin-left:1rem;
+    margin-bottom:15px;
 `;
 
 // Info form

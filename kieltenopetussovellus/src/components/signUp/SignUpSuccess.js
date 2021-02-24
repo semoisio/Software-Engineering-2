@@ -40,7 +40,7 @@ function SignUpSuccess() {
                     <FormContent data-testid="signupsuccessformcontent">
                         <Form action="" data-testid="signupsuccessform">
                         <FormLabel htmlFor="for">Account created successfully, you can now sign in.</FormLabel>
-                            <FormButton onClick={() => redirectSignIn}>Sign in</FormButton>
+                            <FormButton onClick={() => redirectSignIn()}>Sign in</FormButton>
                         </Form>
                     </FormContent>
                 </FormWrap>
