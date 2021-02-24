@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 //Container for whole page
 export const Container = styled.nav`
     min-height: 100vh;
-    background: linear-gradient(to top, #f0ffef, #e5fae3, #daf5d8, #cef0cc, #c3ebc1);
+    background: #fbfbfb;
 
 `;
 
@@ -90,9 +90,9 @@ export const Form = styled.form`
 // Headline for form
 export const FormH1 = styled.h1`
     margin-bottom: 40px;
-    color: black;
+    color: #1EB495;
     font-size: 20px;
-    font-weight: 400;
+    font-weight: bold;
     text-align: center;
 `;
 
@@ -106,13 +106,14 @@ export const FormLabel = styled.label`
     margin-bottom: 8px;
     font-size: 14px;
     color: black;
+    
 `;
 
 // Styles for inputs
 export const FormInput = styled.input`
     padding: 16px 16px;
     margin-bottom: 32px;
-    border: none;
+    border: 1px solid #BFBFBF;
     border-radius: 4px;
 `;
 
