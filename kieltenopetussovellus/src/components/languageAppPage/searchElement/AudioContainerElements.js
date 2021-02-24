@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {background,CONtext,CONh1,CONinput,OBbg,OBhover,OBtext} from '../../../tools/colors';
 
 export const OneAudioContainer = styled.div`
     width: 93%;
@@ -8,7 +9,7 @@ export const OneAudioContainer = styled.div`
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-    border: solid black;
+    border: solid ${CONinput};
     border-radius: 5px;
     padding: 5px;
 
@@ -48,20 +49,21 @@ export const AudioTextContainer = styled.div`
 `;
 
 export const AudioTitle = styled.h2`
-    
+    color: ${CONh1};
 `;
 
 export const AudioDescription = styled.p`
     //width: 100%;
-    
+    color: ${CONtext};
 `;
 
 export const StartAudioBtn = styled.div`
     border-radius: 50px;
-    background: #FFC67C;
+    background: ${OBbg};
     white-space: nowrap;
-    padding: 16px 64px;
-    color: #FFFFFF;
+    padding: 1rem 1rem;
+    border-radius: 10px;
+    color: ${OBtext};
     font-size: 16px;
     outline: none;
     border: none;
@@ -69,10 +71,10 @@ export const StartAudioBtn = styled.div`
     transition: all 0.2s ease-in-out;
     text-decoration: none;
     margin-top: 1rem;
+    text-shadow: 1px 1px 2px #626262;
 
     &:hover{
         transition: all 0.2s ease-in-out;
-        background: #fff;
-        background: #68EDCB;
+        background: ${OBhover};
     }
 `;

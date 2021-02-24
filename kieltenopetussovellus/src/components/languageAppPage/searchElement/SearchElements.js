@@ -1,5 +1,6 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
+import {background,CONtext,CONh1,CONinput,RBbg,RBhover,RBtext,RBshadow } from '../../../tools/colors';
 
 export const SearchAndListenContainer = styled.div`
     display:flex;
@@ -24,7 +25,7 @@ export const SearchContainer = styled.div`
         flex-direction:column;
         width: 100%;
         transition: 0.3s ease-in-out;
-        background: #FBFBFB;
+        background: ${background};
         overflow:auto;
     }
    
@@ -44,7 +45,7 @@ export const ListenContainer = styled.div`
 
 export const OpenSearchIconContainer = styled.div`
     display: none;
-    color: #000;
+    color: ${CONtext};
     cursor: pointer;
     align-items:center;
     justify-content:center;
@@ -57,12 +58,11 @@ export const OpenSearchIconContainer = styled.div`
     }
 
     &:hover{
-        color:#68EDCB;
+        opacity: 50%;
     }
 `;
 export const SearchText = styled.h4`
     margin: 0.5rem;
-    
 `;
 
 export const OpenIcon = styled(AiFillCaretDown)`
@@ -71,7 +71,7 @@ export const OpenIcon = styled(AiFillCaretDown)`
 
 export const CloseSearchIconContainer = styled.div`
     display: none;
-    color: #000;
+    color: ${CONtext};
     cursor: pointer;
 
     @media screen and (max-width: 768px){
@@ -82,7 +82,7 @@ export const CloseSearchIconContainer = styled.div`
     }
 
     &:hover{
-        color:#68EDCB;
+        opacity: 50%;
     }
 `;
 
@@ -94,13 +94,13 @@ export const CloseIcon = styled(AiFillCaretUp)`
 export const Form = styled.form`
     display: flex;
     flex-direction:column;
-    width: 100%;
+    width: 100%;    
 `;
 
 // Headline for form
 export const FormH1 = styled.h1`
     margin-bottom: 15px;
-    color: #000;
+    color: ${CONh1};
     font-size: 20px;
     font-weight: 400;
     text-align: center;
@@ -110,7 +110,7 @@ export const FormH1 = styled.h1`
 export const FormLabel = styled.label`
     margin-bottom: 8px;
     font-size: 14px;
-    color: #000;
+    color: ${CONh1};
     margin-left:1rem;
 `;
 
@@ -120,7 +120,7 @@ export const FormInput = styled.input`
     margin-bottom: 15px;
     margin-left:1rem;
     margin-right:1rem;
-    border: none;
+    border: solid 1px ${CONinput};
     border-radius: 4px;
 `;
 
@@ -154,6 +154,30 @@ export const FormButton = styled.button`
     }
 `;
 
+//Styles for form button
+export const ClearButton = styled.div`
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: ${RBbg};
+    padding: 0.5rem 0.5rem;
+    border: none;
+    border-radius: 4px;
+    color: ${RBtext};
+    font-size: medium;
+    margin-left:auto;
+    margin-right:1rem;
+    margin-bottom: 15px;
+    cursor: pointer;
+    border-radius: 10px;
+    font-weight: 300;
+    width:30%;
+
+    &:hover{
+        background: ${RBhover   };
+    }
+`;
+
 export const LoaderContainer = styled.div`
     display:flex;
     width:100%;
@@ -165,4 +189,11 @@ export const LoaderContainer = styled.div`
 export const LoaderText = styled.h1`
     margin-top: 0;
     margin-right: 1rem;
+`;
+
+export const FoundCount = styled.div`
+    margin-left: 16px;
+    margin-top: 1rem;
+    color:${CONh1};
+    font-size: 1.1rem;
 `;

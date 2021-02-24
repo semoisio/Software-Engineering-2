@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import Loader from "react-loader-spinner";
-import { RadioGroup, RadioButton, ReversedRadioButton } from 'react-radio-buttons';
+import { RadioGroup, RadioButton } from 'react-radio-buttons';
+import {background,CONtext,CONh1,CONinput,OBbg,OBhover,OBtext} from '../../../tools/colors';
 import {
     SearchAndListenContainer,
     SearchContainer,
@@ -19,7 +20,9 @@ import {
     RadioBtnContainer,
     FormButton,
     LoaderContainer,
-    LoaderText
+    LoaderText,
+    FoundCount,
+    ClearButton
 } from './SearchElements';
 import {
     buildQuery
@@ -30,10 +33,17 @@ import notFound from '../../../images/notFound.png';
 import {genreOptions,languageOptions} from '../../../tools/defaultOptions';
 
 const Search = () => {
+    //This keep track is search open or not in smaller window sizes
     const [isOpen, setIsopen] = useState(false);
+
+    //If you want to do search update this state by +1
     const [doFetch, setDoFetch] = useState(0);
+
+    //Array where finded audios are saved
     const [audiot, setAudiot] = useState([]);
+    // This state keeps track did search succeed or not
     const [error, setError] = useState(false);
+    // State to toggle searching or no
     const [searching, setSearching] = useState(false);
 
     //Select component genre
@@ -43,12 +53,18 @@ const Search = () => {
 
     //radio button
     const [selectedDifficulty, setSelectedDifficulty] = useState("");
+    //Difficulty checked holds information what radiobutten have to bee checked
+    const [difficultyChecked, setDifficultyChecked] = useState([false,false,false]);
+
     //audio search input
     const [audioTitle, setAudioTitle] = useState("");
 
+    // Toggle search open and close
     const toggle = () => {
         setIsopen(!isOpen);
     }
+
+    // All changed functions keep track what have been written in form
     const handleSelectClickLanguage = (param) => {
         setSelectedLanguage(param);
     }
@@ -57,18 +73,33 @@ const Search = () => {
     }
     const radioButtonChanged = (value) => {
         setSelectedDifficulty(value);
+        switch (value) {
+            case "beginner":
+                setDifficultyChecked([true,false,false])
+                break;
+            case "intermediate":
+                setDifficultyChecked([false,true,false])
+                break;
+            case "expert":
+                setDifficultyChecked([false,false,true])
+                break;
+            default:
+                setDifficultyChecked([false,false,false])
+                break;
+        }
     }
-
     const audioChanged = (e) => {
         setAudioTitle(e.target.value);
     }
 
+    // Form submit button fires this function and this fires audiofetch from database
     const fetchAudio = (e) => {
         setDoFetch(doFetch + 1);
         toggle();
         e.preventDefault();
     }
 
+    // This fetches audios from database with according search terms
     useEffect(() => {
         const haeAudio = async () => {
             setSearching(true);
@@ -102,6 +133,7 @@ const Search = () => {
         }
     }, [doFetch]);
 
+    // When page opened first time this function fetches some audio to display to screen
     useEffect(() => {
         const fetchAudio = async () => {
             setSearching(true);
@@ -131,6 +163,19 @@ const Search = () => {
 
     }, []);
 
+    /**
+     * Clears all text and choices from form
+     */
+    const clearChoices = () => {
+        setSelectedGenre({value:""});
+        setSelectedLanguage({value:""});
+        setAudioTitle("")
+        radioButtonChanged("");
+    };
+
+    /**
+     * Maps all audios to screen
+     */
     const audioInside = audiot.map((t, index) => {
         return <AudioContainer
             key={index}
@@ -174,15 +219,20 @@ const Search = () => {
                     <FormLabel htmlFor="for" >Difficulty</FormLabel>
                     <RadioBtnContainer>
                         <RadioGroup onChange={(value) => { radioButtonChanged(value) }}>
-                            <RadioButton rootColor="#FFC67C" pointColor="#68EDCB" value="beginner">Beginner</RadioButton>
-                            <RadioButton rootColor="#FFC67C" pointColor="#68EDCB" value="intermediate">Intermediate</RadioButton>
-                            <RadioButton rootColor="#FFC67C" pointColor="#68EDCB" value="expert">Expert</RadioButton>
+                            <RadioButton checked={difficultyChecked[0]} rootColor={OBbg} pointColor={OBhover} value="beginner">Beginner</RadioButton>
+                            <RadioButton checked={difficultyChecked[1]} rootColor={OBbg} pointColor={OBhover} value="intermediate">Intermediate</RadioButton>
+                            <RadioButton checked={difficultyChecked[2]} rootColor={OBbg} pointColor={OBhover} value="expert">Expert</RadioButton>
                         </RadioGroup>
                     </RadioBtnContainer>
+                    <ClearButton type="button" onClick={() =>{clearChoices()}}>Clear</ClearButton>
                     <FormButton type="submit">Search</FormButton>
                 </Form>
             </SearchContainer>
             <ListenContainer>
+                {
+                    audiot.length !== 0 ?
+                    <FoundCount>Found: {audiot.length}</FoundCount>:null
+                }
                 {
                     searching ?
                         <LoaderContainer>
