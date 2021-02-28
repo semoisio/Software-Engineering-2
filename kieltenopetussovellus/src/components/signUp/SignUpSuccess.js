@@ -27,9 +27,7 @@ function SignUpSuccess() {
         setIsOpen(!isOpen);
     };
 
-    const redirectSignIn = () => {
-        history.push('/signin');
-    };
+    
 
     return (
         <>
@@ -39,8 +37,9 @@ function SignUpSuccess() {
                 <FormWrap data-testid="signupsuccessformwrap">
                     <FormContent data-testid="signupsuccessformcontent">
                         <Form action="" data-testid="signupsuccessform">
-                        <FormLabel htmlFor="for">Account created successfully, you can now sign in.</FormLabel>
-                            <FormButton onClick={() => redirectSignIn()}>Sign in</FormButton>
+                            <FormLabel htmlFor="for">
+                                Account created successfully. Confirmation link has been sent to your email. You must confirm your email before you can sign in.
+                        </FormLabel>
                         </Form>
                     </FormContent>
                 </FormWrap>

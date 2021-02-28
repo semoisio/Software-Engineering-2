@@ -78,9 +78,13 @@ function SignUp() {
             };
             const result = await fetch("http://127.0.0.1:3001/user", requestOptions);
             let response = await result.json();
+
             if (response.status === "OK") {
                 // redirect to signin
-                history.push('/signupsuccess');
+                history.push({
+                    pathname: '/signupsuccess',
+                    state: { user: response.added }
+                });
             }
             else {
                 setInfotext(response.msg);
@@ -99,11 +103,11 @@ function SignUp() {
                             <FormH1 data-testid="signupformh1">Create user</FormH1>
                             <FormLabel htmlFor="for">I want to learn</FormLabel>
                             <SelectContainer>
-                            <Select
-                                value={learning}
-                                onChange={learningChanged}
-                                options={languageOptions}
-                            />
+                                <Select
+                                    value={learning}
+                                    onChange={learningChanged}
+                                    options={languageOptions}
+                                />
                             </SelectContainer>
                             <FormLabel htmlFor="for" data-testid="signupformlabel1">Username</FormLabel>
                             <FormInput type="text" required value={username} onChange={(e) => { usernameChanged(e) }} data-testid="signupforminput1" />

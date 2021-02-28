@@ -40,6 +40,10 @@ app.use(userRoutes);
 const audioRoutes = require('./routes/audioRoutes');
 app.use(audioRoutes);
 
+// email routes
+const emailRoutes = require('./routes/emailRoutes');
+app.use(emailRoutes);
+
 //Asetetaan serveri kuuntelemaan määriteltyäreittiä
 app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);

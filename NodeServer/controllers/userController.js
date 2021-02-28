@@ -3,11 +3,12 @@
 const MongoClient = require('mongodb').MongoClient;
 const crud = require('../database/crud');
 const bcrypt = require('bcrypt');
+var email = require('./emailController');
 
 var user = "user_basic";
 var pw = "kevat21basic";
 var db = "testi";
-var collection = "testicol";
+var collection = "usercol";
 
 const uri = "mongodb+srv://" + user + ":" + pw + "@kielikanta.izgqz.mongodb.net/?retryWrites=true&w=majority";
 
@@ -39,12 +40,20 @@ module.exports = {
                         // create hashed password
                         const hashed = await bcrypt.hash(c.password, 10);
                         // create new user
-                        const newUser = { username: c.username, password: hashed, email: c.email, learning: c.learning };
+                        const newUser = { 
+                            username: c.username, 
+                            password: hashed, 
+                            email: c.email, 
+                            learning: c.learning,
+                            status: "" 
+                        };
                         // add user to db
                         const client2 = new MongoClient(uri, { useUnifiedTopology: true });
                         const added = await crud.createOne(client2, db, collection, newUser);
                         if (added) {
-                            res.json({ status: "OK", added: added });
+                            // send confirmation link
+                            email.sendMail(added[0].email, added[0]._id)
+                            .then(() => res.json({ status: "OK", added: added }));
                         }
                         else {
                             res.json({ status: "NOT OK", msg: "Error adding user" });
