@@ -50,7 +50,7 @@ export const IntroH1 = styled.h1`
     }
 `;
 
-export const IntroText = styled.p`
+export const IntroText = styled.div`
 	text-align: center;
 	padding: 10px;
 	overflow-wrap: break-word;
