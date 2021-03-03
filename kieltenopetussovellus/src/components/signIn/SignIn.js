@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Footer, FooterLink } from '../homePage/IntroPageElementsJS';
 import Navbar from '../homePageNavbar/Navbar';
 import SideBar from '../homePageNavbar/SideBar';
-
+import { useHistory } from 'react-router-dom';
 import {
     Container,
     FormWrap,
@@ -19,7 +19,7 @@ import {
 const SignIn=(props) =>{
     // This state keeps track if sidebar is open or not
     const [isOpen, setIsOpen] = useState(false);
-
+    const history = useHistory();
     /**
      * Toggle function for showing and hiding sidebar
      */
@@ -49,6 +49,7 @@ const SignIn=(props) =>{
         const result = await fetch("http://127.0.0.1:3001/user?username="+username + '&password=' + password, requestOptions);
         let response = await result.json();
         if (response.status === "OK") {
+            history.push("/");
             props.setIsloggedin(true)
             console.log('login success')
         }
