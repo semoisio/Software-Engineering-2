@@ -106,6 +106,7 @@ export const FormLabel = styled.label`
     margin-bottom: 8px;
     font-size: 14px;
     color: black;
+    white-space: pre-line;
     
 `;
 

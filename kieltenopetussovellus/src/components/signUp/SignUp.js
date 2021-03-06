@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Navbar from '../homePageNavbar/Navbar';
 import SideBar from '../homePageNavbar/SideBar';
@@ -41,6 +41,8 @@ function SignUp() {
     const [learning, setLearning] = useState(languageOptions[0]);
     const [infoText, setInfotext] = useState("");
     const [confPassword, setconfPassword] = useState("");
+    const [pwInfo, setPwInfo] = useState("");
+    const [pwInputVisited, setPwInputVisited] = useState(false);
 
     // These functions change states if user types in something
     const usernameChanged = (event) => {
@@ -64,10 +66,41 @@ function SignUp() {
         setInfotext("");
     };
 
+    const pwFocus = () => {
+        setPwInputVisited(true);
+        validatePw();
+    }
+
+    const validatePw = () => {
+        let length = "Minimum length 8 characters\n";
+        let capital = "At least one uppercase letter (between A-Z)\n";
+        let lower = "At least one lowercase letter (between a-z)\n";
+        let number = "At least one number\n";
+
+        if (password.length >= 8) {
+            length = "";
+        }
+        if (password.match(/[A-Z]/g)) {
+            capital = "";
+        }
+        if (password.match(/[a-z]/g)) {
+            lower = "";
+        }
+        if (password.match(/[0-9]/g)) {
+            number = "";
+        }
+        if (length.length > 0 || capital.length > 0 || lower.length > 0 || number.length > 0) {
+            setPwInfo("Your password does not fulfill following requirements:\n" + length + capital + lower + number);
+        }
+        else {
+            setPwInfo("");
+        }
+    }
+
     const SubmitRegister = async (e) => {
         e.preventDefault();
         // confirm password
-        if (password !== confPassword) {
+        if (password !== confPassword || pwInfo !== "") {
             setInfotext("Check password");
         }
         else {
@@ -92,6 +125,11 @@ function SignUp() {
         }
     };
 
+    useEffect(() => {
+        if (pwInputVisited)
+            validatePw();
+    }, [password]);
+
     return (
         <>
             <Container data-testid="signupcontainer">
@@ -114,7 +152,8 @@ function SignUp() {
                             <FormLabel htmlFor="for">Email</FormLabel>
                             <FormInput type="email" required value={email} onChange={(e) => { emailChanged(e) }} />
                             <FormLabel htmlFor="for">Password</FormLabel>
-                            <FormInput type="password" required value={password} onChange={(e) => { passwordChanged(e) }} />
+                            <FormInput type="password" required value={password} onChange={(e) => { passwordChanged(e) }} onFocus={() => pwFocus()} />
+                            <FormLabel>{pwInfo}</FormLabel>
                             <FormLabel htmlFor="for">Confirm password</FormLabel>
                             <FormInput type="password" required value={confPassword} onChange={(e) => { confPasswordChanged(e) }} />
                             <FormLabel htmlFor="for">{infoText}</FormLabel>
