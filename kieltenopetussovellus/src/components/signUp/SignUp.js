@@ -83,7 +83,7 @@ function SignUp() {
                 // redirect to signin
                 history.push({
                     pathname: '/signupsuccess',
-                    state: { user: response.added }
+                    state: { user: response.added[0]._id }
                 });
             }
             else {

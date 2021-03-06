@@ -13,7 +13,7 @@ import {
     FormButton
 } from './SignUpElements';
 
-function SignUpSuccess() {
+function SignUpSuccess(props) {
     // This state keeps track is sidebaropen or not
     const [isOpen, setIsOpen] = useState(false);
 
@@ -27,7 +27,14 @@ function SignUpSuccess() {
         setIsOpen(!isOpen);
     };
 
-    
+    const resendClick = async (e) => {
+        e.preventDefault();
+        const id = props.location.state.user;
+        const response = await fetch("http://127.0.0.1:3001/email/confirm?id=" + id);
+        const res = await response.json();
+    }
+
+
 
     return (
         <>
@@ -40,6 +47,9 @@ function SignUpSuccess() {
                             <FormLabel htmlFor="for">
                                 Account created successfully. Confirmation link has been sent to your email. You must confirm your email before you can sign in.
                         </FormLabel>
+                            <FormButton onClick={(e) => resendClick(e)}>
+                                Resend link
+                            </FormButton>
                         </Form>
                     </FormContent>
                 </FormWrap>

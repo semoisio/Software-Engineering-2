@@ -3,7 +3,7 @@
 const MongoClient = require('mongodb').MongoClient;
 const crud = require('../database/crud');
 const bcrypt = require('bcrypt');
-var email = require('./emailController');
+var email = require('../tools/email');
 
 var user = "user_basic";
 var pw = "kevat21basic";
