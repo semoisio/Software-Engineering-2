@@ -21,10 +21,11 @@ const createStream = (path, res) => {
         });
     }
     catch (error) {
-        console.log(error);
+        console.log("Error creating stream");
     }
-}
+};
 
+// find file from server and create readable stream to client
 const fileToClient = async (req, res) => {
     try {
         const c = req.query;
@@ -33,7 +34,7 @@ const fileToClient = async (req, res) => {
         }
         else {
             const client = new MongoClient(uri, { useUnifiedTopology: true });
-            const audio = await crud.findOne(client, db, collection, {"_id": new ObjectId(c.id) });
+            const audio = await crud.findOne(client, db, collection, { "_id": new ObjectId(c.id) });
             if (audio) {
                 createStream(audio.path, res);
             }
@@ -43,30 +44,99 @@ const fileToClient = async (req, res) => {
         }
     }
     catch (error) {
-        console.log(error);
         res.json({ status: "NOT OK", msg: "Error getting audio" });
     }
-}
+};
 
+// search audio
 const searchAudio = async (req, res) => {
     try {
-    const client1 = new MongoClient(uri, { useUnifiedTopology: true });
-    let q = req.query;
-    if (q.title !== undefined){
-        q.title =  new RegExp(q.title);  
-    }
-    
-    console.log(q);
-    const audio = await crud.findMany(client1, db, collection, q, 20);
-    if (audio) {
-        res.json({ status: "OK", found: audio });
-    }
-    else {
-        res.json({ status: "NOT OK", msg: "Did not find audio" });
-    }
+        const client1 = new MongoClient(uri, { useUnifiedTopology: true });
+        let q = req.query;
+        if (Object.keys(q).length > 0) {
+            if (q.title !== undefined) {
+                q.title = new RegExp(q.title);
+            }
+            const audio = await crud.findMany(client1, db, collection, q, 20);
+            if (audio) {
+                res.json({ status: "OK", found: audio });
+            }
+            else {
+                res.json({ status: "NOT OK", msg: "Did not find audio" });
+            }
+        }
+        else {
+            res.json({ status: "NOT OK", msg: "Check query" });
+        }
     }
     catch (error) {
         console.log("Error searching for audio");
+    }
+};
+
+// delete audio by id from server and db
+const deleteAudio = async (req, res) => {
+    const c = req.params;
+    if (!c.id) {
+        res.json({ status: "NOT OK", msg: "Give id" });
+    }
+    else {
+        try {
+            const client1 = new MongoClient(uri, { useUnifiedTopology: true });
+            const client2 = new MongoClient(uri, { useUnifiedTopology: true });
+
+            const audio = await crud.findOne(client1, db, collection, { "_id": new ObjectId(c.id) });
+            if (audio) {
+                // delete audio from server
+                fs.unlink(audio.path, async (err) => {
+                    if (err) {
+                        res.json({ status: "NOT OK", msg: "Error deleting audio" });
+                    }
+                    else {
+                        // delete audio from db
+                        const deleted = await crud.deleteOne(client2, db, collection, { "_id": new ObjectId(c.id) });
+                        if (deleted > 0) {
+                            res.json({ status: "OK" });
+                        }
+                        else {
+                            res.json({ status: "NOT OK", msg: "Did not delete audio" });
+                        }
+                    }
+                })
+            }
+            else {
+                res.json({ status: "NOT OK", msg: "Did not find audio" });
+            }
+        }
+        catch (error) {
+            res.json({ status: "NOT OK", msg: "Error deleting audio" });
+        }
+    }
+};
+
+// update audio info
+const updateAudio = async (req, res) => {
+    let c = req.body;
+    console.log(c);
+    if (!c._id) {
+        res.json({ status: "NOT OK", msg: "Check fields" });
+    }
+    else {
+        try {
+            let id = new ObjectId(c._id); // id of the audio in mongodb
+            delete c._id; // remove id from update json
+            const client1 = new MongoClient(uri, { useUnifiedTopology: true });
+            const updated = await crud.updateOne(client1, db, collection, { "_id": id }, c);
+            if (updated > 0) {
+                res.json({ status: "OK" });
+            }
+            else {
+                res.json({ status: "NOT OK", msg: "Did not update audio" });
+            }
+        }
+        catch (error) {
+            res.json({ status: "NOT OK", msg: "Error updating audio" });
+        }
     }
 }
 
@@ -109,6 +179,9 @@ module.exports = {
         else {
             searchAudio(req, res);
         }
-    }
+    },
+
+    deleteAudio: deleteAudio,
+    updateAudio: updateAudio
 }
 

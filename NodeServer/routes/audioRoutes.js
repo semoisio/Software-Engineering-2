@@ -21,5 +21,9 @@ router.route('/audio')
         ctrl.createNewAudio(req, res);
     })
     .get(ctrl.findAudio)
+    .put(ctrl.updateAudio);
+    
+router.route('/audio/:id')
+    .delete(ctrl.deleteAudio);
 
 module.exports = router;
