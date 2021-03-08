@@ -12,11 +12,12 @@ test('renders ErrorPage', () => {
 });
 
 test('renders HomePage after clicking the homepagelink', () => {
-    render(<Router>
+    render(<div><Router>
         <Errorpage />
         <Switch>
             <Route exact path="/" component={HomePage} />
-        </Switch></Router>);
+        </Switch>
+        </Router></div>);
     fireEvent.click(screen.getByTestId('backHomeLink'));
 
     const element = screen.getByTestId("homepage")

@@ -1,12 +1,13 @@
-import { render, screen,cleanup, fireEvent,waitFor } from '@testing-library/react';
+import { render, screen,cleanup, fireEvent } from '@testing-library/react';
 import App from '../App';
+import { shallow } from 'enzyme';
 
-afterEach(cleanup);
+//afterEach(cleanup);
 
 test('renders signup component after clicking signup button', async () => {
     render(<App />);
 
-    fireEvent.click(screen.getByTestId('navbarBtnLink2'));
+    fireEvent.click(screen.getByText('Join now'));
     
     const element = screen.getByTestId("signupcontainer")
     

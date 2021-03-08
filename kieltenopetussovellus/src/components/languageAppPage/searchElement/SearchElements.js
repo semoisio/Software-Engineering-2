@@ -196,4 +196,29 @@ export const FoundCount = styled.div`
     margin-top: 1rem;
     color:${CONh1};
     font-size: 1.1rem;
+    display:flex;
+    justify-content:space-around;
+`;
+export const WhatPage = styled.h3`
+    margin:0;
+    color:${CONh1}; 
+    margin-right: 3rem;
+`;
+export const Found = styled.h3`
+    margin:0;
+`;
+
+export const PagesContainer = styled.div`
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+`;
+export const PageButton = styled.div`
+    font-size: 1.5rem;
+    color:${CONh1};
+    cursor: pointer;
+
+    &:hover{
+        opacity: 50%;
+    }
 `;

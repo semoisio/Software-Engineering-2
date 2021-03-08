@@ -1,12 +1,18 @@
 import React from 'react'
 import {
-    ProfileContainer
+    ProfileContainer,
+    UserContainer,
+    Username,
+    Learn
 }from './ProfileElements';
 
 const Profile = () => {
     return (
         <ProfileContainer data-testid="profileContainer">
-            Profiili
+            <UserContainer>
+                <Username>Testi</Username>
+                <Learn>I want to learn:​</Learn>
+            </UserContainer>
         </ProfileContainer>
     )
 }

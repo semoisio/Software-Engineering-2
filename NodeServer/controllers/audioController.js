@@ -53,11 +53,11 @@ const searchAudio = async (req, res) => {
     try {
         const client1 = new MongoClient(uri, { useUnifiedTopology: true });
         let q = req.query;
-        if (Object.keys(q).length > 0) {
+        if (Object.keys(q).length >= 0) {
             if (q.title !== undefined) {
                 q.title = new RegExp(q.title);
             }
-            const audio = await crud.findMany(client1, db, collection, q, 20);
+            const audio = await crud.findMany(client1, db, collection, q);
             if (audio) {
                 res.json({ status: "OK", found: audio });
             }

@@ -1,7 +1,6 @@
 import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import App from '../App';
 
-
 test('renders app component', () => {
   render(<App />);
   const app = screen.getByTestId("app")
@@ -16,6 +15,7 @@ test('renders homepage', () => {
 
 test('renders navbar', () => {
   render(<App />);
+  fireEvent.click(screen.getByText('Sign in'));
   const element = screen.getByTestId("navbarNav")
   expect(element).toBeInTheDocument();
 });

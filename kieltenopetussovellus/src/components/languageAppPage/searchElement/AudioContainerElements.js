@@ -4,7 +4,7 @@ import {background,CONtext,CONh1,CONinput,OBbg,OBhover,OBtext} from '../../../to
 export const OneAudioContainer = styled.div`
     width: 93%;
     margin: 1rem;
-    height: 200px;
+    height: auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -14,20 +14,21 @@ export const OneAudioContainer = styled.div`
     padding: 5px;
 
     @media screen and (max-width: 1210px){
-        height: 380px;
+        height: auto;
         justify-content: space-around;
     }
 
     @media screen and (max-width: 490px){
-        height: 500px;
+        height: auto;
         width: 90%;
         padding: 1px;
+        flex-direction:column;
     }
 `;
 
 export const AudioImage = styled.img`
     width:150px;
-    height: 80%;
+    height: 150px;
     border-radius: 10px;
     margin-right: 2rem;
     margin-left: 2rem;
@@ -45,16 +46,19 @@ export const AudioTextContainer = styled.div`
     justify-content:center;
     margin-right: 2rem;
     margin-left: 2rem;
-    width: 200px;
+    width: 50%;
 `;
 
 export const AudioTitle = styled.h2`
     color: ${CONh1};
+    text-align: center;
+    word-break: break-all;
 `;
 
 export const AudioDescription = styled.p`
-    //width: 100%;
+    text-align: center;
     color: ${CONtext};
+    word-break: break-all;
 `;
 
 export const StartAudioBtn = styled.div`

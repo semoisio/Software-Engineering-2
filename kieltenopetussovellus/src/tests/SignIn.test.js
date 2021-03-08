@@ -1,12 +1,14 @@
 import { render, screen,cleanup, fireEvent,waitFor } from '@testing-library/react';
 import App from '../App';
 
+
 afterEach(cleanup);
 
-test('renders signin component after clicking signin button', async () => {
-    render(<App />);
 
-    fireEvent.click(screen.getByTestId('navbarBtnLink1'));
+test('renders signin component after clicking signin button', async () => {
+  render(<App />);
+
+    fireEvent.click(screen.getByText('Sign in'));
     
     const element = screen.getByTestId("signincontainer")
     

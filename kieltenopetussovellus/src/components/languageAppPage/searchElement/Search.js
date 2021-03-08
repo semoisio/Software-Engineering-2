@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import Loader from "react-loader-spinner";
 import { RadioGroup, RadioButton } from 'react-radio-buttons';
-import {background,CONtext,CONh1,CONinput,OBbg,OBhover,OBtext} from '../../../tools/colors';
+import { OBbg, OBhover } from '../../../tools/colors';
 import {
     SearchAndListenContainer,
     SearchContainer,
@@ -22,39 +22,46 @@ import {
     LoaderContainer,
     LoaderText,
     FoundCount,
-    ClearButton
+    ClearButton,
+    PagesContainer,
+    WhatPage,
+    Found,
+    PageButton
 } from './SearchElements';
 import {
-    buildQuery
+    buildQuery,
+    splitAudios
 } from './searchFunctions';
 import AudioContainer from './AudioContainer';
 import audioimage from '../../../images/AudioWave.jpg';
 import notFound from '../../../images/notFound.png';
-import {genreOptions,languageOptions} from '../../../tools/defaultOptions';
+import { genreOptions, languageOptions } from '../../../tools/defaultOptions';
 
 const Search = () => {
     //This keep track is search open or not in smaller window sizes
     const [isOpen, setIsopen] = useState(false);
 
+    //Keep track what page we are showing
+    const [pageNum, setPageNum] = useState(0);
     //If you want to do search update this state by +1
     const [doFetch, setDoFetch] = useState(0);
 
     //Array where finded audios are saved
-    const [audiot, setAudiot] = useState([]);
+    const [audiot, setAudiot] = useState([[]]);
     // This state keeps track did search succeed or not
     const [error, setError] = useState(false);
     // State to toggle searching or no
     const [searching, setSearching] = useState(false);
 
     //Select component genre
-    const [selectedGenre, setSelectedGenre] = useState({value:""});
+    const [selectedGenre, setSelectedGenre] = useState({ value: "" });
     //Select component language
-    const [selectedLanguage, setSelectedLanguage] = useState({value:""});
+    const [selectedLanguage, setSelectedLanguage] = useState({ value: "" });
 
     //radio button
     const [selectedDifficulty, setSelectedDifficulty] = useState("");
     //Difficulty checked holds information what radiobutten have to bee checked
-    const [difficultyChecked, setDifficultyChecked] = useState([false,false,false]);
+    const [difficultyChecked, setDifficultyChecked] = useState([false, false, false]);
 
     //audio search input
     const [audioTitle, setAudioTitle] = useState("");
@@ -75,16 +82,16 @@ const Search = () => {
         setSelectedDifficulty(value);
         switch (value) {
             case "beginner":
-                setDifficultyChecked([true,false,false])
+                setDifficultyChecked([true, false, false])
                 break;
             case "intermediate":
-                setDifficultyChecked([false,true,false])
+                setDifficultyChecked([false, true, false])
                 break;
             case "expert":
-                setDifficultyChecked([false,false,true])
+                setDifficultyChecked([false, false, true])
                 break;
             default:
-                setDifficultyChecked([false,false,false])
+                setDifficultyChecked([false, false, false])
                 break;
         }
     }
@@ -114,12 +121,12 @@ const Search = () => {
 
                 if (rJson.status === "OK") {
                     setError(false);
-                    setAudiot(rJson.found);
+                    setAudiot(splitAudios(rJson.found));
                     setSearching(false);
                 }
                 else {
                     setError(true);
-                    setAudiot([]);
+                    setAudiot([[]]);
                     setSearching(false);
                 }
             } catch {
@@ -137,24 +144,24 @@ const Search = () => {
     useEffect(() => {
         const fetchAudio = async () => {
             setSearching(true);
-            const url = "http://127.0.0.1:3001/audio"
+            const url = "http://127.0.0.1:3001/audio";
             try {
                 const response = await fetch(url);
                 let rJson = await response.json();
 
                 if (rJson.status === "OK") {
                     setError(false);
-                    setAudiot(rJson.found);
+                    setAudiot(splitAudios(rJson.found));
                     setSearching(false);
                 }
                 else {
                     setError(true);
-                    setAudiot([]);
+                    setAudiot([[]]);
                     setSearching(false);
                 }
             } catch {
                 console.log("Audio search failed");
-                setSearching(true);
+                setSearching(false);
             }
 
         }
@@ -167,16 +174,28 @@ const Search = () => {
      * Clears all text and choices from form
      */
     const clearChoices = () => {
-        setSelectedGenre({value:""});
-        setSelectedLanguage({value:""});
+        setSelectedGenre({ value: "" });
+        setSelectedLanguage({ value: "" });
         setAudioTitle("")
         radioButtonChanged("");
     };
 
+    const changePage = (param) => {
+        if (param === "+"){
+            if (pageNum < audiot.length-1){
+                setPageNum(pageNum+1);
+            }
+        }else{
+            if(pageNum > 0){
+                setPageNum(pageNum-1);
+            }
+        }
+    }
+
     /**
      * Maps all audios to screen
      */
-    const audioInside = audiot.map((t, index) => {
+    const audioInside = audiot[pageNum].map((t, index) => {
         return <AudioContainer
             key={index}
             image={audioimage}
@@ -224,34 +243,55 @@ const Search = () => {
                             <RadioButton checked={difficultyChecked[2]} rootColor={OBbg} pointColor={OBhover} value="expert">Expert</RadioButton>
                         </RadioGroup>
                     </RadioBtnContainer>
-                    <ClearButton type="button" onClick={() =>{clearChoices()}}>Clear</ClearButton>
+                    <ClearButton type="button" onClick={() => { clearChoices() }}>Clear</ClearButton>
                     <FormButton type="submit">Search</FormButton>
                 </Form>
             </SearchContainer>
             <ListenContainer>
-                {
+                {  // if audios found show lenght of array
+                    searching?
+                    null:
+                    error?
+                    null:
                     audiot.length !== 0 ?
-                    <FoundCount>Found: {audiot.length}</FoundCount>:null
+                        <FoundCount>
+                            <Found>Found: {audiot.length}</Found>
+                            <PageButton onClick={() => {changePage("-")}}>{"<"}Previous</PageButton>
+                            <PageButton onClick={() => {changePage("+")}}>Next{">"}</PageButton>
+                            <WhatPage>Page: {pageNum + 1}/{audiot.length}</WhatPage>
+                        </FoundCount> : null
                 }
-                {
+                { // if search is happening show loader
                     searching ?
                         <LoaderContainer>
                             <LoaderText>Loading</LoaderText>
                             <Loader
-                            type="TailSpin"
-                            color="#00BFFF"
-                            height={50}
-                            width={50}
-                        /></LoaderContainer>
+                                type="TailSpin"
+                                color="#00BFFF"
+                                height={50}
+                                width={50}
+                            /></LoaderContainer>
 
 
-                        : error ?
+                        : error ?  // if search did not find enything show error else audios
                             <AudioContainer
                                 image={notFound}
                                 title="No matches"
                                 description="We didn't find anything" />
                             : audioInside
                 }
+                {
+                    searching?
+                    null:
+                    error?
+                    null:
+                    <PagesContainer>
+                    <PageButton onClick={() => {changePage("-")}}> {"<"}Previous</PageButton>
+                    <WhatPage>Page: {pageNum + 1}/{audiot.length}</WhatPage>
+                    <PageButton onClick={() => {changePage("+")}}>Next{">"}</PageButton>
+                </PagesContainer>
+                }
+                
             </ListenContainer>
         </SearchAndListenContainer>
     )
