@@ -42,7 +42,7 @@ export const RecordingMic = styled(ReactMic)`
 // Container for recording buttons
 export const RecordingButtonContainer = styled.div`
     display:flex;
-    justify-content:left;
+    justify-content:center;
 `;
 
 // Container for recording info
@@ -63,20 +63,9 @@ export const InfoContainer = styled.div`
 //Recording buttons
 export const RecordButton = styled.button`
     width:20%;
-    /* background: #FFC67C;
-    padding: 16px 0;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    font-size: 20px; */
     margin-left:1rem;
     margin-right:1rem;
     margin-bottom:15px;
-    /* cursor: pointer;
-
-    &:hover{
-        background: #68EDCB;
-    } */
 `;
 
 export const AudioPlayer = styled.audio`

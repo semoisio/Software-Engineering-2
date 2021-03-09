@@ -53,20 +53,15 @@ const searchAudio = async (req, res) => {
     try {
         const client1 = new MongoClient(uri, { useUnifiedTopology: true });
         let q = req.query;
-        if (Object.keys(q).length >= 0) {
-            if (q.title !== undefined) {
-                q.title = new RegExp(q.title);
-            }
-            const audio = await crud.findMany(client1, db, collection, q);
-            if (audio) {
-                res.json({ status: "OK", found: audio });
-            }
-            else {
-                res.json({ status: "NOT OK", msg: "Did not find audio" });
-            }
+        if (q.title !== undefined) {
+            q.title = new RegExp(q.title);
+        }
+        const audio = await crud.findMany(client1, db, collection, q);
+        if (audio) {
+            res.json({ status: "OK", found: audio });
         }
         else {
-            res.json({ status: "NOT OK", msg: "Check query" });
+            res.json({ status: "NOT OK", msg: "Did not find audio" });
         }
     }
     catch (error) {
@@ -117,7 +112,6 @@ const deleteAudio = async (req, res) => {
 // update audio info
 const updateAudio = async (req, res) => {
     let c = req.body;
-    console.log(c);
     if (!c._id) {
         res.json({ status: "NOT OK", msg: "Check fields" });
     }

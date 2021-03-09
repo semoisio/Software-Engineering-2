@@ -11,6 +11,7 @@ import NewRecording from './newRecording/NewRecording';
 import Profile from './profile/Profile';
 import SignOut from './signout/SignOut';
 import Errorpage from '../errorPage/Errorpage';
+import MyAudio from './myAudio/MyAudio';
 
 /**Landing page after signing in */
 const LanguageAppHome = () => {
@@ -34,6 +35,7 @@ const LanguageAppHome = () => {
                     <Switch>
                         <Route exact path="/" component={Search} />
                         <Route path="/newrecording" component={NewRecording} />
+                        <Route path="/myaudio" component={MyAudio} />
                         <Route path="/profile" component={Profile} />
                         <Route path="/signout" component={SignOut} />
 
