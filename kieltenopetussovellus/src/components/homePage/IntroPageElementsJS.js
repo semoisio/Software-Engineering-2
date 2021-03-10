@@ -10,7 +10,7 @@ export const IntroPageContainer = styled.div`
 	justify-content: center;
 	width: 100%;
 	min-height: 100vh;
-	background-image: linear-gradient(to right top, #e0ffcd, #c9fbc7, #aef6c5, #8ff2c6, #68edcb);;
+	background: linear-gradient(to right top, #e0ffcd, #c9fbc7, #aef6c5, #8ff2c6, #68edcb);
 
 `;
 
@@ -103,7 +103,6 @@ export const IntroButton = styled(NavLink)`
 export const Footer = styled.footer`
     background:#1EB495;
 	padding: 15px;
-	width: 100%;
 	height: auto;
 	color: #000;
 	display: flex;
@@ -111,6 +110,7 @@ export const Footer = styled.footer`
 	flex-wrap:nowrap;
 	justify-content:space-around;
 	margin-top: auto;
+	max-width: 100%;
 `;
 
 export const FooterLink = styled(NavLink)`
