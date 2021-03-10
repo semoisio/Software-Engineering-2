@@ -8,7 +8,7 @@ export const SidebarContainer = styled.aside`
     z-index: 999;
     width: 100%;
     height: 100%;
-    background: #0d0d0d;
+    background: linear-gradient(to right top, #e0ffcd, #c9fbc7, #aef6c5, #8ff2c6, #68edcb);
     display: none;
     align-items: center;
     justify-content: center;
@@ -25,6 +25,7 @@ export const SidebarContainer = styled.aside`
 
 export const CloseIcon = styled(FaTimes)`
     color: #fff;
+    margin-right: 15px;
 `;
 
 export const Icon = styled.div`
@@ -45,32 +46,6 @@ export const SidebarWrapper = styled.div`
     color: #fff;
 `;
 
-export const SidebarMenu = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-
-`;
-
-export const SidebarLink = styled(NavLink)`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    text-decoration: none;
-    list-style: none;
-    transition: 0.2s ease-in-out;
-    text-decoration: none;
-    color: #fff;
-    cursor: pointer;
-
-    &:hover{
-        color: #01bf71;
-        transition: 0.2s ease-in-out;
-    }
-`;
-
 export const SideBtnWrap = styled.div`
     display:flex;
     flex-direction:column;
@@ -78,22 +53,24 @@ export const SideBtnWrap = styled.div`
 `;
 
 export const SidebarRoute = styled(NavLink)`
-    border-radius: 50px;
-    background: #01bf71;
-    white-space: nowrap;
-    padding: 16px 64px;
-    color: #010606;
-    font-size: 16px;
-    outline: none;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-    text-decoration: none;
+    background-color: #FF995E;
+    box-shadow: 1px 1px 2px #626262;
+	padding: 1rem 1rem;
+	border: none;
+    border-radius: 30px;
+	text-decoration: none;
+	font-weight: 300;
+	color: #ffffff;
+	text-shadow: 1px 1px 2px #626262;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+	font-size: medium;
+	text-align: center;
     margin-top: 1rem;
+    width: 100%;
 
     &:hover{
-        transition: all 0.2s ease-in-out;
-        background: #fff;
-        color: #010606;
+        transition: all 0.1s ease-in-out;
+	    background-color: #FFC67C;
     }
 `;
