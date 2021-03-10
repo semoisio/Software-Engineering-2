@@ -62,7 +62,6 @@ export const FormContent = styled.div`
 
 // Form
 export const Form = styled.form`
-    //background: #FBFBFB;
     max-width: 400px;
     height: auto;
     width: 100%;
@@ -72,7 +71,6 @@ export const Form = styled.form`
     margin: 0 auto;
     padding: 80px 32px;
     border-radius: 4px;
-    //box-shadow: 0 1px 3px rgba(0,0,0,0.9);
     
     @media screen and (max-width: 400px){
         padding: 10px 10px;
@@ -90,7 +88,7 @@ export const Form = styled.form`
 // Headline for form
 export const FormH1 = styled.h1`
     margin-bottom: 40px;
-    color: #1EB495;
+    color: black;
     font-size: 20px;
     font-weight: bold;
     text-align: center;
@@ -116,6 +114,12 @@ export const FormInput = styled.input`
     margin-bottom: 32px;
     border: 1px solid #BFBFBF;
     border-radius: 4px;
+
+    &:focus{
+        outline: none;
+        border: 1px solid black;
+        border-radius: 4px;
+    }
 `;
 
 //Styles for form button

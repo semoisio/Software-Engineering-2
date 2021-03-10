@@ -138,7 +138,7 @@ function SignUp() {
                 <FormWrap data-testid="signupformwrap">
                     <FormContent data-testid="signupformcontent">
                         <Form action="" data-testid="signupform" onSubmit={(e) => SubmitRegister(e)}>
-                            <FormH1 data-testid="signupformh1">Create user</FormH1>
+                            <FormH1 data-testid="signupformh1">REGISTER</FormH1>
                             <FormLabel htmlFor="for">I want to learn</FormLabel>
                             <SelectContainer>
                                 <Select
@@ -157,7 +157,7 @@ function SignUp() {
                             <FormLabel htmlFor="for">Confirm password</FormLabel>
                             <FormInput type="password" required value={confPassword} onChange={(e) => { confPasswordChanged(e) }} />
                             <FormLabel htmlFor="for">{infoText}</FormLabel>
-                            <FormButton type="submit">Sign up</FormButton>
+                            <FormButton type="submit">Register</FormButton>
                         </Form>
                     </FormContent>
 
