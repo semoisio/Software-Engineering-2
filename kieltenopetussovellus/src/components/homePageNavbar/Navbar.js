@@ -6,8 +6,7 @@ import {
     NavLogo, 
     MobileIcon, 
     NavMenu, 
-    NavItem,
-    NavLinks,
+
     NavBtn,
     NavBtnLink
 } from './NavbarElements';
@@ -26,14 +25,11 @@ const Navbar = ({toggle}) => {
                     <MobileIcon onClick={toggle} data-testid="navbarIcon">
                         <FaBars data-testid="navbarBurger"/>
                     </MobileIcon>
-                    <NavMenu data-testid="navbarMenu">
-                        <NavItem data-testid="navbarMenuItem">
-                            <NavLinks to="/" data-testid="navbarLink">Home</NavLinks>
-                        </NavItem>
+                    <NavMenu data-testid="navbarMenu">                  
                     </NavMenu>
                     <NavBtn data-testid="navbarBtn">
                         <NavBtnLink activeClassName="active" to="/signin" data-testid="navbarBtnLink1">Sign in</NavBtnLink>
-                        <NavBtnLink activeClassName="active" to="/signup" data-testid="navbarBtnLink2">Sign up</NavBtnLink>
+                        <NavBtnLink activeClassName="active" to="/signup" data-testid="navbarBtnLink2">Join now</NavBtnLink>
                     </NavBtn>
                 </NavbarContainer>
             </Nav>
