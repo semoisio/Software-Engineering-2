@@ -64,7 +64,9 @@ button:hover {
 	background-color: #FFC67C;
 }
 
-
+button:focus{
+	outline: none;
+}
 /* Sivun yläpalkki (styled(nav)): NavbarElements */
 .Nav {
     background: linear-gradient(to right top, #08ffbf, #07ecb5, #0ed9ab, #16c6a0, #1eb495);
