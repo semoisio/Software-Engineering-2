@@ -69,12 +69,12 @@ const SignIn=(props) =>{
                     <SideBar data-testid="sidebar" isOpen={isOpen} toggle={toggle} />
                     <FormContent data-testid="signinformcontent">
                         <Form action="" data-testid="signinform" onSubmit={(e) => SubmitLogin(e)}>
-                            <FormH1 data-testid="signinformh1">User login</FormH1>
+                            <FormH1 data-testid="signinformh1">LOGIN</FormH1>
                             <FormLabel htmlFor="for" data-testid="signinformlabel1">Username</FormLabel>
                             <FormInput type="text" required value={username} onChange={(e) => { usernameChanged(e) }} />
                             <FormLabel htmlFor="for">Password</FormLabel>
                             <FormInput type="password" required value={password} onChange={(e) => { passwordChanged(e) }} />
-                            <FormButton type="submit">Login</FormButton>
+                            <FormButton type="submit">Sign in</FormButton>
                             <p style={{ color: "white" }}>{infoText}</p>
                         </Form>
 
