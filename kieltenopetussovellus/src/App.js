@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom'
 import HomePage from './components/homePage/HomePage'
 import SignUp from './components/signUp/SignUp';
@@ -11,29 +11,39 @@ import Confirm from './components/signUp/Confirm';
 
 
 function App() {
-  
+
   const [isLoggedin, setIsloggedin] = useState(false);
+  const [user, setUser] = useState();
 
   let page = null;
   
-    if (isLoggedin) {
-      page =  <LanguageAppHome />;  
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+      const foundUser = loggedInUser;
+      setUser(foundUser);
     }
-    else {
-      page = <Router>
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/signup" component={SignUp} />
-          <Route path="/signupsuccess" component={SignUpSuccess} />
-          <Route path="/confirm/:id" component={Confirm} />
-          <Route path="/signin"><SignIn setIsloggedin={setIsloggedin}/></Route>
+  }, []);
+
+  if (user) {
+    console.log(user)
+    page = <LanguageAppHome />;
+  }
+  else {
+    page = <Router>
+      <Switch>
+        <Route exact path="/" component={HomePage} />
+        <Route path="/signup" component={SignUp} />
+        <Route path="/signupsuccess" component={SignUpSuccess} />
+        <Route path="/confirm/:id" component={Confirm} />
+        <Route path="/signin"><SignIn setIsloggedin={setIsloggedin} /></Route>
           /**Tämä aina viimeiseksi. Ohjaa virhe sivulle */
           <Route path="/" component={Errorpage} />
-        </Switch>
-      </Router>
-    }
-  
-  
+      </Switch>
+    </Router>
+  }
+
+
   return (
 
     <div className="App" data-testid="app">

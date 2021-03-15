@@ -30,6 +30,7 @@ const SignIn=(props) =>{
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [infoText, setInfotext] = useState("");
+    
 
     // Tracks user input
     const usernameChanged = (event) => {
@@ -38,6 +39,7 @@ const SignIn=(props) =>{
     const passwordChanged = (event) => {
         setPassword(event.target.value);
     };
+
 
     // Login function
     const SubmitLogin = async (e) => {
@@ -50,8 +52,11 @@ const SignIn=(props) =>{
         let response = await result.json();
         if (response.status === "OK") {
             history.push("/");
-            props.setIsloggedin(true)
-            console.log('login success')
+            //props.setIsloggedin(true)
+            // sets username to local storage
+            localStorage.setItem('user', username) 
+            //refreshes the page
+            window.location.reload(); 
         }
         else {
             setInfotext(response.msg);
