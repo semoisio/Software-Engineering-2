@@ -41,12 +41,11 @@ export const EditContainer = styled.div`
 
 // container for search buttons
 export const ButtonContainer = styled.div`
-    width: 20%;
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: right;
+    align-items: end;
     margin-right: 2rem;
 
     @media screen and (max-width: 768px){
@@ -55,32 +54,25 @@ export const ButtonContainer = styled.div`
         display: flex;
         flex-direction: row;
         transition: all 1s;
+        justify-content: center;
     }
 `;
 
 // audio player
 export const AudioPlayer = styled.audio`
-    width: 100%;
     min-width: 200px;
     margin-left:1rem;
     margin-right:1rem;
     margin-bottom:15px;
-
-    @media screen and (max-width: 768px){
-        width: 50%;
-    }
 `;
 
 // search buttons
 export const SearchButton = styled.button`
     width: 50%;
+    min-width: 75px;
     margin-left:1rem;
     margin-right:1rem;
     margin-bottom:15px;
-
-    @media screen and (max-width: 768px){
-        width: 50%;
-    }
 `;
 
 // container for edit buttons

@@ -21,6 +21,7 @@ import {
     LoaderText,
     EditButton,
     EditButtonContainer,
+    AudioPlayer
 } from './MyAudioElements';
 import AudioContainer from './AudioContainer';
 
@@ -33,6 +34,10 @@ const MyAudio = () => {
     const [searching, setSearching] = useState(false);
     // Audio selected for editing
     const [selectedAudio, setSelectedAudio] = useState(null);
+    // username
+    const [username, setUsername] = useState(localStorage.getItem("user"));
+    // audio file fetched for listening
+    const [audioFetched, setAudioFetched] = useState("");
 
     // fields for editing audio info
     const [language, setLanguage] = useState("");
@@ -65,7 +70,7 @@ const MyAudio = () => {
     // fetch user's audios from db
     const fetchAudio = async () => {
         setSearching(true);
-        const url = "http://127.0.0.1:3001/audio" + "?username=testi";
+        const url = "http://127.0.0.1:3001/audio?username=" + username;
         try {
             const response = await fetch(url);
             let rJson = await response.json();
@@ -118,6 +123,19 @@ const MyAudio = () => {
         }
     };
 
+    // fetch one audio file
+    const haeAudioFile = async () => {
+        if (selectedAudio) {
+            const url = "http://127.0.0.1:3001/audio?file=true&id=" + selectedAudio._id;
+            try {
+                const response = await fetch(url).then(r => r.blob());
+                setAudioFetched(URL.createObjectURL(response));
+            } catch {
+                console.log("errors")
+            }
+        }
+    }
+
     // user saves audio info
     const clickSave = (e) => {
         e.preventDefault();
@@ -153,6 +171,7 @@ const MyAudio = () => {
             setDesc(selectedAudio.desc);
             setGenre(genreOptions.find(x => x.value === selectedAudio.genre));
             setDifficulty(difficultyOptions.find(x => x.value === selectedAudio.difficulty));
+            haeAudioFile();
         }
     }, [selectedAudio]);
 
@@ -204,7 +223,13 @@ const MyAudio = () => {
                     selectedAudio ?
                         <MyAudioForm>
                             <Title>Edit audio information</Title>
-
+                            {
+                                audioFetched !== "" ?
+                                    <AudioPlayer controls>
+                                        <source src={audioFetched} type="audio/webm" />
+                                    </AudioPlayer> : null
+                                    
+                            }
                             <FormLabel htmlFor="for" >Language</FormLabel>
                             <SelectContainer>
                                 <Select
