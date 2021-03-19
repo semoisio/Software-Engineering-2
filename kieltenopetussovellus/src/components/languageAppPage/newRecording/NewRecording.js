@@ -24,7 +24,7 @@ const fs = require('fs');
 const NewRecording = () => {
   const [recording, setRecording] = useState(false);
   const [recordedAudio, setRecordedAudio] = useState(null);
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState(localStorage.getItem("user"));
   const [language, setLanguage] = useState("");
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -33,10 +33,6 @@ const NewRecording = () => {
 
   const languageChanged = (e) => {
     setLanguage(e);
-  }
-
-  const usernameChanged = (e) => {
-    setUsername(e.target.value);
   }
 
   const titleChanged = (e) => {
@@ -80,6 +76,7 @@ const NewRecording = () => {
 
       // check that audio is ready
       if (recordedAudio) {
+
 
         // check that fields are given
         if (language && username.length > 0 && title.length > 0 && desc.length > 0 && genre && difficulty) {
@@ -166,9 +163,6 @@ const NewRecording = () => {
                   options={languageOptions}
                 />
               </SelectContainer>
-              <FormLabel htmlFor="for" >Username</FormLabel>
-              <FormInput type="text" value={username} onChange={(e) => usernameChanged(e)}></FormInput>
-
               <FormLabel htmlFor="for" >Title</FormLabel>
               <FormInput type="text" value={title} onChange={(e) => titleChanged(e)}></FormInput>
 
