@@ -6,6 +6,6 @@ let ctrl = require('../controllers/userController');
 router.route('/user')
     //.get(ctrl.findOneUser)
     .post(ctrl.createNewUser)
-    .get(ctrl.loginUser);
+    //.get(ctrl.loginUser);
 
 module.exports = router;

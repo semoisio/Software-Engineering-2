@@ -71,7 +71,7 @@ module.exports = {
     findOneUser: async (params) => {
         const client = new MongoClient(uri, { useUnifiedTopology: true });
         return await crud.findOne(client, db, collection, params);
-    },*/
+    },
 
 
     loginUser: async (req, res) => {
@@ -108,5 +108,5 @@ module.exports = {
         }
 
 
-    }
+    }*/
 }
