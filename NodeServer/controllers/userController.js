@@ -4,6 +4,7 @@ const MongoClient = require('mongodb').MongoClient;
 const crud = require('../database/crud');
 const bcrypt = require('bcrypt');
 var email = require('../tools/email');
+var ObjectId = require('mongodb').ObjectID;
 
 var user = "user_basic";
 var pw = "kevat21basic";
@@ -40,12 +41,12 @@ module.exports = {
                         // create hashed password
                         const hashed = await bcrypt.hash(c.password, 10);
                         // create new user
-                        const newUser = { 
-                            username: c.username, 
-                            password: hashed, 
-                            email: c.email, 
+                        const newUser = {
+                            username: c.username,
+                            password: hashed,
+                            email: c.email,
                             learning: c.learning,
-                            status: "" 
+                            status: ""
                         };
                         // add user to db
                         const client2 = new MongoClient(uri, { useUnifiedTopology: true });
@@ -53,7 +54,7 @@ module.exports = {
                         if (added) {
                             // send confirmation link
                             email.sendMail(added[0].email, added[0]._id)
-                            .then(() => res.json({ status: "OK", added: added }));
+                                .then(() => res.json({ status: "OK", added: added }));
                         }
                         else {
                             res.json({ status: "NOT OK", msg: "Error adding user" });
@@ -66,7 +67,51 @@ module.exports = {
             res.json({ status: "NOT OK", msg: "Error adding user" });
         }
     },
+    findUser: async (req, res) => {
+        try {
+            const client1 = new MongoClient(uri, { useUnifiedTopology: true });
+            // if username dont came with query send error
+            if (req.query.username === undefined || req.query.username === "") {
+                res.json({ status: "NOT OK", msg: "Use username to find user" });
+            }
 
+            const user = await crud.findOneUser(client1, db, collection, req.query)
+
+            if (user) {
+                res.json({ status: "OK", found: user });
+            }
+            else {
+                res.json({ status: "NOT OK", msg: "Did not find user" });
+            }
+
+        }
+        catch (error) {
+
+            res.json({ status: "NOT OK", msg: "Error finding user" });
+        }
+    },
+    deleteUser: async (req, res) => {
+        try {
+            const client1 = new MongoClient(uri, { useUnifiedTopology: true });
+            // if username dont came with query send error
+            const c = req.params;
+            if (!c.id) {
+                res.json({ status: "NOT OK", msg: "Give id" });
+            }
+
+            const deleted = await crud.deleteOneUser(client1, db, collection, { "_id": new ObjectId(c.id) });
+            if (deleted > 0) {
+                res.json({ status: "OK", msg: "User deleted succesfully" });
+            }
+            else {
+                res.json({ status: "NOT OK", msg: "Did not delete user" });
+            }
+        }
+        catch (error) {
+
+            res.json({ status: "NOT OK", msg: "Error finding user" });
+        }
+    }
     /*
     findOneUser: async (params) => {
         const client = new MongoClient(uri, { useUnifiedTopology: true });

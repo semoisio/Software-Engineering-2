@@ -221,7 +221,53 @@ async function deleteMany(client, db, collection, id) {
         await client.close();
     }
 }
+async function findOneUser(client, db, collection, params){
+    try {
+        await client.connect();
+        // clean input of keys starting with $-sign
+        var clean = sanitize(params);
 
+        let result = await client.db(db).collection(collection).find(clean).toArray();
+         
+        
+        if (result.length > 0) {
+            console.log("Found user");
+            return result;
+        }
+        else{
+            console.log("No user found");
+        }
+    }
+    catch (e) {
+        console.log(e);
+        console.log("Something went wrong while searching for user");
+    }
+    finally {
+        await client.close();
+    }
+}
+
+async function deleteOneUser(client, db, collection, id){
+    try {
+        await client.connect();
+        // clean input of keys starting with $-sign
+
+        const result = await client.db(db).collection(collection).deleteOne(id, { checkKeys: true });
+         
+        if (result.deletedCount > 0)
+            console.log("Deleted document");
+        else
+            console.log("No documents were deleted");
+        return result.deletedCount;
+    }
+    catch (e) {
+        console.log(e);
+        console.log("Something went wrong while deleting user");
+    }
+    finally {
+        await client.close();
+    }
+}
 module.exports = {
     createOne: createOne,
     createMany: createMany,
@@ -234,4 +280,7 @@ module.exports = {
 
     deleteOne: deleteOne,
     deleteMany: deleteMany,
+
+    findOneUser: findOneUser,
+    deleteOneUser: deleteOneUser
 }
