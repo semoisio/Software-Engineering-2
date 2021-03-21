@@ -48,7 +48,7 @@ const SignIn=(props) =>{
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
         };
-        const result = await fetch("http://127.0.0.1:3001/user?username="+username + '&password=' + password, requestOptions);
+        const result = await fetch("http://127.0.0.1:3001/login?username="+username + '&password=' + password, requestOptions);
         let response = await result.json();
         if (response.status === "OK") {
             history.push("/");

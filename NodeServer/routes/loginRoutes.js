@@ -3,7 +3,7 @@ var router = express.Router();
 
 let ctrl = require('../controllers/loginController');
 
-router.route('/user')
+router.route('/login')
     .get(ctrl.loginUser);
 
 module.exports = router;
