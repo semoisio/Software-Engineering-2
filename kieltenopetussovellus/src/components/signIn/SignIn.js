@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Footer, FooterLink } from '../homePage/IntroPageElementsJS';
 import Navbar from '../homePageNavbar/Navbar';
 import SideBar from '../homePageNavbar/SideBar';
+import { Link } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
 import {
     Container,
@@ -19,6 +20,7 @@ import {
 const SignIn=(props) =>{
     // This state keeps track if sidebar is open or not
     const [isOpen, setIsOpen] = useState(false);
+    //const [user, setUser] = useState();
     const history = useHistory();
     /**
      * Toggle function for showing and hiding sidebar
@@ -53,10 +55,12 @@ const SignIn=(props) =>{
         if (response.status === "OK") {
             history.push("/");
             //props.setIsloggedin(true)
+
             // sets username to local storage
             localStorage.setItem('user', username) 
-            //refreshes the page
-            window.location.reload(); 
+            props.setUser(localStorage.getItem("user"))
+
+            //window.location.reload(); 
         }
         else {
             setInfotext(response.msg);
@@ -79,8 +83,9 @@ const SignIn=(props) =>{
                             <FormInput type="text" required value={username} onChange={(e) => { usernameChanged(e) }} />
                             <FormLabel htmlFor="for">Password</FormLabel>
                             <FormInput type="password" required value={password} onChange={(e) => { passwordChanged(e) }} />
+                            <Link to="">Forgot password?</Link>
                             <FormButton type="submit">Sign in</FormButton>
-                            <p style={{ color: "white" }}>{infoText}</p>
+                            <p style={{ color: "black" }}>{infoText}</p>
                         </Form>
 
                     </FormContent>
