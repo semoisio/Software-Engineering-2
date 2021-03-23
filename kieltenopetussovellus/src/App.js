@@ -12,7 +12,7 @@ import Confirm from './components/signUp/Confirm';
 
 function App() {
 
-  const [isLoggedin, setIsloggedin] = useState(false);
+  //const [isLoggedin, setIsloggedin] = useState(false);
   const [user, setUser] = useState();
 
   let page = null;
@@ -36,7 +36,7 @@ function App() {
         <Route path="/signup" component={SignUp} />
         <Route path="/signupsuccess" component={SignUpSuccess} />
         <Route path="/confirm/:id" component={Confirm} />
-        <Route path="/signin"><SignIn setIsloggedin={setIsloggedin} /></Route>
+        <Route path="/signin"><SignIn setUser={setUser} /></Route>
           /**Tämä aina viimeiseksi. Ohjaa virhe sivulle */
           <Route path="/" component={Errorpage} />
       </Switch>
