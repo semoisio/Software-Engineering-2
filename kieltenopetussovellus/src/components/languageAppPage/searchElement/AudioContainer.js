@@ -62,4 +62,4 @@ const AudioContainer = (props) => {
     )
 }
 
-export default AudioContainer
+export default AudioContainer;

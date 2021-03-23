@@ -8,6 +8,7 @@ router.route('/user')
     .post(ctrl.createNewUser)
     //.get(ctrl.loginUser);
     .get(ctrl.findUser)
+    .put(ctrl.updateUser)
 
 router.route('/user/:id')
     .delete(ctrl.deleteUser)

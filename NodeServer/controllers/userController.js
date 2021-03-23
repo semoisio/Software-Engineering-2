@@ -111,6 +111,28 @@ module.exports = {
 
             res.json({ status: "NOT OK", msg: "Error finding user" });
         }
+    },
+    updateUser: async (req, res) => {
+        let c = req.body;
+        try {
+            const client1 = new MongoClient(uri, { useUnifiedTopology: true });
+            // if username dont came with query send error
+            if (!c._id) {
+                res.json({ status: "NOT OK", msg: "Give id" });
+            }
+
+            const updated = await crud.updateOneUser(client1, db, collection, { "_id": new ObjectId(c._id)}, c);
+            if (updated > 0) {
+                res.json({ status: "OK", msg: "User update succesfully" });
+            }
+            else {
+                res.json({ status: "NOT OK", msg: "Did not update user" });
+            }
+        }
+        catch (error) {
+
+            res.json({ status: "NOT OK", msg: "Error finding user" });
+        }
     }
     /*
     findOneUser: async (params) => {

@@ -246,7 +246,14 @@ async function findOneUser(client, db, collection, params){
         await client.close();
     }
 }
-
+/**
+ * 
+* @param {client} client - The client used to connect to database
+ * @param {string} db - The name of the database in MongoDB
+ * @param {string} collection - The name of the collection in MongoDB
+ * @param {ObjeckId} id - Id of the user in MongoDB
+ * @returns 
+ */
 async function deleteOneUser(client, db, collection, id){
     try {
         await client.connect();
@@ -268,6 +275,31 @@ async function deleteOneUser(client, db, collection, id){
         await client.close();
     }
 }
+/**
+ * Updates one document that matches the given identifier.
+ * @param {client} client - The client used to connect to database
+ * @param {string} db - The name of the database in MongoDB
+ * @param {string} collection - The name of the collection in MongoDB
+ * @param {Object} id - Identifier of the user (id, name etc.)
+ * @param {Object} newValue - Values that are updated
+ */
+ async function updateOneUser(client, db, collection, id, newValue) {
+    try {
+        await client.connect();
+        const result = await client.db(db).collection(collection).updateOne(id, { $set: newValue });
+        if (result.modifiedCount > 0)
+            console.log("Updated user");
+        else
+            console.log("No user were updated");
+        return (result.modifiedCount);
+    }
+    catch (e) {
+        console.log("Something went wrong while updating a user");
+    }
+    finally {
+        await client.close();
+    }
+}
 module.exports = {
     createOne: createOne,
     createMany: createMany,
@@ -282,5 +314,6 @@ module.exports = {
     deleteMany: deleteMany,
 
     findOneUser: findOneUser,
-    deleteOneUser: deleteOneUser
+    deleteOneUser: deleteOneUser,
+    updateOneUser: updateOneUser
 }

@@ -198,6 +198,11 @@ export const FoundCount = styled.div`
     font-size: 1.1rem;
     display:flex;
     justify-content:space-around;
+
+    @media screen and (max-width: 500px){
+        font-size: 0.8rem;
+    }
+
 `;
 export const WhatPage = styled.h3`
     margin:0;
@@ -212,6 +217,11 @@ export const PagesContainer = styled.div`
     display:flex;
     align-items:center;
     justify-content:space-around;
+    
+    @media screen and (max-width: 500px){
+        font-size: 0.8rem;
+    } 
+    
 `;
 export const PageButton = styled.div`
     font-size: 1.5rem;
@@ -221,4 +231,8 @@ export const PageButton = styled.div`
     &:hover{
         opacity: 50%;
     }
+
+    @media screen and (max-width: 500px){
+        font-size: 0.8rem;
+    }   
 `;

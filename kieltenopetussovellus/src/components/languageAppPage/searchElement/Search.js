@@ -192,6 +192,16 @@ const Search = () => {
         }
     }
 
+    const calculateAudios = () => {
+        let i = 0;
+        audiot.forEach(element => {
+            element.forEach(element => {
+                i++;
+            });    
+        });
+        return i;
+    }
+
     /**
      * Maps all audios to screen
      */
@@ -255,7 +265,7 @@ const Search = () => {
                     null:
                     audiot.length !== 0 ?
                         <FoundCount>
-                            <Found>Found: {audiot.length}</Found>
+                            <Found>Found: {calculateAudios()}</Found>
                             <PageButton onClick={() => {changePage("-")}}>{"<"}Previous</PageButton>
                             <PageButton onClick={() => {changePage("+")}}>Next{">"}</PageButton>
                             <WhatPage>Page: {pageNum + 1}/{audiot.length}</WhatPage>
@@ -270,9 +280,8 @@ const Search = () => {
                                 color="#00BFFF"
                                 height={50}
                                 width={50}
-                            /></LoaderContainer>
-
-
+                            />
+                        </LoaderContainer>
                         : error ?  // if search did not find enything show error else audios
                             <AudioContainer
                                 image={notFound}
@@ -285,7 +294,7 @@ const Search = () => {
                     null:
                     error?
                     null:
-                    <PagesContainer>
+                <PagesContainer>
                     <PageButton onClick={() => {changePage("-")}}> {"<"}Previous</PageButton>
                     <WhatPage>Page: {pageNum + 1}/{audiot.length}</WhatPage>
                     <PageButton onClick={() => {changePage("+")}}>Next{">"}</PageButton>
