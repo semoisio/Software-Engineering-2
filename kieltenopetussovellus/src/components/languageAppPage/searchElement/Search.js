@@ -109,6 +109,7 @@ const Search = () => {
     // This fetches audios from database with according search terms
     useEffect(() => {
         const haeAudio = async () => {
+            setPageNum(0);
             setSearching(true);
             const queryKeys = ["title", "difficulty", "genre", "language"];
             const uncheckedQuery = [audioTitle, selectedDifficulty, selectedGenre.value, selectedLanguage.value];

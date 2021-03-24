@@ -29,7 +29,7 @@ const LanguageNavbar = ({toggle }) => {
                 <NavBtn to="/" data-testid="navBtnSearch">Search and Listen</NavBtn>
                 <NavBtn to="/newrecording" data-testid="navBtnRecording">New recording</NavBtn>
                 <NavBtn to="/profile" data-testid="navBtnProfile">Profile</NavBtn>
-                
+                <NavBtn to="/myaudio" data-testid="navBtnProfile">My audios</NavBtn>
                 <button onClick={handleLogout}>Sign out</button>
             </NavBtnWrapper>
             <MobileIcon onClick={toggle}>
