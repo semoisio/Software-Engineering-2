@@ -185,6 +185,7 @@ const Search = () => {
         if (param === "+"){
             if (pageNum < audiot.length-1){
                 setPageNum(pageNum+1);
+                
             }
         }else{
             if(pageNum > 0){
@@ -208,13 +209,16 @@ const Search = () => {
      */
     const audioInside = audiot[pageNum].map((t, index) => {
         return <AudioContainer
-            key={index}
+            key={index +","+ pageNum}
+            avain={index}
             image={audioimage}
             title={t.title}
             description={t.desc}
             id={t._id}
         />
     });
+
+    console.log(audioInside)
     return (
         <SearchAndListenContainer data-testid="searchContainer">
             <OpenSearchIconContainer isOpen={isOpen} onClick={toggle}>
