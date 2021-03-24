@@ -2,22 +2,24 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
 export const IntroPageContainer = styled.div`
-    display: flex;
+    /* display: flex;
 	flex-direction: row;
 	flex-flow: row wrap;
 	text-align: center;
 	flex-wrap: wrap;
-	justify-content: center;
-	width: 100%;
+	justify-content: center; */
+	//width: 100%;
 	min-height: 100vh;
 	background: linear-gradient(to right top, #e0ffcd, #c9fbc7, #aef6c5, #8ff2c6, #68edcb);
+	display:flex;
+	flex-direction:column;
 
 `;
 
 export const IntroPageMain = styled.div`
-    width: 100%;
-	height: 100%;
-	padding: 20px;
+    //width: 100%;
+	//height: 100%;
+	//padding: 20px;
 	display: flex;
 	flex-direction: row;
 	flex-wrap:wrap;
@@ -34,7 +36,7 @@ export const IntroLogoDiv = styled.div`
 
 export const IntroLogoImg = styled.img`
     display: block;
-    margin: 0 auto;
+    //margin: 0 auto;
 `;
 
 export const IntroH1 = styled.h1`
@@ -109,8 +111,9 @@ export const Footer = styled.footer`
 	flex-direction:row;
 	flex-wrap:nowrap;
 	justify-content:space-around;
-	margin-top: auto;
-	max-width: 100%;
+	align-items:center;
+	//margin-top: auto;
+	//max-width: 100%;
 `;
 
 export const FooterLink = styled(NavLink)`
@@ -118,6 +121,7 @@ export const FooterLink = styled(NavLink)`
 	font-size: small;
 	text-decoration: none;
 	text-shadow: 1px 1px 2px #000000;
+
 
     &:hover{
         text-decoration: none;

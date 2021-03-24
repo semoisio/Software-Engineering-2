@@ -90,12 +90,13 @@ const SignIn=(props) =>{
 
                     </FormContent>
                 </FormWrap>
-            </Container>
-            <Footer>
+                <Footer>
 				<FooterLink to='/'>Terms and Conditions</FooterLink>
 				<FooterLink to='/'>Privacy Policy</FooterLink>
 				<FooterLink to='/'>About us</FooterLink>
 		    </Footer>
+            </Container>
+            
         </>
     )
 }

@@ -5,16 +5,19 @@ import { NavLink } from 'react-router-dom';
 export const Container = styled.nav`
     min-height: 100vh;
     background: #fbfbfb;
+    display: flex;
+    flex-direction:column;
 `;
 
 //Wrapper for content
 export const FormWrap = styled.div`
-    height: 100%;
+    //height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     overflow: auto;
+    margin-bottom: auto;
 
     @media screen and (max-width: 400px){
         height: 80%;
@@ -60,7 +63,7 @@ export const Form = styled.form`
     display: flex;
     flex-direction:column;
     margin: 0 auto;
-    padding: 80px 32px;
+    padding: 40px 16px;
     border-radius: 4px;
     
     @media screen and (max-width: 400px){

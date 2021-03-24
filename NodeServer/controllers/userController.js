@@ -120,8 +120,9 @@ module.exports = {
             if (!c._id) {
                 res.json({ status: "NOT OK", msg: "Give id" });
             }
-
-            const updated = await crud.updateOneUser(client1, db, collection, { "_id": new ObjectId(c._id)}, c);
+            let id = new ObjectId(c._id); // id of the audio in mongodb
+            delete c._id; // remove id from update json
+            const updated = await crud.updateOneUser(client1, db, collection, { "_id": id}, c);
             if (updated > 0) {
                 res.json({ status: "OK", msg: "User update succesfully" });
             }

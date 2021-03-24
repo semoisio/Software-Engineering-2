@@ -162,12 +162,13 @@ function SignUp() {
                     </FormContent>
 
                 </FormWrap>
+                <Footer>
+                    <FooterLink to='/'>Terms and Conditions</FooterLink>
+                    <FooterLink to='/'>Privacy Policy</FooterLink>
+                    <FooterLink to='/'>About us</FooterLink>
+                </Footer>
             </Container>
-            <Footer>
-                <FooterLink to='/'>Terms and Conditions</FooterLink>
-                <FooterLink to='/'>Privacy Policy</FooterLink>
-                <FooterLink to='/'>About us</FooterLink>
-            </Footer>
+
         </>
     )
 }

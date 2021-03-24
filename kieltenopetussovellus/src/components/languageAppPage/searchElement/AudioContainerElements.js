@@ -61,7 +61,7 @@ export const AudioDescription = styled.p`
     word-break: break-all;
 `;
 
-export const StartAudioBtn = styled.div`
+export const StartAudioBtn = styled.button`
     border-radius: 50px;
     background: ${OBbg};
     white-space: nowrap;

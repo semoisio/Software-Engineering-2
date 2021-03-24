@@ -5,6 +5,8 @@ import { NavLink } from 'react-router-dom';
 export const Container = styled.nav`
     min-height: 100vh;
     background: #fbfbfb;
+    display: flex;
+    flex-direction: column;
 
 `;
 
@@ -19,12 +21,13 @@ export const LinkContainer = styled.div`
 
 //Wrapper for content
 export const FormWrap = styled.div`
-    height: 100%;
+    //min-height: 100vh;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     overflow: auto;
+    margin-bottom:auto;
 
     @media screen and (max-width: 400px){
         height: 80%;

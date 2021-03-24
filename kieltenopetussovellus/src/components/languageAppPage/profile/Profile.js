@@ -28,7 +28,7 @@ const Profile = () => {
 
     const [editing, setEditing] = useState(false);
 
-    const [editingButtonText, setEeditingButtonText] = useState("Edit");
+    const [editingButtonText, setEeditingButtonText] = useState("Edit language");
 
     const [changePassword, setChangePassword] = useState(false);
 
@@ -63,13 +63,13 @@ const Profile = () => {
     }
 
     const editingChangged = () => {
-        if (editingButtonText === "Edit") {
+        if (editingButtonText === "Edit language") {
             setEditing(true);
             setEeditingButtonText("Save");
         } else {
             setEditing(false);
             user[0].learning = selectedLanguage.value 
-            setEeditingButtonText("Edit");
+            setEeditingButtonText("Edit language");
             //setDoupdate(doUpdate +1);
         }
     }
@@ -79,7 +79,11 @@ const Profile = () => {
     }
 
     const confirmUserDelete = () => {
-        
+        if(window.confirm("Are you sure?")){
+
+        }else{
+
+        }
     }
 
     useEffect(() => {
