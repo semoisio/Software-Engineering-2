@@ -24,6 +24,7 @@ import {
     AudioPlayer
 } from './MyAudioElements';
 import AudioContainer from './AudioContainer';
+import ConfirmDialog from '../../../dialogs/ConfirmDialog';
 
 const MyAudio = () => {
     // Array where finded audios are saved
@@ -92,19 +93,24 @@ const MyAudio = () => {
     };
 
     // delete audio
-    const deleteAudio = async (id) => {
-        if (window.confirm("Delete audio?")) {
-            const requestOptions = {
-                method: 'DELETE',
-            };
-            const url = "http://127.0.0.1:3001/audio/" + id;
-            const response = await fetch(url, requestOptions);
-            let result = await response.json();
-            if (result.status === "OK") {
-                fetchAudio();
-                setSelectedAudio(null);
+    const deleteAudio = (id) => {
+        let dialogProps = {
+            title: "Confirm delete",
+            message: "Delete recording?",
+            clickOk: async () => {
+                const requestOptions = {
+                    method: 'DELETE',
+                };
+                const url = "http://127.0.0.1:3001/audio/" + id;
+                const response = await fetch(url, requestOptions);
+                let result = await response.json();
+                if (result.status === "OK") {
+                    fetchAudio();
+                    setSelectedAudio(null);
+                }
             }
         }
+        ConfirmDialog(dialogProps);
     };
 
     // update audio info
@@ -228,7 +234,7 @@ const MyAudio = () => {
                                     <AudioPlayer controls>
                                         <source src={audioFetched} type="audio/webm" />
                                     </AudioPlayer> : null
-                                    
+
                             }
                             <FormLabel htmlFor="for" >Language</FormLabel>
                             <SelectContainer>

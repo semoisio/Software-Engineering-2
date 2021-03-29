@@ -12,6 +12,11 @@ import {
     FormLabel,
     FormButton
 } from './SignUpElements';
+import Loader from "react-loader-spinner";
+import {
+    LoaderContainer,
+    LoaderText,
+} from '../../components/languageAppPage/searchElement/SearchElements';
 
 const Confirm = (props) => {
     const [confirming, setConfirming] = useState(true);
@@ -46,7 +51,7 @@ const Confirm = (props) => {
             setConfirmed(true);
         }
         else {
-            setErrortext("Something went wrong while confirming email.");
+            setErrortext(response.msg);
         }
         setConfirming(false);
     }, []);
@@ -64,9 +69,15 @@ const Confirm = (props) => {
                 <FormContent data-testid="confirmformcontent">
                     {
                         confirming ?
-                            <Form action="">
-                                <FormLabel>Confirming...</FormLabel>
-                            </Form>
+                            <LoaderContainer>
+                                <LoaderText>Registering</LoaderText>
+                                <Loader
+                                    type="TailSpin"
+                                    color="#00BFFF"
+                                    height={50}
+                                    width={50}
+                                />
+                            </LoaderContainer>
                             :
                             confirmed ?
                                 <Form action="" data-testid="confirmform">

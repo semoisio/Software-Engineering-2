@@ -15,6 +15,7 @@ const AudioContainer = (props) => {
     const [searching, setSearching] = useState(false);
 
     useEffect(() => {
+        /*
         const haeAudio = async () => {
             setSearching(true);
             const url = "http://127.0.0.1:3001/audio?file=true&id=" + props.id;
@@ -33,11 +34,17 @@ const AudioContainer = (props) => {
         if (doFetch > 0) {
             haeAudio();
         }
+        */
+        if (doFetch > 0) {
+            props.setListening(true);
+            props.setSelectedAudio(props.id);
+        }
     }, [doFetch]);
 
     const fireFetch = () => {
         setDoFetch(doFetch + 1);
     }
+
     return (
         <OneAudioContainer>
             <AudioImage src={props.image} />
@@ -48,14 +55,14 @@ const AudioContainer = (props) => {
             {
                 searching ?
                     <Loader type="TailSpin" color="#00BFFF" height={50} width={50} /> :
-                    props.id === undefined ?
-                        null :
-                        audioFetched === "" ?
-                            <StartAudioBtn onClick={() => { fireFetch() }}>Listen audio</StartAudioBtn>
-                            :
-                            <audio controls>
-                                <source src={audioFetched} type="audio/webm" />
-                            </audio>
+                    //props.id === undefined ?
+                    //null :
+                    //audioFetched === "" ?
+                    <StartAudioBtn onClick={() => fireFetch()}>Listen audio</StartAudioBtn>
+                //:
+                //<audio controls>
+                //    <source src={audioFetched} type="audio/webm" />
+                //</audio>
             }
 
         </OneAudioContainer>

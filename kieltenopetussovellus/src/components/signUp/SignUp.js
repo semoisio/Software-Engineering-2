@@ -5,6 +5,7 @@ import SideBar from '../homePageNavbar/SideBar';
 import { Footer, FooterLink } from '../homePage/IntroPageElementsJS';
 import { languageOptions } from '../../tools/defaultOptions';
 import Select from 'react-select';
+import Loader from "react-loader-spinner";
 
 import {
     Container,
@@ -20,6 +21,10 @@ import {
     LinkContainer,
     SelectContainer
 } from './SignUpElements';
+import {
+    LoaderContainer,
+    LoaderText,
+} from '../../components/languageAppPage/searchElement/SearchElements';
 
 function SignUp() {
     // This state keeps track is sidebaropen or not
@@ -43,6 +48,7 @@ function SignUp() {
     const [confPassword, setconfPassword] = useState("");
     const [pwInfo, setPwInfo] = useState("");
     const [pwInputVisited, setPwInputVisited] = useState(false);
+    const [registering, setRegistering] = useState(false);
 
     // These functions change states if user types in something
     const usernameChanged = (event) => {
@@ -104,6 +110,7 @@ function SignUp() {
             setInfotext("Check password");
         }
         else {
+            setRegistering(true);
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -111,12 +118,12 @@ function SignUp() {
             };
             const result = await fetch("http://127.0.0.1:3001/user", requestOptions);
             let response = await result.json();
-
+            setRegistering(false);
             if (response.status === "OK") {
                 // redirect to signin
                 history.push({
                     pathname: '/signupsuccess',
-                    state: { user: response.added[0]._id }
+                    state: { user: response.added[0] }
                 });
             }
             else {
@@ -131,45 +138,54 @@ function SignUp() {
     }, [password]);
 
     return (
-        <>
-            <Container data-testid="signupcontainer">
-                <Navbar data-testid="navbar" toggle={toggle} />
-                <SideBar data-testid="sidebar" isOpen={isOpen} toggle={toggle} />
-                <FormWrap data-testid="signupformwrap">
-                    <FormContent data-testid="signupformcontent">
-                        <Form action="" data-testid="signupform" onSubmit={(e) => SubmitRegister(e)}>
-                            <FormH1 data-testid="signupformh1">REGISTER</FormH1>
-                            <FormLabel htmlFor="for">I want to learn</FormLabel>
-                            <SelectContainer>
-                                <Select
-                                    value={learning}
-                                    onChange={learningChanged}
-                                    options={languageOptions}
-                                />
-                            </SelectContainer>
-                            <FormLabel htmlFor="for" data-testid="signupformlabel1">Username</FormLabel>
-                            <FormInput type="text" required value={username} onChange={(e) => { usernameChanged(e) }} data-testid="signupforminput1" />
-                            <FormLabel htmlFor="for">Email</FormLabel>
-                            <FormInput type="email" required value={email} onChange={(e) => { emailChanged(e) }} />
-                            <FormLabel htmlFor="for">Password</FormLabel>
-                            <FormInput type="password" required value={password} onChange={(e) => { passwordChanged(e) }} onFocus={() => pwFocus()} />
-                            <FormLabel>{pwInfo}</FormLabel>
-                            <FormLabel htmlFor="for">Confirm password</FormLabel>
-                            <FormInput type="password" required value={confPassword} onChange={(e) => { confPasswordChanged(e) }} />
-                            <FormLabel htmlFor="for">{infoText}</FormLabel>
-                            <FormButton type="submit">Register</FormButton>
-                        </Form>
-                    </FormContent>
+        <Container data-testid="signupcontainer">
+            <Navbar data-testid="navbar" toggle={toggle} />
+            <SideBar data-testid="sidebar" isOpen={isOpen} toggle={toggle} />
+            {
+                registering ?
+                    <LoaderContainer>
+                        <LoaderText>Registering</LoaderText>
+                        <Loader
+                            type="TailSpin"
+                            color="#00BFFF"
+                            height={50}
+                            width={50}
+                        />
+                    </LoaderContainer> :
+                    <FormWrap data-testid="signupformwrap">
+                        <FormContent data-testid="signupformcontent">
+                            <Form action="" data-testid="signupform" onSubmit={(e) => SubmitRegister(e)}>
+                                <FormH1 data-testid="signupformh1">REGISTER</FormH1>
+                                <FormLabel htmlFor="for">I want to learn</FormLabel>
+                                <SelectContainer>
+                                    <Select
+                                        value={learning}
+                                        onChange={learningChanged}
+                                        options={languageOptions}
+                                    />
+                                </SelectContainer>
+                                <FormLabel htmlFor="for" data-testid="signupformlabel1">Username</FormLabel>
+                                <FormInput type="text" required value={username} onChange={(e) => { usernameChanged(e) }} data-testid="signupforminput1" />
+                                <FormLabel htmlFor="for">Email</FormLabel>
+                                <FormInput type="email" required value={email} onChange={(e) => { emailChanged(e) }} />
+                                <FormLabel htmlFor="for">Password</FormLabel>
+                                <FormInput type="password" required value={password} onChange={(e) => { passwordChanged(e) }} onFocus={() => pwFocus()} />
+                                <FormLabel>{pwInfo}</FormLabel>
+                                <FormLabel htmlFor="for">Confirm password</FormLabel>
+                                <FormInput type="password" required value={confPassword} onChange={(e) => { confPasswordChanged(e) }} />
+                                <FormLabel htmlFor="for">{infoText}</FormLabel>
+                                <FormButton type="submit">Register</FormButton>
+                            </Form>
+                        </FormContent>
 
-                </FormWrap>
-                <Footer>
-                    <FooterLink to='/'>Terms and Conditions</FooterLink>
-                    <FooterLink to='/'>Privacy Policy</FooterLink>
-                    <FooterLink to='/'>About us</FooterLink>
-                </Footer>
-            </Container>
-
-        </>
+                    </FormWrap>
+            }
+            <Footer>
+                <FooterLink to='/'>Terms and Conditions</FooterLink>
+                <FooterLink to='/'>Privacy Policy</FooterLink>
+                <FooterLink to='/'>About us</FooterLink>
+            </Footer>
+        </Container>
     )
 }
 

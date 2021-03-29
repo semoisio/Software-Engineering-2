@@ -31,7 +31,7 @@ export const SearchContainer = styled.div`
    
 `;
 
-export const ListenContainer = styled.div`
+export const SearchResultContainer = styled.div`
     height:90vh;
     width:70%;
     transition: all 1s;

@@ -29,7 +29,7 @@ function SignUpSuccess(props) {
 
     const resendClick = async (e) => {
         e.preventDefault();
-        const id = props.location.state.user;
+        const id = props.location.state.user._id;
         const response = await fetch("http://127.0.0.1:3001/email/confirm?id=" + id);
         const res = await response.json();
     }
@@ -45,8 +45,14 @@ function SignUpSuccess(props) {
                     <FormContent data-testid="signupsuccessformcontent">
                         <Form action="" data-testid="signupsuccessform">
                             <FormLabel htmlFor="for">
-                                Account created successfully. Confirmation link has been sent to your email. You must confirm your email before you can sign in.
-                        </FormLabel>
+                                Account created successfully.
+                            </FormLabel>
+                            <FormLabel htmlFor="for">
+                                Confirmation link has been sent to {props.location.state.user.email}.
+                            </FormLabel>
+                            <FormLabel htmlFor="for">
+                                You must confirm your email before you can sign in.
+                            </FormLabel>
                             <FormButton onClick={(e) => resendClick(e)}>
                                 Resend link
                             </FormButton>

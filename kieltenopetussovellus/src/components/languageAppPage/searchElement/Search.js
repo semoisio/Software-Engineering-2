@@ -6,7 +6,7 @@ import { OBbg, OBhover } from '../../../tools/colors';
 import {
     SearchAndListenContainer,
     SearchContainer,
-    ListenContainer,
+    SearchResultContainer,
     OpenSearchIconContainer,
     SearchText,
     OpenIcon,
@@ -36,6 +36,7 @@ import AudioContainer from './AudioContainer';
 import audioimage from '../../../images/AudioWave.jpg';
 import notFound from '../../../images/notFound.png';
 import { genreOptions, languageOptions } from '../../../tools/defaultOptions';
+import Listen from './Listen';
 
 const Search = () => {
     //This keep track is search open or not in smaller window sizes
@@ -65,6 +66,12 @@ const Search = () => {
 
     //audio search input
     const [audioTitle, setAudioTitle] = useState("");
+
+    // open listening view
+    const [listening, setListening] = useState(false);
+
+    // audio that is selected for listening
+    const [selectedAudio, setSelectedAudio] = useState(null);
 
     // Toggle search open and close
     const toggle = () => {
@@ -97,6 +104,15 @@ const Search = () => {
     }
     const audioChanged = (e) => {
         setAudioTitle(e.target.value);
+    }
+
+    const listeningChanged = (listening) => {
+        setListening(listening);
+    }
+
+    // Set selectedaudio by id
+    const selectedAudioChanged = (audioId) => {
+        setSelectedAudio(audioId);
     }
 
     // Form submit button fires this function and this fires audiofetch from database
@@ -182,14 +198,14 @@ const Search = () => {
     };
 
     const changePage = (param) => {
-        if (param === "+"){
-            if (pageNum < audiot.length-1){
-                setPageNum(pageNum+1);
-                
+        if (param === "+") {
+            if (pageNum < audiot.length - 1) {
+                setPageNum(pageNum + 1);
+
             }
-        }else{
-            if(pageNum > 0){
-                setPageNum(pageNum-1);
+        } else {
+            if (pageNum > 0) {
+                setPageNum(pageNum - 1);
             }
         }
     }
@@ -199,7 +215,7 @@ const Search = () => {
         audiot.forEach(element => {
             element.forEach(element => {
                 i++;
-            });    
+            });
         });
         return i;
     }
@@ -209,106 +225,113 @@ const Search = () => {
      */
     const audioInside = audiot[pageNum].map((t, index) => {
         return <AudioContainer
-            key={index +","+ pageNum}
+            key={index + "," + pageNum}
             avain={index}
             image={audioimage}
             title={t.title}
             description={t.desc}
             id={t._id}
+            setListening={listeningChanged}
+            setSelectedAudio={selectedAudioChanged}
         />
     });
-
-    console.log(audioInside)
+    
     return (
-        <SearchAndListenContainer data-testid="searchContainer">
-            <OpenSearchIconContainer isOpen={isOpen} onClick={toggle}>
-                <SearchText>Open search</SearchText>
-                <OpenIcon onClick={toggle} />
-            </OpenSearchIconContainer>
-            <SearchContainer isOpen={isOpen}>
-                <CloseSearchIconContainer isOpen={isOpen} onClick={toggle}>
-                    <SearchText>Close search</SearchText>
-                    <CloseIcon onClick={toggle} />
-                </CloseSearchIconContainer>
-                <Form onSubmit={(e) => fetchAudio(e)}>
-                    <FormH1>Search audio</FormH1>
-                    <FormLabel htmlFor="for" >Search</FormLabel>
-                    <FormInput type="text" value={audioTitle} onChange={(e) => { audioChanged(e) }} />
-                    <FormLabel htmlFor="for" >Language</FormLabel>
-                    <SelectContainer>
-                        <Select
-                            value={selectedLanguage}
-                            onChange={handleSelectClickLanguage}
-                            options={languageOptions}
-                        />
-                    </SelectContainer>
-                    <FormLabel htmlFor="for" >Genre</FormLabel>
-                    <SelectContainer>
-                        <Select
-                            value={selectedGenre}
-                            onChange={handleSelectClickGenre}
-                            options={genreOptions}
-                        />
-                    </SelectContainer>
-                    <FormLabel htmlFor="for" >Difficulty</FormLabel>
-                    <RadioBtnContainer>
-                        <RadioGroup onChange={(value) => { radioButtonChanged(value) }}>
-                            <RadioButton checked={difficultyChecked[0]} rootColor={OBbg} pointColor={OBhover} value="beginner">Beginner</RadioButton>
-                            <RadioButton checked={difficultyChecked[1]} rootColor={OBbg} pointColor={OBhover} value="intermediate">Intermediate</RadioButton>
-                            <RadioButton checked={difficultyChecked[2]} rootColor={OBbg} pointColor={OBhover} value="expert">Expert</RadioButton>
-                        </RadioGroup>
-                    </RadioBtnContainer>
-                    <ClearButton type="button" onClick={() => { clearChoices() }}>Clear</ClearButton>
-                    <FormButton type="submit">Search</FormButton>
-                </Form>
-            </SearchContainer>
-            <ListenContainer>
-                {  // if audios found show lenght of array
-                    searching?
-                    null:
-                    error?
-                    null:
-                    audiot.length !== 0 ?
-                        <FoundCount>
-                            <Found>Found: {calculateAudios()}</Found>
-                            <PageButton onClick={() => {changePage("-")}}>{"<"}Previous</PageButton>
-                            <PageButton onClick={() => {changePage("+")}}>Next{">"}</PageButton>
-                            <WhatPage>Page: {pageNum + 1}/{audiot.length}</WhatPage>
-                        </FoundCount> : null
-                }
-                { // if search is happening show loader
-                    searching ?
-                        <LoaderContainer>
-                            <LoaderText>Loading</LoaderText>
-                            <Loader
-                                type="TailSpin"
-                                color="#00BFFF"
-                                height={50}
-                                width={50}
-                            />
-                        </LoaderContainer>
-                        : error ?  // if search did not find enything show error else audios
-                            <AudioContainer
-                                image={notFound}
-                                title="No matches"
-                                description="We didn't find anything" />
-                            : audioInside
-                }
-                {
-                    searching?
-                    null:
-                    error?
-                    null:
-                <PagesContainer>
-                    <PageButton onClick={() => {changePage("-")}}> {"<"}Previous</PageButton>
-                    <WhatPage>Page: {pageNum + 1}/{audiot.length}</WhatPage>
-                    <PageButton onClick={() => {changePage("+")}}>Next{">"}</PageButton>
-                </PagesContainer>
-                }
-                
-            </ListenContainer>
-        </SearchAndListenContainer>
+        <>
+            { listening ? <Listen 
+            setListening={listeningChanged} 
+            id={selectedAudio}
+            /> :
+                <SearchAndListenContainer data-testid="searchContainer">
+                    <OpenSearchIconContainer isOpen={isOpen} onClick={toggle}>
+                        <SearchText>Open search</SearchText>
+                        <OpenIcon onClick={toggle} />
+                    </OpenSearchIconContainer>
+                    <SearchContainer isOpen={isOpen}>
+                        <CloseSearchIconContainer isOpen={isOpen} onClick={toggle}>
+                            <SearchText>Close search</SearchText>
+                            <CloseIcon onClick={toggle} />
+                        </CloseSearchIconContainer>
+                        <Form onSubmit={(e) => fetchAudio(e)}>
+                            <FormH1>Search audio</FormH1>
+                            <FormLabel htmlFor="for" >Search</FormLabel>
+                            <FormInput type="text" value={audioTitle} onChange={(e) => { audioChanged(e) }} />
+                            <FormLabel htmlFor="for" >Language</FormLabel>
+                            <SelectContainer>
+                                <Select
+                                    value={selectedLanguage}
+                                    onChange={handleSelectClickLanguage}
+                                    options={languageOptions}
+                                />
+                            </SelectContainer>
+                            <FormLabel htmlFor="for" >Genre</FormLabel>
+                            <SelectContainer>
+                                <Select
+                                    value={selectedGenre}
+                                    onChange={handleSelectClickGenre}
+                                    options={genreOptions}
+                                />
+                            </SelectContainer>
+                            <FormLabel htmlFor="for" >Difficulty</FormLabel>
+                            <RadioBtnContainer>
+                                <RadioGroup onChange={(value) => { radioButtonChanged(value) }}>
+                                    <RadioButton checked={difficultyChecked[0]} rootColor={OBbg} pointColor={OBhover} value="beginner">Beginner</RadioButton>
+                                    <RadioButton checked={difficultyChecked[1]} rootColor={OBbg} pointColor={OBhover} value="intermediate">Intermediate</RadioButton>
+                                    <RadioButton checked={difficultyChecked[2]} rootColor={OBbg} pointColor={OBhover} value="expert">Expert</RadioButton>
+                                </RadioGroup>
+                            </RadioBtnContainer>
+                            <ClearButton type="button" onClick={() => { clearChoices() }}>Clear</ClearButton>
+                            <FormButton type="submit">Search</FormButton>
+                        </Form>
+                    </SearchContainer>
+                    <SearchResultContainer>
+                        {  // if audios found show lenght of array
+                            searching ?
+                                null :
+                                error ?
+                                    null :
+                                    audiot.length !== 0 ?
+                                        <FoundCount>
+                                            <Found>Found: {calculateAudios()}</Found>
+                                            <PageButton onClick={() => { changePage("-") }}>{"<"}Previous</PageButton>
+                                            <PageButton onClick={() => { changePage("+") }}>Next{">"}</PageButton>
+                                            <WhatPage>Page: {pageNum + 1}/{audiot.length}</WhatPage>
+                                        </FoundCount> : null
+                        }
+                        { // if search is happening show loader
+                            searching ?
+                                <LoaderContainer>
+                                    <LoaderText>Loading</LoaderText>
+                                    <Loader
+                                        type="TailSpin"
+                                        color="#00BFFF"
+                                        height={50}
+                                        width={50}
+                                    />
+                                </LoaderContainer>
+                                : error ?  // if search did not find enything show error else audios
+                                    <AudioContainer
+                                        image={notFound}
+                                        title="No matches"
+                                        description="We didn't find anything" />
+                                    : audioInside
+                        }
+                        {
+                            searching ?
+                                null :
+                                error ?
+                                    null :
+                                    <PagesContainer>
+                                        <PageButton onClick={() => { changePage("-") }}> {"<"}Previous</PageButton>
+                                        <WhatPage>Page: {pageNum + 1}/{audiot.length}</WhatPage>
+                                        <PageButton onClick={() => { changePage("+") }}>Next{">"}</PageButton>
+                                    </PagesContainer>
+                        }
+
+                    </SearchResultContainer>
+                </SearchAndListenContainer>
+            }
+        </>
     )
 }
-
 export default Search;

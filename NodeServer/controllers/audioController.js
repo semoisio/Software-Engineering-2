@@ -56,6 +56,10 @@ const searchAudio = async (req, res) => {
         if (q.title !== undefined) {
             q.title = new RegExp(q.title);
         }
+        if (q.id !== undefined) {
+            q._id = new ObjectId(q.id);
+            delete q.id;
+        }
         const audio = await crud.findMany(client1, db, collection, q);
         if (audio) {
             res.json({ status: "OK", found: audio });
@@ -152,7 +156,9 @@ module.exports = {
                     desc: c.desc,
                     genre: c.genre,
                     difficulty: c.difficulty,
-                    path: req.file.path
+                    path: req.file.path,
+                    rating: [],
+                    comments: []
                 });
                 if (newAudio) {
                     res.json({ status: "OK", added: newAudio });
