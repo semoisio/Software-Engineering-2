@@ -22,11 +22,17 @@ import {
 } from '../searchElement/SearchElements'
 import { foundCorrectLabel, checkMatch } from './profileFunctions';
 import NotifyDialog from '../../../dialogs/NotifyDialog';
+import ConfirmDialog from '../../../dialogs/ConfirmDialog';
+import { useHistory } from 'react-router-dom';
+
 
 
 const Profile = () => {
+    const history = useHistory();
     // State to toggle searching or no
     const [searching, setSearching] = useState(false);
+
+    const [deleteUser, setDeleteUser] = useState(false);
 
     const [editing, setEditing] = useState(false);
 
@@ -37,7 +43,7 @@ const Profile = () => {
     //Fire user update
     const [doUpdate, setDoupdate] = useState(0);
     const [doPasswordUpdate, setDoPasswordUpdate] = useState(0);
-    
+
 
     //Fire password change
     const [doCheck, setDoCheck] = useState(0);
@@ -100,49 +106,63 @@ const Profile = () => {
             if (response.status === "NOT OK") {
                 let dialogprops = {
                     title: "Incorrect password",
-                    message: "You gave wrong oldpassword!",
+                    message: "Wrong old password!",
                 }
                 NotifyDialog(dialogprops);
                 setDoCheck(false);
-            } else {
-                // Second chech does new passwords match
-                if (false === checkMatch(newPassword1, newPassword2)) {
+            } 
+            else {
+
+                if (newPassword1.length === 0) {
                     let dialogprops = {
-                        title: "Check passwords",
-                        message: "New passwords doesn't match!",
+                        title: "Check new password",
+                        message: "You have to give something!",
                     }
                     NotifyDialog(dialogprops);
                     setDoCheck(false);
-                } else {
-
-                    // update password 
-                    user[0].password = newPassword1;
-                    const requestOptions = {
-                        method: 'PUT',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(user[0])
-                    };
-                    const responseU = await fetch("http://127.0.0.1:3001/user", requestOptions);
-                    let updated = await responseU.json();
-
-                    if (updated.status === "OK") {
-                        cancelSavePassword();
-                        setDoCheck(false);
+                } 
+                else {
+                    // Second chech does new passwords match
+                    if (false === checkMatch(newPassword1, newPassword2)) {
                         let dialogprops = {
-                            title: "Succes!",
-                            message: "Password changed succesfully!",
+                            title: "Check passwords",
+                            message: "New passwords doesn't match!",
                         }
                         NotifyDialog(dialogprops);
                         setDoCheck(false);
-                    } else {
-                        let dialogprops = {
-                            title: "Error",
-                            message: "Something went wrong updating password! Try again later.",
+                    } 
+                    else {
+
+                        // update password 
+                        user[0].password = newPassword1;
+                        const requestOptions = {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(user[0])
+                        };
+                        const responseU = await fetch("http://127.0.0.1:3001/user", requestOptions);
+                        let updated = await responseU.json();
+
+                        if (updated.status === "OK") {
+                            cancelSavePassword();
+                            setDoCheck(false);
+                            let dialogprops = {
+                                title: "Succes!",
+                                message: "Password changed succesfully!",
+                            }
+                            NotifyDialog(dialogprops);
+                            setDoCheck(false);
+                        } 
+                        else {
+                            let dialogprops = {
+                                title: "Error",
+                                message: "Something went wrong updating password! Try again later.",
+                            }
+                            NotifyDialog(dialogprops);
+                            setDoCheck(false);
                         }
-                        NotifyDialog(dialogprops);
-                        setDoCheck(false);
+
                     }
-
                 }
             }
         }
@@ -160,12 +180,56 @@ const Profile = () => {
     }
 
     const confirmUserDelete = () => {
-        if (window.confirm("Are you sure?")) {
+        let dialogprops = {
+            title: "HOX!",
+            message: "Are you sure?",
+            clickOk: () => {
+                setDeleteUser(true)
+            }
+        }
+        ConfirmDialog(dialogprops)
+    }
 
-        } else {
+    useEffect(() => {
+        const deleteUserFunc = async () => {
+            try {
+                const requestOptions = {
+                    method: 'delete'
+                };
+                const delResponse = await fetch("http://127.0.0.1:3001/user/" + user[0]._id, requestOptions);
+                let del = await delResponse.json();
+
+                if (del.status === "OK") {
+                    let dialogprops = {
+                        title: "Succes",
+                        message: "Account deleted succesfully",
+                    }
+
+                    NotifyDialog(dialogprops);
+                    history.push("/");
+                    localStorage.clear();
+                    window.location.reload();
+
+                } else {
+                    let dialogprops = {
+                        title: "Error",
+                        message: "Something went wrong!",
+                    }
+                    NotifyDialog(dialogprops);
+                }
+
+
+            } catch {
+                console.log("User delete failed");
+            }
 
         }
-    }
+
+        if (deleteUser === true) {
+            deleteUserFunc();
+        }
+
+    }, [deleteUser]);
 
     useEffect(() => {
         const updateUser = async () => {
@@ -291,6 +355,10 @@ const Profile = () => {
             validatePw();
     }, [newPassword1]);
 
+    const changePasswordClicked = () => {
+        setChangePassword(!changePassword)
+    }
+
     return (
         <ProfileContainer data-testid="profileContainer">
 
@@ -304,22 +372,27 @@ const Profile = () => {
                     <FormText>{pwInfo}</FormText>
                     <FormLabel>Confirm new password</FormLabel>
                     <FormInput type="password" value={newPassword2} onChange={(e) => (confirmPasswordChanged(e))} onBlur={() => setMatch(checkMatch(newPassword1, newPassword2))} />
-                    <FormButtonDelete onClick={() => { cancelSavePassword() }} >Cancel</FormButtonDelete>
+
                     {doCheck ?
-                        <LoaderContainer>
-                            <LoaderText>Loading</LoaderText>
+                        <>
+                            <LoaderText>Checkking</LoaderText>
                             <Loader
                                 type="TailSpin"
                                 color="#00BFFF"
                                 height={50}
                                 width={50}
                             />
-                        </LoaderContainer> : null}
-                    <FormButton onClick={() => { setDoPasswordUpdate(doPasswordUpdate +1) }} >Save password</FormButton>
+                        </> :
+                        <>
+                            <FormButton onClick={() => { setDoPasswordUpdate(doPasswordUpdate + 1) }} >Save password</FormButton>
+                            <FormButtonDelete onClick={() => { cancelSavePassword() }} >Cancel</FormButtonDelete>
+                        </>
+                    }
+
                 </UserContainer> :
                 searching ?
                     <LoaderContainer>
-                        <LoaderText>Loading</LoaderText>
+                        <LoaderText>Loading user data</LoaderText>
                         <Loader
                             type="TailSpin"
                             color="#00BFFF"
@@ -339,9 +412,9 @@ const Profile = () => {
                                 options={languageOptions}
                             />
                         </SelectContainer>
-                        <FormButton onClick={() => (editingChangged())}>{editingButtonText}</FormButton>
-                        <FormButton onClick={() => (setChangePassword(!changePassword))}>Change password</FormButton>
-                        <FormButtonDelete onClick={() => { confirmUserDelete() }}>Delete account</FormButtonDelete>
+                        <FormButton onClick={() => editingChangged()}>{editingButtonText}</FormButton>
+                        <FormButton onClick={() => changePasswordClicked()}>Change password</FormButton>
+                        <FormButtonDelete onClick={() => confirmUserDelete()}>Delete account</FormButtonDelete>
                     </UserContainer>
             }
 
