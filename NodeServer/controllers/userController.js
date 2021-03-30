@@ -116,10 +116,24 @@ module.exports = {
         let c = req.body;
         try {
             const client1 = new MongoClient(uri, { useUnifiedTopology: true });
+            const client2 = new MongoClient(uri, { useUnifiedTopology: true });
             // if username dont came with query send error
-            if (!c._id) {
-                res.json({ status: "NOT OK", msg: "Give id" });
+            if (!c._id || !c.password || !c.username || !c.email ||!c.learning) {
+                res.json({ status: "NOT OK", msg: "Check body, fields missing" });
             }
+
+            const checkName = await crud.findOne(client2, db, collection, { username: c.username });
+
+            if (!checkName) {
+                res.json({ status: "NOT OK", msg: "Username not found" });
+            }else{
+                //If password changed need to hash new password
+                if (!bcrypt.compareSync(c.password, checkName.password)) {
+                    const hashed = await bcrypt.hash(c.password, 10);
+                    c.password = hashed;   
+                }
+            }
+            
             let id = new ObjectId(c._id); // id of the audio in mongodb
             delete c._id; // remove id from update json
             const updated = await crud.updateOneUser(client1, db, collection, { "_id": id}, c);
@@ -131,7 +145,6 @@ module.exports = {
             }
         }
         catch (error) {
-
             res.json({ status: "NOT OK", msg: "Error finding user" });
         }
     }

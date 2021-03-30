@@ -9,7 +9,8 @@ import {
     FormInput,
     FormLabel,
     FormButton,
-    FormButtonDelete
+    FormButtonDelete,
+    FormText
 } from './ProfileElements';
 import Select from 'react-select';
 import kuva from '../../../images/AudioWave.jpg'
@@ -19,7 +20,8 @@ import {
     LoaderText,
     LoaderContainer
 } from '../searchElement/SearchElements'
-import { foundCorrectLabel } from './profileFunctions';
+import { foundCorrectLabel, checkMatch } from './profileFunctions';
+import NotifyDialog from '../../../dialogs/NotifyDialog';
 
 
 const Profile = () => {
@@ -34,6 +36,8 @@ const Profile = () => {
 
     //Fire user update
     const [doUpdate, setDoupdate] = useState(0);
+    const [doPasswordUpdate, setDoPasswordUpdate] = useState(0);
+    
 
     //Fire password change
     const [doCheck, setDoCheck] = useState(0);
@@ -45,6 +49,10 @@ const Profile = () => {
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword1, setNewPassword1] = useState("");
     const [newPassword2, setNewPassword2] = useState("");
+    const [pwInputVisited, setPwInputVisited] = useState(false);
+    const [pwInfo, setPwInfo] = useState("");
+
+    const [match, setMatch] = useState(false);
 
     const handleSelectClickLanguage = (param) => {
         setSelectedLanguage(param);
@@ -68,20 +76,93 @@ const Profile = () => {
             setEeditingButtonText("Save");
         } else {
             setEditing(false);
-            user[0].learning = selectedLanguage.value 
+
+            // if no changes we dont do anything
+            if (user[0].learning !== selectedLanguage.value) {
+                user[0].learning = selectedLanguage.value
+                setDoupdate(doUpdate + 1);
+            }
             setEeditingButtonText("Edit language");
-            //setDoupdate(doUpdate +1);
         }
     }
+    useEffect(() => {
+        const savePassword = async () => {
+            setDoCheck(true);
 
-    const savePassword = () => {
+            // First chech is the oldpassword correct
+            const requestOptions = {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+            };
+            const result = await fetch("http://127.0.0.1:3001/login?username=" + localStorage.getItem("user") + '&password=' + oldPassword, requestOptions);
+            let response = await result.json();
+
+            if (response.status === "NOT OK") {
+                let dialogprops = {
+                    title: "Incorrect password",
+                    message: "You gave wrong oldpassword!",
+                }
+                NotifyDialog(dialogprops);
+                setDoCheck(false);
+            } else {
+                // Second chech does new passwords match
+                if (false === checkMatch(newPassword1, newPassword2)) {
+                    let dialogprops = {
+                        title: "Check passwords",
+                        message: "New passwords doesn't match!",
+                    }
+                    NotifyDialog(dialogprops);
+                    setDoCheck(false);
+                } else {
+
+                    // update password 
+                    user[0].password = newPassword1;
+                    const requestOptions = {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(user[0])
+                    };
+                    const responseU = await fetch("http://127.0.0.1:3001/user", requestOptions);
+                    let updated = await responseU.json();
+
+                    if (updated.status === "OK") {
+                        cancelSavePassword();
+                        setDoCheck(false);
+                        let dialogprops = {
+                            title: "Succes!",
+                            message: "Password changed succesfully!",
+                        }
+                        NotifyDialog(dialogprops);
+                        setDoCheck(false);
+                    } else {
+                        let dialogprops = {
+                            title: "Error",
+                            message: "Something went wrong updating password! Try again later.",
+                        }
+                        NotifyDialog(dialogprops);
+                        setDoCheck(false);
+                    }
+
+                }
+            }
+        }
+
+        if (doPasswordUpdate > 0) {
+            savePassword();
+        }
+    }, [doPasswordUpdate]);
+
+    const cancelSavePassword = () => {
         setChangePassword(!changePassword);
+        setOldPassword("");
+        setNewPassword1("");
+        setNewPassword2("");
     }
 
     const confirmUserDelete = () => {
-        if(window.confirm("Are you sure?")){
+        if (window.confirm("Are you sure?")) {
 
-        }else{
+        } else {
 
         }
     }
@@ -89,20 +170,50 @@ const Profile = () => {
     useEffect(() => {
         const updateUser = async () => {
             setSearching(true);
-             // HUOM KEskes!!!!!!!!!!!
             try {
-                const url = "http://127.0.0.1:3001/user?username=" + localStorage.getItem("user");
-                const response = await fetch(url);
-                let rJson = await response.json();
+                const requestOptions = {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(user[0])
+                };
+                const responseU = await fetch("http://127.0.0.1:3001/user", requestOptions);
+                let updated = await responseU.json();
 
-                if (rJson.status === "OK") {
-                    setUser(rJson.found);
-                    setSelectedLanguage({ value: rJson.found[0].learning, label: foundCorrectLabel(rJson.found[0].learning) })
-                    setSearching(false);
+                //After update channe correct info to screen. In else notify user that update failed
+                if (updated.status === "OK") {
+                    const url = "http://127.0.0.1:3001/user?username=" + localStorage.getItem("user");
+                    const response = await fetch(url);
+                    let rJson = await response.json();
+
+                    if (rJson.status === "OK") {
+                        setUser(rJson.found);
+                        setSelectedLanguage({ value: rJson.found[0].learning, label: foundCorrectLabel(rJson.found[0].learning) })
+                        setSearching(false);
+                    }
+                    else {
+                        setSearching(false);
+                    }
+                } else {
+                    const url = "http://127.0.0.1:3001/user?username=" + localStorage.getItem("user");
+                    const response = await fetch(url);
+                    let rJson = await response.json();
+
+                    if (rJson.status === "OK") {
+                        setUser(rJson.found);
+                        setSelectedLanguage({ value: rJson.found[0].learning, label: foundCorrectLabel(rJson.found[0].learning) })
+                        setSearching(false);
+                    }
+                    else {
+                        setSearching(false);
+                    }
+                    let dialogprops = {
+                        title: "Update failed",
+                        message: "Update failed please try again later",
+                    }
+                    NotifyDialog(dialogprops);
                 }
-                else {
-                    setSearching(false);
-                }
+
+
             } catch {
                 console.log("User update failed");
                 setSearching(false);
@@ -144,50 +255,96 @@ const Profile = () => {
 
     }, []);
 
+    const pwFocus = () => {
+        setPwInputVisited(true);
+        validatePw();
+    }
+
+    const validatePw = () => {
+        let length = "Minimum length 8 characters\n";
+        let capital = "At least one uppercase letter (between A-Z)\n";
+        let lower = "At least one lowercase letter (between a-z)\n";
+        let number = "At least one number\n";
+
+        if (newPassword1.length >= 8) {
+            length = "";
+        }
+        if (newPassword1.match(/[A-Z]/g)) {
+            capital = "";
+        }
+        if (newPassword1.match(/[a-z]/g)) {
+            lower = "";
+        }
+        if (newPassword1.match(/[0-9]/g)) {
+            number = "";
+        }
+        if (length.length > 0 || capital.length > 0 || lower.length > 0 || number.length > 0) {
+            setPwInfo("Your password does not fulfill following requirements:\n" + length + capital + lower + number);
+        }
+        else {
+            setPwInfo("");
+        }
+    }
+
+    useEffect(() => {
+        if (pwInputVisited)
+            validatePw();
+    }, [newPassword1]);
 
     return (
         <ProfileContainer data-testid="profileContainer">
-            
-            {changePassword ? 
-            
-            <UserContainer>
-                <FormLabel>Old password</FormLabel>
-                <FormInput type="text"  value={oldPassword} onChange={(e) =>(oldPasswordChanged(e))}  />
-                <FormLabel>New password</FormLabel>
-                <FormInput type="text" value={newPassword1} onChange={(e) =>(passwordChanged(e))} />
-                <FormLabel>Confirm new password</FormLabel>
-                <FormInput type="text"  value={newPassword2} onChange={(e) =>(confirmPasswordChanged(e))} />
-                <FormButton onClick={() =>{savePassword()}} >Save password</FormButton>
-            </UserContainer>:
-            searching ?
-                <LoaderContainer>
-                    <LoaderText>Loading</LoaderText>
-                    <Loader
-                        type="TailSpin"
-                        color="#00BFFF"
-                        height={50}
-                        width={50}
-                    />
-                </LoaderContainer> :
+
+            {changePassword ?
 
                 <UserContainer>
-                    <Username>{user === undefined ? "testi" : user[0].username}</Username>
-                    <Learn>I want to learn:​</Learn>
-                    <UserImage src={kuva} />
-                    <SelectContainer>
-                        <Select
-                            isDisabled={!editing}
-                            value={selectedLanguage}
-                            onChange={handleSelectClickLanguage}
-                            options={languageOptions}
+                    <FormLabel>Old password</FormLabel>
+                    <FormInput type="password" value={oldPassword} onChange={(e) => (oldPasswordChanged(e))} />
+                    <FormLabel>New password</FormLabel>
+                    <FormInput type="password" value={newPassword1} onChange={(e) => (passwordChanged(e))} onFocus={() => pwFocus()} />
+                    <FormText>{pwInfo}</FormText>
+                    <FormLabel>Confirm new password</FormLabel>
+                    <FormInput type="password" value={newPassword2} onChange={(e) => (confirmPasswordChanged(e))} onBlur={() => setMatch(checkMatch(newPassword1, newPassword2))} />
+                    <FormButtonDelete onClick={() => { cancelSavePassword() }} >Cancel</FormButtonDelete>
+                    {doCheck ?
+                        <LoaderContainer>
+                            <LoaderText>Loading</LoaderText>
+                            <Loader
+                                type="TailSpin"
+                                color="#00BFFF"
+                                height={50}
+                                width={50}
+                            />
+                        </LoaderContainer> : null}
+                    <FormButton onClick={() => { setDoPasswordUpdate(doPasswordUpdate +1) }} >Save password</FormButton>
+                </UserContainer> :
+                searching ?
+                    <LoaderContainer>
+                        <LoaderText>Loading</LoaderText>
+                        <Loader
+                            type="TailSpin"
+                            color="#00BFFF"
+                            height={50}
+                            width={50}
                         />
-                    </SelectContainer>
-                    <FormButton onClick={() => (editingChangged())}>{editingButtonText}</FormButton>
-                    <FormButton onClick={() => (setChangePassword(!changePassword))}>Change password</FormButton>
-                    <FormButtonDelete onClick={() =>{confirmUserDelete()}}>Delete account</FormButtonDelete>
-                </UserContainer>
+                    </LoaderContainer> :
+
+                    <UserContainer>
+                        <Username>{user === undefined ? "testi" : user[0].username}</Username>
+                        <UserImage src={kuva} />
+                        <SelectContainer>
+                            <Select
+                                isDisabled={!editing}
+                                value={selectedLanguage}
+                                onChange={handleSelectClickLanguage}
+                                options={languageOptions}
+                            />
+                        </SelectContainer>
+                        <FormButton onClick={() => (editingChangged())}>{editingButtonText}</FormButton>
+                        <FormButton onClick={() => (setChangePassword(!changePassword))}>Change password</FormButton>
+                        <FormButtonDelete onClick={() => { confirmUserDelete() }}>Delete account</FormButtonDelete>
+                    </UserContainer>
             }
-        
+
 
 
         </ProfileContainer>

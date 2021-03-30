@@ -25,20 +25,27 @@ export const UserContainer = styled.div`
 `;
 
 export const UserImage = styled.img`
-      height: 100px;
-      width: 100px;
+      height: 150px;
+      width: 150px;
       border-radius: 5px;
-      margin:0.2rem;
+      margin:0.8rem;
+
 `;
 export const SelectContainer = styled.div`
-    margin:0.2rem;
-    width: 270px;
+    margin:0.8rem;
+    width: 200px;
 `;
 
 // Labels for diffrent form elements
 export const FormLabel = styled.label`
 
     color: ${CONh1};
+    margin:0.2rem;
+`;
+
+export const FormText = styled.p`
+
+    color: ${CONtext};
     margin:0.2rem;
 `;
 
@@ -55,14 +62,12 @@ export const FormInput = styled.input`
 
 
 export const FormButton = styled.button`
-    margin-left:1rem;
-    margin-right:1rem;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
+    width: 200px;
 `;
 
 export const FormButtonDelete = styled.button`
-    margin-left:1rem;
-    margin-right:1rem;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     background: red;
+    width: 200px;
 `;
