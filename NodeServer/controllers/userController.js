@@ -75,7 +75,7 @@ module.exports = {
                 res.json({ status: "NOT OK", msg: "Use username to find user" });
             }
 
-            const user = await crud.findOneUser(client1, db, collection, req.query)
+            const user = await crud.findOne(client1, db, collection, req.query)
 
             if (user) {
                 res.json({ status: "OK", found: user });
@@ -99,7 +99,7 @@ module.exports = {
                 res.json({ status: "NOT OK", msg: "Give id" });
             }
 
-            const deleted = await crud.deleteOneUser(client1, db, collection, { "_id": new ObjectId(c.id) });
+            const deleted = await crud.deleteOne(client1, db, collection, { "_id": new ObjectId(c.id) });
             if (deleted > 0) {
                 res.json({ status: "OK", msg: "User deleted succesfully" });
             }
@@ -118,20 +118,24 @@ module.exports = {
             const client1 = new MongoClient(uri, { useUnifiedTopology: true });
             const client2 = new MongoClient(uri, { useUnifiedTopology: true });
             // if username dont came with query send error
-            if (!c._id || !c.password || !c.username || !c.email ||!c.learning) {
+            if (!c._id || !c.username ) {
                 res.json({ status: "NOT OK", msg: "Check body, fields missing" });
             }
 
-            const checkName = await crud.findOne(client2, db, collection, { username: c.username });
+            //const checkName = await crud.findOne(client2, db, collection, { username: c.username });
 
-            if (!checkName) {
-                res.json({ status: "NOT OK", msg: "Username not found" });
-            }else{
-                //If password changed need to hash new password
-                if (!bcrypt.compareSync(c.password, checkName.password)) {
-                    const hashed = await bcrypt.hash(c.password, 10);
-                    c.password = hashed;   
-                }
+            // if (!checkName) {
+            //     res.json({ status: "NOT OK", msg: "Username not found" });
+            // }else{
+            //     //If password changed need to hash new password
+            //     if (!bcrypt.compareSync(c.password, checkName.password)) {
+            //         const hashed = await bcrypt.hash(c.password, 10);
+            //         c.password = hashed;   
+            //     }
+            // }
+            if (c.password){
+                const hashed = await bcrypt.hash(c.password, 10);
+                c.password = hashed;
             }
             
             let id = new ObjectId(c._id); // id of the audio in mongodb

@@ -22,6 +22,5 @@ export const checkMatch = (new1, new2) => {
         return true;
     }else{
         return false;
-    }
-    
+    } 
 }

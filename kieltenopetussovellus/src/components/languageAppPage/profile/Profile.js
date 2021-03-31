@@ -84,8 +84,8 @@ const Profile = () => {
             setEditing(false);
 
             // if no changes we dont do anything
-            if (user[0].learning !== selectedLanguage.value) {
-                user[0].learning = selectedLanguage.value
+            if (user.learning !== selectedLanguage.value) {
+                user.learning = selectedLanguage.value
                 setDoupdate(doUpdate + 1);
             }
             setEeditingButtonText("Edit language");
@@ -134,11 +134,11 @@ const Profile = () => {
                     else {
 
                         // update password 
-                        user[0].password = newPassword1;
+                        user.password = newPassword1;
                         const requestOptions = {
                             method: 'PUT',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(user[0])
+                            body: JSON.stringify({ _id: user._id , username: user.username, password: user.password })
                         };
                         const responseU = await fetch("http://127.0.0.1:3001/user", requestOptions);
                         let updated = await responseU.json();
@@ -196,17 +196,12 @@ const Profile = () => {
                 const requestOptions = {
                     method: 'delete'
                 };
-                const delResponse = await fetch("http://127.0.0.1:3001/user/" + user[0]._id, requestOptions);
+                const delResponse = await fetch("http://127.0.0.1:3001/user/" + user._id, requestOptions);
                 let del = await delResponse.json();
 
                 if (del.status === "OK") {
-                    let dialogprops = {
-                        title: "Succes",
-                        message: "Account deleted succesfully",
-                    }
-
-                    NotifyDialog(dialogprops);
-                    history.push("/");
+                    setSearching(true);  
+                    history.push("/");                
                     localStorage.clear();
                     window.location.reload();
 
@@ -238,7 +233,7 @@ const Profile = () => {
                 const requestOptions = {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(user[0])
+                    body: JSON.stringify({"_id": user._id , "username": user.username , "learning": user.learning })
                 };
                 const responseU = await fetch("http://127.0.0.1:3001/user", requestOptions);
                 let updated = await responseU.json();
@@ -251,7 +246,7 @@ const Profile = () => {
 
                     if (rJson.status === "OK") {
                         setUser(rJson.found);
-                        setSelectedLanguage({ value: rJson.found[0].learning, label: foundCorrectLabel(rJson.found[0].learning) })
+                        setSelectedLanguage({ value: rJson.found.learning, label: foundCorrectLabel(rJson.found.learning) })
                         setSearching(false);
                     }
                     else {
@@ -264,7 +259,7 @@ const Profile = () => {
 
                     if (rJson.status === "OK") {
                         setUser(rJson.found);
-                        setSelectedLanguage({ value: rJson.found[0].learning, label: foundCorrectLabel(rJson.found[0].learning) })
+                        setSelectedLanguage({ value: rJson.found.learning, label: foundCorrectLabel(rJson.found.learning) })
                         setSearching(false);
                     }
                     else {
@@ -302,7 +297,7 @@ const Profile = () => {
 
                 if (rJson.status === "OK") {
                     setUser(rJson.found);
-                    setSelectedLanguage({ value: rJson.found[0].learning, label: foundCorrectLabel(rJson.found[0].learning) })
+                    setSelectedLanguage({ value: rJson.found.learning, label: foundCorrectLabel(rJson.found.learning) })
                     setSearching(false);
                 }
                 else {
@@ -375,7 +370,7 @@ const Profile = () => {
 
                     {doCheck ?
                         <>
-                            <LoaderText>Checkking</LoaderText>
+                            <LoaderText>Checking</LoaderText>
                             <Loader
                                 type="TailSpin"
                                 color="#00BFFF"
@@ -402,7 +397,7 @@ const Profile = () => {
                     </LoaderContainer> :
 
                     <UserContainer>
-                        <Username>{user === undefined ? "testi" : user[0].username}</Username>
+                        <Username>{user === undefined ? "testi" : user.username}</Username>
                         <UserImage src={kuva} />
                         <SelectContainer>
                             <Select
