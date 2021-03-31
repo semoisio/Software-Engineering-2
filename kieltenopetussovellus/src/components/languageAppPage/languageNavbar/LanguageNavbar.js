@@ -6,7 +6,8 @@ import {
     Logo,
     NavBtn,
     NavBtnWrapper,
-    MobileIcon
+    MobileIcon,
+    SINavBtn
 } from './LanguageNavbarElements';
 
 const LanguageNavbar = ({toggle }) => {
@@ -26,11 +27,11 @@ const LanguageNavbar = ({toggle }) => {
         <LanguageNav>
             <Logo>GroupO</Logo>
             <NavBtnWrapper>
-                <NavBtn to="/" data-testid="navBtnSearch">Search and Listen</NavBtn>
-                <NavBtn to="/newrecording" data-testid="navBtnRecording">New recording</NavBtn>
-                <NavBtn to="/profile" data-testid="navBtnProfile">Profile</NavBtn>
-                <NavBtn to="/myaudio" data-testid="navBtnProfile">My audios</NavBtn>
-                <button onClick={handleLogout}>Sign out</button>
+                <NavBtn activeClassName="active" to="/" data-testid="navBtnSearch">Search and Listen</NavBtn>
+                <NavBtn activeClassName="active" to="/newrecording" data-testid="navBtnRecording">New recording</NavBtn>
+                <NavBtn activeClassName="active" to="/profile" data-testid="navBtnProfile">Profile</NavBtn>
+                <NavBtn activeClassName="active" to="/myaudio" data-testid="navBtnProfile">My audios</NavBtn>
+                <SINavBtn className="button1" onClick={handleLogout}>Sign out</SINavBtn>
             </NavBtnWrapper>
             <MobileIcon onClick={toggle}>
                 <FaBars />

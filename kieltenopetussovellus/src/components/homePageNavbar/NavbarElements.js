@@ -99,6 +99,7 @@ export const NavBtnLink = styled(NavLink)`
     //font-variant-caps: small-caps;
     padding: 1.8rem 1rem;
     cursor: pointer;
+    font-size: medium;
 
     &:active{
         border-bottom: 3px solid #FFC67C;

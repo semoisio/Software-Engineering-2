@@ -77,6 +77,29 @@ export const NavBtn = styled(NavLink)`
   }
 `;
 
+export const SINavBtn = styled.button`
+    color: #fff;
+    text-shadow: 1px 1px 2px #626262;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    padding: 1.8rem 1rem;
+    cursor: pointer;
+    margin: 0;
+    
+    &:active{
+        background: #C3EBC1;
+    }
+    &:hover{
+        transition: all 0.2s ease-in-out;
+        background: #1EB495;
+
+    }
+    &.${props => props.activeClassName} {
+        background: #1EB495;
+  }
+`;
+
 export const MobileIcon = styled.div`
     display: none;
 
