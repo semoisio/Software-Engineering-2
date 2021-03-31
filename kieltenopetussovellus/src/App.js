@@ -8,6 +8,7 @@ import SignIn from './components/signIn/SignIn';
 import LanguageAppHome from './components/languageAppPage/LanguageAppHome';
 import SignUpSuccess from './components/signUp/SignUpSuccess';
 import Confirm from './components/signUp/Confirm';
+import ProfileDeleted from './components/profileDeleted/ProfileDeleted';
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/signup" component={SignUp} />
+        <Route path="/profile" component={ProfileDeleted} />
         <Route path="/signupsuccess" component={SignUpSuccess} />
         <Route path="/confirm/:id" component={Confirm} />
         <Route path="/signin"><SignIn setUser={setUser} /></Route>

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {background,CONtext,CONh1,CONinput,RBbg,RBhover,RBtext,RBshadow } from '../../../tools/colors';
+import {CONtext,CONh1} from '../../../tools/colors';
 
 export const ProfileContainer = styled.div`
     display:flex;
@@ -68,6 +68,6 @@ export const FormButton = styled.button`
 
 export const FormButtonDelete = styled.button`
     margin-bottom: 5px;
-    background: red;
+    //background: red;
     width: 200px;
 `;
