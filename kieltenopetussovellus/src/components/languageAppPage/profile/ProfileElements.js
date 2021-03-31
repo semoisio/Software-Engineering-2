@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {CONtext,CONh1} from '../../../tools/colors';
+import {CONtext,CONh1,CONinput} from '../../../tools/colors';
 
 export const ProfileContainer = styled.div`
     display:flex;
