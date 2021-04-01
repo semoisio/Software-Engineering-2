@@ -19,7 +19,7 @@ import {
 } from './NewRecordingElements';
 import {
   LoaderContainer,
-    LoaderText,
+  LoaderText,
 } from '../searchElement/SearchElements';
 import { genreOptions, languageOptions, difficultyOptions } from '../../../tools/defaultOptions';
 import ConfirmDialog from '../../../dialogs/ConfirmDialog';
@@ -59,6 +59,15 @@ const NewRecording = () => {
     setDifficulty(e);
   }
 
+  const clearFields = () => {
+    setRecordedAudio(null);
+    setLanguage(null);
+    setTitle("");
+    setDesc("");
+    setGenre(null);
+    setDifficulty(null);
+  }
+
 
   const startRecording = () => {
     if (recordedAudio) {
@@ -67,6 +76,7 @@ const NewRecording = () => {
         message: "Previous audio will be lost if you start recording. Continue?",
         clickOk: () => {
           setRecording(true);
+          clearFields();
         }
       }
       ConfirmDialog(dialogprops);
@@ -94,7 +104,7 @@ const NewRecording = () => {
 
 
         // check that fields are given
-        if (language && username.length > 0 && title.length > 0 && desc.length > 0 && genre && difficulty) {
+        if (language && title.length > 0 && desc.length > 0 && genre && difficulty) {
           setUploading(true);
 
           // get blob from url
@@ -125,13 +135,7 @@ const NewRecording = () => {
               title: "Success",
               message: "Audio uploaded successfully.",
             }
-            setRecordedAudio(null);
-            setLanguage(null);
-            setUsername("");
-            setTitle("");
-            setDesc("");
-            setGenre(null);
-            setDifficulty(null);
+            clearFields();
           }
           else {
             dialogprops = {

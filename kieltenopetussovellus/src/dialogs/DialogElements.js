@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { NAVbg, CONinput, background } from '../tools/colors';
 
 export const DialogContainer = styled.div`
+    z-index: 999;
     display: flex;
     flex-direction: column;
     width: 400px;
@@ -41,13 +42,13 @@ export const DialogMessage = styled.p`
 
 export const ButtonContainer = styled.div`
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 `;
 
 export const DialogButton = styled.button`
-    width: 30%;
-    margin-left: 4px;
-    margin-right: 4px;
+    width: 20%;
+    margin-left: 10px;
+    margin-right: 10px;
 `;
 
 

@@ -24,36 +24,38 @@ ConfirmDialog(dialogprops);
 */
 
 const ConfirmDialog = (props) => {
-        const ui = ({ onClose }) => {
+    const ui = ({ onClose }) => {
 
-            const clickOk = () => {
-                props.clickOk();
-                onClose()
-            }
+        const clickOk = () => {
+            props.clickOk();
+            onClose()
+        };
 
-            const clickCancel = () => {
-                onClose()
-            }
+        const clickCancel = () => {
+            onClose()
+        };
 
-            return (
-                <DialogContainer>
-                    <TitleContainer>
-                        <DialogTitle>{props.title}</DialogTitle>
-                    </TitleContainer>
-                    <MessageContainer>
-                        <DialogMessage>{props.message}</DialogMessage>
-                    </MessageContainer>
-                    <ButtonContainer>
-                        <DialogButton onClick={() => clickOk()}>Ok</DialogButton>
-                        <DialogButton onClick={() => clickCancel()}>Cancel</DialogButton>
-                    </ButtonContainer>
-                </DialogContainer>
-            )
-        }
+        return (
+            <DialogContainer>
+                <TitleContainer>
+                    <DialogTitle>{props.title}</DialogTitle>
+                </TitleContainer>
+                <MessageContainer>
+                    <DialogMessage>{props.message}</DialogMessage>
+                </MessageContainer>
+                <ButtonContainer>
+                    <DialogButton onClick={() => clickOk()}>Ok</DialogButton>
+                    <DialogButton className="button2" onClick={() => clickCancel()}>Cancel</DialogButton>
+                </ButtonContainer>
+            </DialogContainer>
+        )
+    };
 
-        return confirmAlert({
-            customUI: ui
-        })
-    }
+    return confirmAlert({
+        customUI: ui,
+        closeOnClickOutside: false,
+        onClickOutside: () => { },
+    });
+}
 
 export default ConfirmDialog;
