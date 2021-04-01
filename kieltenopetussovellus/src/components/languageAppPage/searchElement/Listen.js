@@ -8,10 +8,16 @@ import {
     ListenButton,
     CommentInput,
     CommentContainer,
-
+    NotFound,
+    AudioPlayer,
+    RatingContainer,
 } from './ListenElements';
 import Comment from './Comment';
 import { genreOptions, languageOptions, difficultyOptions } from '../../../tools/defaultOptions';
+import notFound from '../../../images/notFound.png';
+import ReactStars from "react-rating-stars-component";
+import { CONh1 } from '../../../tools/colors';
+import { getRating, calculateRating, addRating } from './ratingFunctions';
 
 
 const Listen = (props) => {
@@ -21,6 +27,8 @@ const Listen = (props) => {
     const [back, setBack] = useState(0);
     // while searching show spinner
     const [searching, setSearching] = useState(false);
+    // fetching audio file
+    const [fetching, setFetching] = useState(false);
     // audio (file) that is fetched when this component is loaded
     const [audioFetched, setAudioFetched] = useState("");
     // information of audio
@@ -29,39 +37,80 @@ const Listen = (props) => {
     const [commentText, setCommentText] = useState("");
     // comment array
     const [commentArray, setCommentArray] = useState([[]]);
+    // user's rating
+    const [userRating, setUserRating] = useState(0);
+    // total rating
+    const [ratingValue, setRatingValue] = useState(0);
 
     const commentTextChanged = (e) => {
         setCommentText(e.target.value);
+    }
+
+    const updateRating = async () => {
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                _id: props.id,
+                rating: audioInfo.rating
+            })
+        };
+        const url = "http://127.0.0.1:3001/audio/";
+        const response = await fetch(url, requestOptions);
+        let result = await response.json();
+        if (result.status === "OK") {
+            haeAudioInfo();
+        }
+    }
+
+    const userRatingChanged = (newRating) => {
+        setUserRating(newRating);
+        addRating(username, newRating, audioInfo.rating);
+        updateRating();
     }
 
     const changeAudioInfo = (audio) => {
         let difficulty = difficultyOptions.find(x => x.value === audio.difficulty);
         let language = languageOptions.find(x => x.value === audio.language);
         let genre = genreOptions.find(x => x.value === audio.genre);
-
-        audio.difficulty = difficulty.label;
-        audio.language = language.label;
-        audio.genre = genre.label;
+        if (difficulty) {
+            audio.difficulty = difficulty.label;
+        }
+        if (language) {
+            audio.language = language.label;
+        }
+        if (genre) {
+            audio.genre = genre.label;
+        }
         setAudioInfo(audio);
-        setCommentArray(audio.comments);
+        if (audio.comments) {
+            setCommentArray(audio.comments);
+        }
+        if (audio.rating) {
+            setRatingValue(calculateRating(audio.rating));
+            let userHasRated = getRating(username, audio.rating);
+            if (userHasRated > 0) {
+                setUserRating(userHasRated);
+            }
+        }
     };
 
     const haeAudioFile = async () => {
-        setSearching(true);
+        setFetching(true);
         const url = "http://127.0.0.1:3001/audio?file=true&id=" + props.id;
         try {
             const response = await fetch(url).then(r => r.blob());
             if (response.type !== "application/json; charset=utf-8") {
                 setAudioFetched(URL.createObjectURL(response));
             }
-            setSearching(false);
 
         } catch {
             console.log("errors")
         }
         finally {
-            setSearching(false);
+            setFetching(false);
         }
+        
     };
 
     const haeAudioInfo = async () => {
@@ -72,15 +121,9 @@ const Listen = (props) => {
             const result = await response.json();
             if (result.status === "OK") {
                 changeAudioInfo(result.found[0]);
-                haeAudioFile();
-                setSearching(false);
             }
-            else {
-                setSearching(false);
-            }
-        } catch {
+        } catch (error) {
             console.log("errors")
-            setSearching(false);
         }
         finally {
             setSearching(false);
@@ -103,7 +146,6 @@ const Listen = (props) => {
         const url = "http://127.0.0.1:3001/audio/";
         const response = await fetch(url, requestOptions);
         let result = await response.json();
-        console.log(result)
         if (result.status === "OK") {
             haeAudioInfo();
             setCommentText("");
@@ -113,6 +155,7 @@ const Listen = (props) => {
     useEffect(() => {
         if (props.id !== null) {
             haeAudioInfo();
+            haeAudioFile();
         }
     }, []);
 
@@ -131,9 +174,9 @@ const Listen = (props) => {
             if (commentArray.length > 0) {
                 let comments = commentArray.map((t, index) => {
                     return <Comment
-                    key = {index}
-                    username = {t.username}
-                    comment = {t.comment}
+                        key={index}
+                        username={t.username}
+                        comment={t.comment}
                     />
                 });
                 return comments;
@@ -153,7 +196,6 @@ const Listen = (props) => {
         }
     }
 
-   
 
     return (
         <>
@@ -161,8 +203,7 @@ const Listen = (props) => {
                 props.id === null ? null :
                     searching ?
                         <Loader type="TailSpin" color="#00BFFF" height={50} width={50} /> :
-                        audioFetched === "" ?
-                            null :
+                        audioInfo === null ? <InfoText>Something went wrong...</InfoText> :
                             <ListenContainer>
                                 <InfoContainer>
                                     <Title>{audioInfo.title}</Title>
@@ -171,13 +212,40 @@ const Listen = (props) => {
                                     <InfoText>Difficulty: {audioInfo.difficulty}</InfoText>
                                     <InfoText>Language: {audioInfo.language}</InfoText>
                                     <InfoText>Genre: {audioInfo.genre}</InfoText>
-                                    <audio controls>
-                                        <source src={audioFetched} type="audio/webm" />
-                                    </audio>
+                                    <InfoText>Rating:</InfoText>
+                                    <ReactStars
+                                        count={5}
+                                        size={30}
+                                        activeColor={CONh1}
+                                        value={ratingValue}
+                                        edit={false}
+                                    />
+                                    {
+                                        fetching ? 
+                                        <Loader type="TailSpin" color="#00BFFF" height={50} width={50} /> :
+                                        audioFetched === "" ?
+                                            <InfoText>
+                                                <NotFound src={notFound}></NotFound>
+                                            File not found
+                                            </InfoText> :
+                                            <AudioPlayer controls>
+                                                <source src={audioFetched} type="audio/webm" />
+                                            </AudioPlayer>
+                                    }
+                                    <RatingContainer>
+                                        <InfoText>Rate audio:</InfoText>
+                                        <ReactStars
+                                            count={5}
+                                            onChange={userRatingChanged}
+                                            size={30}
+                                            activeColor={CONh1}
+                                            value={userRating}
+                                        />
+                                    </RatingContainer>
                                     <ListenButton onClick={() => clickBack()}>Back</ListenButton>
                                 </InfoContainer>
                                 <CommentContainer>
-                                    <InfoText>Comments:</InfoText>
+                                    <Title>Comments:</Title>
                                     <Comments />
                                     <InfoText>Give comments about audio:</InfoText>
                                     <CommentInput value={commentText} onChange={(e) => commentTextChanged(e)}></CommentInput>
