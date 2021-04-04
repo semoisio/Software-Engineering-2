@@ -23,12 +23,18 @@ import {
     EditButtonContainer,
     AudioPlayer
 } from './MyAudioElements';
+import {
+    PagesContainer,
+    WhatPage,
+    PageButton
+} from '../searchElement/SearchElements';
 import AudioContainer from './AudioContainer';
 import ConfirmDialog from '../../../dialogs/ConfirmDialog';
+import { splitAudios } from '../searchElement/searchFunctions';
 
 const MyAudio = () => {
-    // Array where finded audios are saved
-    const [audiot, setAudiot] = useState([]);
+    // Array where found audios are saved
+    const [audiot, setAudiot] = useState([[]]);
     // This state keeps track did search succeed or not
     const [error, setError] = useState(false);
     // State to toggle searching or no
@@ -39,6 +45,10 @@ const MyAudio = () => {
     const [username, setUsername] = useState(localStorage.getItem("user"));
     // audio file fetched for listening
     const [audioFetched, setAudioFetched] = useState("");
+    //Keep track what page we are showing
+    const [pageNum, setPageNum] = useState(0);
+    // count of audios
+    const [audioCount, setAudioCount] = useState(0);
 
     // fields for editing audio info
     const [language, setLanguage] = useState("");
@@ -67,6 +77,17 @@ const MyAudio = () => {
         setDifficulty(e);
     }
 
+    const changePage = (param) => {
+        if (param === "+") {
+            if (pageNum < audiot.length - 1) {
+                setPageNum(pageNum + 1);
+            }
+        } else {
+            if (pageNum > 0) {
+                setPageNum(pageNum - 1);
+            }
+        }
+    }
 
     // fetch user's audios from db
     const fetchAudio = async () => {
@@ -78,7 +99,8 @@ const MyAudio = () => {
 
             if (rJson.status === "OK") {
                 setError(false);
-                setAudiot(rJson.found);
+                setAudioCount(rJson.found.length);
+                setAudiot(splitAudios(rJson.found));
                 setSearching(false);
             }
             else {
@@ -182,7 +204,7 @@ const MyAudio = () => {
     }, [selectedAudio]);
 
     // map found audios to screen
-    const audioInside = audiot.map((t, index) => {
+    const audioInside = audiot[pageNum].map((t, index) => {
         return <AudioContainer
             key={index}
             image={audioimage}
@@ -201,8 +223,16 @@ const MyAudio = () => {
         <MyAudioContainer>
             <SearchContainer>
                 {
-                    audiot.length !== 0 ?
-                        <FoundCount>You have {audiot.length} recordings</FoundCount> : null
+                    audioCount > 0 ?
+                        <FoundCount>You have {audioCount} recordings</FoundCount> : null
+                }
+                {
+                    audiot[1] ?
+                        <PagesContainer>
+                            <PageButton onClick={() => { changePage("-") }}> {"<"}Previous</PageButton>
+                            <WhatPage>Page: {pageNum + 1}/{audiot.length}</WhatPage>
+                            <PageButton onClick={() => { changePage("+") }}>Next{">"}</PageButton>
+                        </PagesContainer> : null
                 }
                 {
                     searching ?

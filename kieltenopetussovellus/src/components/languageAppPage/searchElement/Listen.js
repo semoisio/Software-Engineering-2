@@ -12,12 +12,18 @@ import {
     AudioPlayer,
     RatingContainer,
 } from './ListenElements';
+import {
+    PagesContainer,
+    WhatPage,
+    PageButton
+} from './SearchElements';
 import Comment from './Comment';
 import { genreOptions, languageOptions, difficultyOptions } from '../../../tools/defaultOptions';
 import notFound from '../../../images/notFound.png';
 import ReactStars from "react-rating-stars-component";
 import { CONh1 } from '../../../tools/colors';
 import { getRating, calculateRating, addRating } from './ratingFunctions';
+import { splitAudios } from './searchFunctions';
 
 
 const Listen = (props) => {
@@ -41,9 +47,23 @@ const Listen = (props) => {
     const [userRating, setUserRating] = useState(0);
     // total rating
     const [ratingValue, setRatingValue] = useState(0);
+    //Keep track what page we are showing
+    const [pageNum, setPageNum] = useState(0);
 
     const commentTextChanged = (e) => {
         setCommentText(e.target.value);
+    }
+
+    const changePage = (param) => {
+        if (param === "+") {
+            if (pageNum < commentArray.length - 1) {
+                setPageNum(pageNum + 1);
+            }
+        } else {
+            if (pageNum > 0) {
+                setPageNum(pageNum - 1);
+            }
+        }
     }
 
     const updateRating = async () => {
@@ -84,7 +104,7 @@ const Listen = (props) => {
         }
         setAudioInfo(audio);
         if (audio.comments) {
-            setCommentArray(audio.comments);
+            setCommentArray(splitAudios(audio.comments));
         }
         if (audio.rating) {
             setRatingValue(calculateRating(audio.rating));
@@ -110,7 +130,7 @@ const Listen = (props) => {
         finally {
             setFetching(false);
         }
-        
+
     };
 
     const haeAudioInfo = async () => {
@@ -172,7 +192,7 @@ const Listen = (props) => {
     const Comments = () => {
         if (audioInfo !== null) {
             if (commentArray.length > 0) {
-                let comments = commentArray.map((t, index) => {
+                let comments = commentArray[pageNum].map((t, index) => {
                     return <Comment
                         key={index}
                         username={t.username}
@@ -221,16 +241,16 @@ const Listen = (props) => {
                                         edit={false}
                                     />
                                     {
-                                        fetching ? 
-                                        <Loader type="TailSpin" color="#00BFFF" height={50} width={50} /> :
-                                        audioFetched === "" ?
-                                            <InfoText>
-                                                <NotFound src={notFound}></NotFound>
+                                        fetching ?
+                                            <Loader type="TailSpin" color="#00BFFF" height={50} width={50} /> :
+                                            audioFetched === "" ?
+                                                <InfoText>
+                                                    <NotFound src={notFound}></NotFound>
                                             File not found
                                             </InfoText> :
-                                            <AudioPlayer controls>
-                                                <source src={audioFetched} type="audio/webm" />
-                                            </AudioPlayer>
+                                                <AudioPlayer controls>
+                                                    <source src={audioFetched} type="audio/webm" />
+                                                </AudioPlayer>
                                     }
                                     <RatingContainer>
                                         <InfoText>Rate audio:</InfoText>
@@ -245,6 +265,14 @@ const Listen = (props) => {
                                     <ListenButton onClick={() => clickBack()}>Back</ListenButton>
                                 </InfoContainer>
                                 <CommentContainer>
+                                    {
+                                        commentArray[1] ?
+                                            <PagesContainer>
+                                                <PageButton onClick={() => { changePage("-") }}> {"<"}Previous</PageButton>
+                                                <WhatPage>Page: {pageNum + 1}/{commentArray.length}</WhatPage>
+                                                <PageButton onClick={() => { changePage("+") }}>Next{">"}</PageButton>
+                                            </PagesContainer> : null
+                                    }
                                     <Title>Comments:</Title>
                                     <Comments />
                                     <InfoText>Give comments about audio:</InfoText>
