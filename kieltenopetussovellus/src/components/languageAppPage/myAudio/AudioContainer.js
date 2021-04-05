@@ -26,6 +26,7 @@ const AudioContainer = (props) => {
             "difficulty": props.difficulty
         };
         props.setSelectedAudio(audio);
+        props.setIsOpen(true);
     }
 
 

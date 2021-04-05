@@ -18,7 +18,6 @@ export const SearchContainer = styled.div`
     @media screen and (max-width: 768px){
         width: 100%;
         margin-right: 16px;
-        display: flex;
         flex-direction:column;
         transition: all 1s;
     }
@@ -26,16 +25,25 @@ export const SearchContainer = styled.div`
 
 // container for editing selected audio info
 export const EditContainer = styled.div`
-    width:30%;
     display:flex;
+    width:30%;
     flex-direction:column;
+    opacity: ${({ isOpen }) => (isOpen ? '100%' : '0')}; 
+    transition: all 0.3s;
+    min-height:80vh;
 
     @media screen and (max-width: 768px){
+        position: fixed;
         width: 100%;
-        margin-right: 16px;
         display: flex;
-        flex-direction:column;
-        transition: all 1s;
+        flex-direction:column;  
+        z-index: 998;
+        opacity: ${({ isOpen }) => (isOpen ? '100%' : '0')}; 
+        top: ${({ isOpen }) => (isOpen ? '80px' : '-100%')};
+        bottom: ${({ isOpen }) => (isOpen ? 0 : null)};
+        transition: 0.3s ease-in-out;
+        background: ${background};
+        overflow: auto;
     }
 `;
 

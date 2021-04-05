@@ -41,6 +41,8 @@ const MyAudio = () => {
     const [searching, setSearching] = useState(false);
     // Audio selected for editing
     const [selectedAudio, setSelectedAudio] = useState(null);
+
+    const [isOpen, setIsOpen] = useState(false);
     // username
     const [username, setUsername] = useState(localStorage.getItem("user"));
     // audio file fetched for listening
@@ -105,12 +107,12 @@ const MyAudio = () => {
             }
             else {
                 setError(true);
-                setAudiot([]);
+                setAudiot([[]]);
                 setSearching(false);
             }
         } catch {
             console.log("Audio search failed");
-            setSearching(true);
+            setSearching(false);
         }
     };
 
@@ -137,6 +139,7 @@ const MyAudio = () => {
 
     // update audio info
     const updateAudio = async (audio) => {
+        setSearching(true);
         const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -148,6 +151,8 @@ const MyAudio = () => {
         if (result.status === "OK") {
             fetchAudio();
             setSelectedAudio(null);
+        }else{
+            setSearching(false);
         }
     };
 
@@ -166,6 +171,7 @@ const MyAudio = () => {
 
     // user saves audio info
     const clickSave = (e) => {
+        //setSearching(true);
         e.preventDefault();
         if (selectedAudio) {
             let updatedAudio = {
@@ -177,6 +183,7 @@ const MyAudio = () => {
                 "difficulty": difficulty.value
             }
             updateAudio(updatedAudio);
+            setIsOpen(false);
         }
     };
 
@@ -184,6 +191,7 @@ const MyAudio = () => {
     const clickCancel = (e) => {
         e.preventDefault();
         setSelectedAudio(null);
+        setIsOpen(false);
     };
 
     // first time loading page
@@ -216,12 +224,13 @@ const MyAudio = () => {
             difficulty={t.difficulty}
             deleteAudio={deleteAudio}
             setSelectedAudio={setSelectedAudio}
+            setIsOpen={setIsOpen}
         />
     });
 
     return (
         <MyAudioContainer>
-            <SearchContainer>
+            <SearchContainer isOpen={isOpen}>
                 {
                     audioCount > 0 ?
                         <FoundCount>You have {audioCount} recordings</FoundCount> : null
@@ -254,56 +263,53 @@ const MyAudio = () => {
                             : audioInside
                 }
             </SearchContainer>
-            <EditContainer>
-                {
-                    selectedAudio ?
-                        <MyAudioForm>
-                            <Title>Edit audio information</Title>
-                            {
-                                audioFetched !== "" ?
-                                    <AudioPlayer controls>
-                                        <source src={audioFetched} type="audio/webm" />
-                                    </AudioPlayer> : null
+            <EditContainer isOpen={isOpen}>
+                <MyAudioForm >
+                    <Title>Edit audio information</Title>
+                    {
+                        audioFetched !== "" ?
+                            <AudioPlayer controls>
+                                <source src={audioFetched} type="audio/webm" />
+                            </AudioPlayer> : null
 
-                            }
-                            <FormLabel htmlFor="for" >Language</FormLabel>
-                            <SelectContainer>
-                                <Select
-                                    value={language}
-                                    onChange={languageChanged}
-                                    options={languageOptions}
-                                />
-                            </SelectContainer>
+                    }
+                    <FormLabel htmlFor="for" >Language</FormLabel>
+                    <SelectContainer>
+                        <Select
+                            value={language}
+                            onChange={languageChanged}
+                            options={languageOptions}
+                        />
+                    </SelectContainer>
 
-                            <FormLabel htmlFor="for" >Title</FormLabel>
-                            <FormInput type="text" value={title} onChange={(e) => titleChanged(e)} defa></FormInput>
+                    <FormLabel htmlFor="for" >Title</FormLabel>
+                    <FormInput type="text" value={title} onChange={(e) => titleChanged(e)} defa></FormInput>
 
-                            <FormLabel htmlFor="for" >Description</FormLabel>
-                            <FormDesc type="textarea" value={desc} onChange={(e) => descChanged(e)}></FormDesc>
+                    <FormLabel htmlFor="for" >Description</FormLabel>
+                    <FormDesc type="textarea" value={desc} onChange={(e) => descChanged(e)}></FormDesc>
 
-                            <FormLabel htmlFor="for" >Genre</FormLabel>
-                            <SelectContainer>
-                                <Select
-                                    value={genre}
-                                    onChange={genreChanged}
-                                    options={genreOptions}
-                                />
-                            </SelectContainer>
+                    <FormLabel htmlFor="for" >Genre</FormLabel>
+                    <SelectContainer>
+                        <Select
+                            value={genre}
+                            onChange={genreChanged}
+                            options={genreOptions}
+                        />
+                    </SelectContainer>
 
-                            <FormLabel htmlFor="for" >Difficulty</FormLabel>
-                            <SelectContainer>
-                                <Select
-                                    value={difficulty}
-                                    onChange={difficultyChanged}
-                                    options={difficultyOptions}
-                                />
-                            </SelectContainer>
-                            <EditButtonContainer>
-                                <EditButton onClick={(e) => clickSave(e)}>Save</EditButton>
-                                <EditButton onClick={(e) => clickCancel(e)}>Cancel</EditButton>
-                            </EditButtonContainer>
-                        </MyAudioForm> : null
-                }
+                    <FormLabel htmlFor="for" >Difficulty</FormLabel>
+                    <SelectContainer>
+                        <Select
+                            value={difficulty}
+                            onChange={difficultyChanged}
+                            options={difficultyOptions}
+                        />
+                    </SelectContainer>
+                    <EditButtonContainer>
+                        <EditButton onClick={(e) => clickSave(e)}>Save</EditButton>
+                        <EditButton onClick={(e) => clickCancel(e)}>Cancel</EditButton>
+                    </EditButtonContainer>
+                </MyAudioForm>
             </EditContainer>
         </MyAudioContainer>
     )
