@@ -64,12 +64,18 @@ const MyAudio = () => {
     }
 
     const titleChanged = (e) => {
-        setTitle(e.target.value);
-    }
-
-    const descChanged = (e) => {
-        setDesc(e.target.value);
-    }
+        let title = e.target.value;
+        if (title.length <= 50) {
+          setTitle(title);
+        }
+      }
+    
+      const descChanged = (e) => {
+        let desc = e.target.value;
+        if (desc.length <= 300) {
+          setDesc(desc);
+        }
+      }
 
     const genreChanged = (e) => {
         setGenre(e);
