@@ -46,7 +46,7 @@ export const ButtonContainer = styled.div`
 `;
 
 export const DialogButton = styled.button`
-    width: 20%;
+    width: 30%;
     margin-left: 10px;
     margin-right: 10px;
 `;
