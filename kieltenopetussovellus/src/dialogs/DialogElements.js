@@ -5,7 +5,7 @@ export const DialogContainer = styled.div`
     z-index: 999;
     display: flex;
     flex-direction: column;
-    width: 400px;
+    width: 280px;
     height: 200px;
     border: 4px ${CONinput} solid;
     border-radius: 4px;

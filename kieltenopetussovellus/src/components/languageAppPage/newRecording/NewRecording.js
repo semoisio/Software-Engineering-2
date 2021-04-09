@@ -16,6 +16,10 @@ import {
   FormDesc,
   RecordingMic,
   AudioPlayer,
+  QuizContainer,
+  QuizCheck,
+  QuestionAnswer,
+  UploadButtonContainer,
 } from './NewRecordingElements';
 import {
   LoaderContainer,
@@ -38,6 +42,15 @@ const NewRecording = () => {
   const [genre, setGenre] = useState("");
   const [difficulty, setDifficulty] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [chkQuiz, setChkQuiz] = useState(false);
+
+  // quiz inputs
+  const [q1, setQ1] = useState("");
+  const [q2, setQ2] = useState("");
+  const [q3, setQ3] = useState("");
+  const [a1, setA1] = useState("");
+  const [a2, setA2] = useState("");
+  const [a3, setA3] = useState("");
 
   const languageChanged = (e) => {
     setLanguage(e);
@@ -59,6 +72,29 @@ const NewRecording = () => {
     setDifficulty(e);
   }
 
+  const chkQuizChanged = () => {
+    setChkQuiz(!chkQuiz);
+  }
+
+  const q1Changed = (e) => {
+    setQ1(e.target.value);
+  }
+  const q2Changed = (e) => {
+    setQ2(e.target.value);
+  }
+  const q3Changed = (e) => {
+    setQ3(e.target.value);
+  }
+  const a1Changed = (e) => {
+    setA1(e.target.value);
+  }
+  const a2Changed = (e) => {
+    setA2(e.target.value);
+  }
+  const a3Changed = (e) => {
+    setA3(e.target.value);
+  }
+
   const clearFields = () => {
     setRecordedAudio(null);
     setLanguage(null);
@@ -66,6 +102,16 @@ const NewRecording = () => {
     setDesc("");
     setGenre(null);
     setDifficulty(null);
+    clearQuiz();
+  }
+
+  const clearQuiz = () => {
+    setQ1("");
+    setQ2("");
+    setQ3("");
+    setA1("");
+    setA2("");
+    setA3("");
   }
 
 
@@ -94,6 +140,17 @@ const NewRecording = () => {
     setRecordedAudio(recordedBlob);
   }
 
+  const validateQuiz = () => {
+    let message = "";
+    if (q1.length > 0 && a1.length === 0 || q2.length > 0 && a2.length === 0 || q3.length > 0 && a3.length === 0) {
+      message = "Give answer to each question.";
+    }
+    else if (q1.length === 0 && a1.length > 0 || q2.length === 0 && a2.length > 0 || q3.length === 0 && a3.length > 0) {
+      message = "Dont use empty questions.";
+    }
+    return message;
+  }
+
   const uploadAudio = async () => {
     let dialogprops = null;
     // while not recordin
@@ -105,7 +162,7 @@ const NewRecording = () => {
 
         // check that fields are given
         if (language && title.length > 0 && desc.length > 0 && genre && difficulty) {
-          setUploading(true);
+
 
           // get blob from url
           let blob = await fetch(recordedAudio.blobURL).then(r => r.blob());
@@ -121,29 +178,63 @@ const NewRecording = () => {
           fd.append('genre', genre.value);
           fd.append('difficulty', difficulty.value);
 
-          // send formdata to server
-          const requestOptions = {
-            method: 'POST',
-            body: fd
-          };
-          const result = await fetch("http://127.0.0.1:3001/audio", requestOptions);
-          let response = await result.json();
-          setUploading(false);
-
-          if (response.status === "OK") {
-            dialogprops = {
-              title: "Success",
-              message: "Audio uploaded successfully.",
+          // add quiz
+          let quiz = [];
+          if (chkQuiz) {
+            let message = validateQuiz();
+            if (message !== "") {
+              dialogprops = {
+                title: "Check quiz",
+                message: message,
+              }
             }
-            clearFields();
+            else {
+              if (q1.length > 0) {
+                quiz.push({ question: q1, answer: a1 });
+              }
+              if (q2.length > 0) {
+                quiz.push({ question: q2, answer: a2 });
+              }
+              if (q3.length > 0) {
+                quiz.push({ question: q3, answer: a3 });
+              }
+            }
           }
-          else {
-            dialogprops = {
-              title: "Error",
-              message: response.msg + ".",
+          // sending quiz as string and parsing it back to array in server
+          fd.append('quiz', JSON.stringify(quiz));
+
+          // if quiz was ok
+          if (dialogprops === null) {
+            setUploading(true);
+            // send formdata to server
+            const requestOptions = {
+              method: 'POST',
+              body: fd
+            };
+            const result = await fetch("http://127.0.0.1:3001/audio", requestOptions);
+            let response = await result.json();
+            setUploading(false);
+
+            if (response.status === "OK") {
+              dialogprops = {
+                title: "Success",
+                message: "Audio uploaded successfully.",
+              }
+              clearFields();
             }
+            else {
+              dialogprops = {
+                title: "Error",
+                message: response.msg + ".",
+              }
+            }
+          }
+          // quiz not ok 
+          else {
+            NotifyDialog(dialogprops);
           }
         }
+        // audio info missing
         else {
           dialogprops = {
             title: "Missing information",
@@ -151,7 +242,7 @@ const NewRecording = () => {
           }
         }
       }
-
+      // audio not recorded
       else {
         dialogprops = {
           title: "Missing audio",
@@ -159,6 +250,7 @@ const NewRecording = () => {
         }
       }
     }
+    // recording ongoing
     else {
       dialogprops = {
         title: "Recording in progress",
@@ -238,7 +330,40 @@ const NewRecording = () => {
                         options={difficultyOptions}
                       />
                     </SelectContainer>
-                    <FormButton onClick={() => uploadAudio()} type="button">Upload</FormButton>
+
+                    <FormLabel htmlFor="for" >
+                      <QuizCheck type="checkbox"
+                        checked={chkQuiz}
+                        onChange={(e) => chkQuizChanged(e)} />
+                      Add quiz
+                    </FormLabel>
+                    {
+                      chkQuiz ?
+                        <QuizContainer>
+                          <QuestionAnswer>
+                            <FormLabel htmlFor="for" >Question 1</FormLabel>
+                            <FormInput type="text" value={q1} onChange={(e) => { q1Changed(e) }}></FormInput>
+                            <FormLabel htmlFor="for">Answer</FormLabel>
+                            <FormInput type="text" value={a1} onChange={(e) => { a1Changed(e) }}></FormInput>
+                          </QuestionAnswer>
+                          <QuestionAnswer>
+                            <FormLabel htmlFor="for">Question 2 (optional)</FormLabel>
+                            <FormInput type="text" value={q2} onChange={(e) => { q2Changed(e) }}></FormInput>
+                            <FormLabel htmlFor="for">Answer</FormLabel>
+                            <FormInput type="text" value={a2} onChange={(e) => { a2Changed(e) }}></FormInput>
+                          </QuestionAnswer><QuestionAnswer>
+                            <FormLabel htmlFor="for">Question 3 (optional)</FormLabel>
+                            <FormInput type="text" value={q3} onChange={(e) => { q3Changed(e) }}></FormInput>
+                            <FormLabel htmlFor="for">Answer</FormLabel>
+                            <FormInput type="text" value={a3} onChange={(e) => { a3Changed(e) }}></FormInput>
+                          </QuestionAnswer>
+                          <FormButton onClick={() => clearQuiz()} type="button">Clear quiz</FormButton>
+                        </QuizContainer> : null
+                    }
+                    <UploadButtonContainer>
+                      <FormButton onClick={() => uploadAudio()} type="button">Upload</FormButton>
+                      <FormButton onClick={() => clearFields()} type="button">Cancel</FormButton>
+                    </UploadButtonContainer>
                   </RecordingForm>
                 </InfoContainer> : null
             }
