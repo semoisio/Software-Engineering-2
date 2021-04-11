@@ -8,10 +8,12 @@ import {
 	IntroH1,
 	IntroText,
 	NavBtn,
-	IntroButton,
-	Footer,
-	FooterLink
+	IntroButton
 } from './IntroPageElementsJS';
+
+import { Footer, FooterLink } from '../footer/FooterElements';
+import PrivacyPolicy from '../footer/PrivacyPolicy.pdf';
+
 
 function IntroPageJS() {
 	return (
@@ -31,9 +33,9 @@ function IntroPageJS() {
 					</NavBtn>
 				</IntroPageMain>
 				<Footer>
-					<FooterLink to='/'>Terms and Conditions</FooterLink>
-					<FooterLink to='/'>Privacy Policy</FooterLink>
-					<FooterLink to='/'>About us</FooterLink>
+					<FooterLink to= {PrivacyPolicy} target= "_blank">Terms and Conditions</FooterLink>
+					<FooterLink to= {PrivacyPolicy} target= "_blank">Privacy policy</FooterLink>
+					<FooterLink to= {PrivacyPolicy} target= "_blank">About us</FooterLink>
 				</Footer>
 			</IntroPageContainer>
 
