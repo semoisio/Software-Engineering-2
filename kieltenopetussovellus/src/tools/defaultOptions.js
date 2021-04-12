@@ -7,9 +7,12 @@ export const genreOptions = [
 ];
 
 export const languageOptions = [
-  { value: "en", label: "English" },
-  { value: "fi", label: "Finnish" }
-];
+    { value: "en", label: "English" },
+    { value: "fi", label: "Finnish" },
+    { value: "esp", label: "Spanish" },
+    { value: "ger", label: "German" },
+    { value: "swe", label: "Swedish" }
+  ];
 
 export const difficultyOptions = [
   { value: "beginner", label: "Beginner" },

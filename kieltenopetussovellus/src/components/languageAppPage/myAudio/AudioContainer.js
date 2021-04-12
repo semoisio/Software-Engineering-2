@@ -12,6 +12,7 @@ import {
     SearchButton,
     AudioPlayer,
 } from './MyAudioElements'
+import {getFlag} from '../../../tools/flagFunction';
 
 const AudioContainer = (props) => {
     const [searching, setSearching] = useState(false);
@@ -32,7 +33,7 @@ const AudioContainer = (props) => {
 
     return (
         <OneAudioContainer>
-            <AudioImage src={props.image} />
+            <AudioImage src={getFlag(props.language)} />
             <AudioTextContainer>
                 <AudioTitle>{props.title}</AudioTitle>
                 <AudioDescription>{props.desc}</AudioDescription>
