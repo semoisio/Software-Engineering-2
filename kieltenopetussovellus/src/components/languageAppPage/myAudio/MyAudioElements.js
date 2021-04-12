@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { background, CONtext, CONh1, CONinput, RBbg, RBhover, RBtext, RBshadow } from '../../../tools/colors';
+import Select from 'react-select';
 
 // container for whole page
 export const MyAudioContainer = styled.div`
@@ -165,9 +166,15 @@ export const LoaderText = styled.h1`
     margin-right: 1rem;
 `;
 
-export const FoundCount = styled.div`
-    margin-left: 16px;
-    margin-top: 1rem;
-    color:${CONh1};
-    font-size: 1.1rem;
+export const SortContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+`;
+
+export const SelectInput = styled(Select)`
+    min-width: 150px;
+    margin-left:1rem;
+    margin-right:1rem;
+    margin-bottom: 8px;
 `;
