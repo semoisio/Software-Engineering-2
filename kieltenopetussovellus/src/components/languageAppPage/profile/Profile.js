@@ -22,6 +22,8 @@ import {
 import { foundCorrectLabel, checkMatch } from './profileFunctions';
 import NotifyDialog from '../../../dialogs/NotifyDialog';
 import ConfirmDialog from '../../../dialogs/ConfirmDialog';
+import {getFlag} from '../../../tools/flagFunction';
+
 
 const Profile = () => {
     // State to toggle searching or no
@@ -519,7 +521,7 @@ const Profile = () => {
 
                         <UserContainer>
                             <Username>{user === undefined ? "testi" : user.username}</Username>
-                            <UserImage src={kuva} />
+                            <UserImage src={user ? getFlag(user.learning) : kuva} />
                             <SelectContainer>
                                 <Select
                                     isDisabled={!editing}
