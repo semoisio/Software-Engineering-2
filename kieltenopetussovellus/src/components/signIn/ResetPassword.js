@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Footer, FooterLink } from '../homePage/IntroPageElementsJS';
+import { Footer, FooterLink } from '../footer/FooterElements';
 import Navbar from '../homePageNavbar/Navbar';
 import SideBar from '../homePageNavbar/SideBar';
 import { Link } from "react-router-dom";

@@ -1,6 +1,6 @@
 import Navbar from '../homePageNavbar/Navbar';
 import SideBar from '../homePageNavbar/SideBar';
-import { Footer, FooterLink } from '../homePage/IntroPageElementsJS';
+import { Footer, FooterLink } from '../footer/FooterElements';
 import crypto from 'crypto';
 import Loader from "react-loader-spinner";
 import {
