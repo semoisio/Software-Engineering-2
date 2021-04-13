@@ -11,6 +11,8 @@ import {
     NotFound,
     AudioPlayer,
     RatingContainer,
+    QuizContainer,
+    StarContainer,
 } from './ListenElements';
 import {
     PagesContainer,
@@ -24,6 +26,7 @@ import ReactStars from "react-rating-stars-component";
 import { CONh1 } from '../../../tools/colors';
 import { getRating, calculateRating, addRating } from './ratingFunctions';
 import { splitAudios } from './searchFunctions';
+import Quiz from './Quiz';
 
 
 const Listen = (props) => {
@@ -49,9 +52,28 @@ const Listen = (props) => {
     const [ratingValue, setRatingValue] = useState(0);
     //Keep track what page we are showing
     const [pageNum, setPageNum] = useState(0);
+    // show quiz or not
+    const [showQuiz, setShowQuiz] = useState(false);
+    // show answers or not
+    const [answer, setAnswer] = useState(false);
 
     const commentTextChanged = (e) => {
         setCommentText(e.target.value);
+    }
+
+    const clickTakeQuiz = () => {
+        setShowQuiz(true);
+    }
+
+    const clickHideQuiz = () => {
+        setShowQuiz(false);
+    }
+
+    const clickShowAnswers = () => {
+        setAnswer(true);
+    }
+    const clickHideAnswers = () => {
+        setAnswer(false);
     }
 
     const changePage = (param) => {
@@ -208,11 +230,43 @@ const Listen = (props) => {
         else {
             return null;
         }
-    }
+    };
 
     const clickSend = () => {
         if (commentText.length > 0 && audioInfo !== null) {
             addComment();
+        }
+    };
+
+    const AudioQuiz = () => {
+        if (audioInfo !== null) {
+            if (audioInfo.quiz.length > 0) {
+                let audioQuiz = audioInfo.quiz.map((t, index) => {
+                    return (
+                        <Quiz
+                            key={index}
+                            question={t.question}
+                            answer={t.answer}
+                            showAnswer={answer}
+                        />
+                    )
+                });
+                return (
+                    <QuizContainer>
+                        {audioQuiz}
+                        { answer ?
+                            <ListenButton onClick={() => clickHideAnswers()}>Hide answers</ListenButton> :
+                            <ListenButton onClick={() => clickShowAnswers()}>Show answers</ListenButton>
+                        }
+                    </QuizContainer>
+                );
+            }
+            else {
+                return <InfoText>No quiz has been made for this audio</InfoText>;
+            }
+        }
+        else {
+            return null;
         }
     }
 
@@ -233,13 +287,15 @@ const Listen = (props) => {
                                     <InfoText>Language: {audioInfo.language}</InfoText>
                                     <InfoText>Genre: {audioInfo.genre}</InfoText>
                                     <InfoText>Rating:</InfoText>
-                                    <ReactStars
-                                        count={5}
-                                        size={30}
-                                        activeColor={CONh1}
-                                        value={ratingValue}
-                                        edit={false}
-                                    />
+                                    <StarContainer>
+                                        <ReactStars
+                                            count={5}
+                                            size={30}
+                                            activeColor={CONh1}
+                                            value={ratingValue}
+                                            edit={false}
+                                        />
+                                    </StarContainer>
                                     {
                                         fetching ?
                                             <Loader type="TailSpin" color="#00BFFF" height={50} width={50} /> :
@@ -254,14 +310,25 @@ const Listen = (props) => {
                                     }
                                     <RatingContainer>
                                         <InfoText>Rate audio:</InfoText>
-                                        <ReactStars
-                                            count={5}
-                                            onChange={userRatingChanged}
-                                            size={30}
-                                            activeColor={CONh1}
-                                            value={userRating}
-                                        />
+                                        <StarContainer>
+                                            <ReactStars
+                                                count={5}
+                                                onChange={userRatingChanged}
+                                                size={30}
+                                                activeColor={CONh1}
+                                                value={userRating}
+                                            />
+                                        </StarContainer>
                                     </RatingContainer>
+                                    {
+                                        showQuiz ?
+                                            <ListenButton onClick={() => clickHideQuiz()}>Hide quiz</ListenButton> :
+                                            <ListenButton onClick={() => clickTakeQuiz()}>Show quiz</ListenButton>
+                                    }
+                                    {
+                                        showQuiz ?
+                                            <AudioQuiz /> : null
+                                    }
                                     <ListenButton onClick={() => clickBack()}>Back</ListenButton>
                                 </InfoContainer>
                                 <CommentContainer>

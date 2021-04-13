@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Navbar from '../homePageNavbar/Navbar';
 import SideBar from '../homePageNavbar/SideBar';
-import { Footer, FooterLink } from '../homePage/IntroPageElementsJS';
+import { Footer, FooterLink } from '../footer/FooterElements';
+import PrivacyPolicy from '../footer/PrivacyPolicy.pdf';
 import { languageOptions } from '../../tools/defaultOptions';
 import Select from 'react-select';
 import Loader from "react-loader-spinner";
@@ -181,10 +182,10 @@ function SignUp() {
                     </FormWrap>
             }
             <Footer>
-                <FooterLink to='/'>Terms and Conditions</FooterLink>
-                <FooterLink to='/'>Privacy Policy</FooterLink>
-                <FooterLink to='/'>About us</FooterLink>
-            </Footer>
+				<FooterLink to= {PrivacyPolicy} target= "_blank">Terms and Conditions</FooterLink>
+				<FooterLink to= {PrivacyPolicy} target= "_blank">Privacy policy</FooterLink>
+				<FooterLink to= {PrivacyPolicy} target= "_blank">About us</FooterLink>
+			</Footer>
         </Container>
     )
 }

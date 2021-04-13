@@ -3,7 +3,7 @@ import Select from 'react-select';
 import Loader from "react-loader-spinner";
 import audioimage from '../../../images/AudioWave.jpg';
 import notFound from '../../../images/notFound.png';
-import { genreOptions, languageOptions, difficultyOptions } from '../../../tools/defaultOptions';
+import { genreOptions, languageOptions, difficultyOptions, sortOptions } from '../../../tools/defaultOptions';
 
 import {
     MyAudioContainer,
@@ -16,12 +16,13 @@ import {
     FormInput,
     SelectContainer,
     FormDesc,
-    FoundCount,
     LoaderContainer,
     LoaderText,
     EditButton,
     EditButtonContainer,
-    AudioPlayer
+    AudioPlayer,
+    SortContainer,
+    SelectInput,
 } from './MyAudioElements';
 import {
     PagesContainer,
@@ -31,10 +32,13 @@ import {
 import AudioContainer from './AudioContainer';
 import ConfirmDialog from '../../../dialogs/ConfirmDialog';
 import { splitAudios } from '../searchElement/searchFunctions';
+import { sortByKey } from '../../../tools/sortFunctions';
 
 const MyAudio = () => {
-    // Array where found audios are saved
+    // Array where found audios are saved by page
     const [audiot, setAudiot] = useState([[]]);
+    // array where found audios from server are saved
+    const [audioArray, setAudioArray] = useState([]);
     // This state keeps track did search succeed or not
     const [error, setError] = useState(false);
     // State to toggle searching or no
@@ -51,6 +55,9 @@ const MyAudio = () => {
     const [pageNum, setPageNum] = useState(0);
     // count of audios
     const [audioCount, setAudioCount] = useState(0);
+    // sort audios by this
+    const [sortAudio, setSortAudio] = useState(sortOptions[0]);
+    const [sortCount, setSortCount] = useState(0);
 
     // fields for editing audio info
     const [language, setLanguage] = useState("");
@@ -59,16 +66,27 @@ const MyAudio = () => {
     const [genre, setGenre] = useState("");
     const [difficulty, setDifficulty] = useState("");
 
+    const sortChanged = (e) => {
+        setSortAudio(e);
+        setSortCount(1);
+    }
+
     const languageChanged = (e) => {
         setLanguage(e);
     }
 
     const titleChanged = (e) => {
-        setTitle(e.target.value);
+        let title = e.target.value;
+        if (title.length <= 50) {
+            setTitle(title);
+        }
     }
 
     const descChanged = (e) => {
-        setDesc(e.target.value);
+        let desc = e.target.value;
+        if (desc.length <= 300) {
+            setDesc(desc);
+        }
     }
 
     const genreChanged = (e) => {
@@ -101,8 +119,10 @@ const MyAudio = () => {
 
             if (rJson.status === "OK") {
                 setError(false);
+                let sorted = sortByKey(rJson.found, sortAudio.value);
+                setAudioArray(sorted);
                 setAudioCount(rJson.found.length);
-                setAudiot(splitAudios(rJson.found));
+                setAudiot(splitAudios(sorted));
                 setSearching(false);
             }
             else {
@@ -151,7 +171,7 @@ const MyAudio = () => {
         if (result.status === "OK") {
             fetchAudio();
             setSelectedAudio(null);
-        }else{
+        } else {
             setSearching(false);
         }
     };
@@ -211,11 +231,19 @@ const MyAudio = () => {
         }
     }, [selectedAudio]);
 
+    // sorting parameter changed
+    useEffect(() => {
+        if (audioArray.length > 0 && sortCount > 0) {
+            let sorted = sortByKey(audioArray, sortAudio.value);
+            setAudioArray(sorted);
+            setAudiot(splitAudios(sorted));
+        }
+    }, [sortAudio]);
+
     // map found audios to screen
     const audioInside = audiot[pageNum].map((t, index) => {
         return <AudioContainer
             key={index}
-            image={audioimage}
             id={t._id}
             language={t.language}
             title={t.title}
@@ -233,7 +261,20 @@ const MyAudio = () => {
             <SearchContainer isOpen={isOpen}>
                 {
                     audioCount > 0 ?
-                        <FoundCount>You have {audioCount} recordings</FoundCount> : null
+                        <Title>
+                            You have {audioCount} recordings
+                        </Title> : null
+                }
+                {
+                    audioCount > 0 ?
+                        <SortContainer>
+                            <FormLabel htmlFor="for">Sort by</FormLabel>
+                            <SelectInput
+                                value={sortAudio}
+                                onChange={sortChanged}
+                                options={sortOptions}
+                            />
+                        </SortContainer> : null
                 }
                 {
                     audiot[1] ?

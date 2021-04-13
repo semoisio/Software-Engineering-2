@@ -8,6 +8,7 @@ import {
     AudioDescription,
     StartAudioBtn
 } from './AudioContainerElements';
+import {getFlag} from '../../../tools/flagFunction';
 
 const AudioContainer = (props) => {
     const [audioFetched, setAudioFetched] = useState("");
@@ -47,7 +48,7 @@ const AudioContainer = (props) => {
 
     return (
         <OneAudioContainer>
-            <AudioImage src={props.image} />
+            <AudioImage src={getFlag(props.image)} />
             <AudioTextContainer>
                 <AudioTitle>{props.title}</AudioTitle>
                 <AudioDescription>{props.description}</AudioDescription>

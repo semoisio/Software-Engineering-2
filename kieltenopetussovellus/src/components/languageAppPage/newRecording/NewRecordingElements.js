@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 import React from 'react';
 import { ReactMic } from 'react-mic';
+import { CONinput } from '../../../tools/colors';
 
 // Container for all of the components
 export const NewRecordingContainer = styled.div`
     display:flex;
     flex-wrap: wrap;
+    justify-content:center;
 
     @media screen and (max-width: 768px){
         display: flex;
@@ -17,13 +19,14 @@ export const NewRecordingContainer = styled.div`
 
 // Container for recording 
 export const RecordingContainer = styled.div`
-    width:45%;
+    width: 100%;
+    max-width: 1600px;
     display:flex;
     flex-direction:column;
-    margin-right: auto;
 
     @media screen and (max-width: 768px){
         width: 100%;
+        min-width: 0px;
         margin-right: 16px;
         display: flex;
         flex-direction:column;
@@ -33,10 +36,10 @@ export const RecordingContainer = styled.div`
 
 // React mic
 export const RecordingMic = styled(ReactMic)`
-    //height:100%;
     margin-right:1rem;
     margin-left:1rem;
     margin-bottom:15px;
+    
 `;
 
 // Container for recording buttons
@@ -47,10 +50,10 @@ export const RecordingButtonContainer = styled.div`
 
 // Container for recording info
 export const InfoContainer = styled.div`
-    width:45%;
+    width: 100%;
+    max-width: 1600px;
     display:flex;
     flex-direction:column;
-    //margin: 1rem;
 
     @media screen and (max-width: 768px){
         display: flex;
@@ -69,7 +72,6 @@ export const RecordButton = styled.button`
 `;
 
 export const AudioPlayer = styled.audio`
-    width: auto;
     margin-right:1rem;
     margin-left:1rem;
     margin-bottom:15px;
@@ -86,9 +88,6 @@ export const RecordingForm = styled.form`
 // Headline for form
 export const FormH1 = styled.h1`
     margin-bottom: 15px;
-    /* color: #fff;
-    font-size: 20px;
-    font-weight: 400; */
     text-align: center;
 `;
 
@@ -96,7 +95,6 @@ export const FormH1 = styled.h1`
 export const FormLabel = styled.label`
     margin-bottom: 8px;
     font-size: 14px;
-    //color: #fff;
     margin-left:1rem;
 `;
 
@@ -134,18 +132,35 @@ export const RadioBtnContainer = styled.div`
 //Styles for form button
 export const FormButton = styled.button`
     width:20%;
-    /* background: #FFC67C;
-    padding: 16px 0;
-    border: none;
-    border-radius: 4px;
-    color: #fff;
-    font-size: 20px; */
     margin-left:1rem;
     margin-right:1rem;
     margin-bottom: 15px;
-    /* cursor: pointer;
+`;
 
-    &:hover{
-        background: #68EDCB;
-    } */
+export const UploadButtonContainer = styled.div`
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+`;
+
+export const QuizContainer = styled.div`
+    display: flex;
+    flex-direction:column;
+    margin-left:1rem;
+    margin-right:1rem;
+    margin-bottom: 15px;
+`;
+
+export const QuizCheck = styled.input`
+    margin-right: 10px;
+`;
+
+export const QuestionAnswer = styled.div`
+    display: flex;
+    flex-direction:column;
+    border: 2px ${CONinput} solid;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 `;

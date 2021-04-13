@@ -158,7 +158,9 @@ module.exports = {
                     difficulty: c.difficulty,
                     path: req.file.path,
                     rating: [],
-                    comments: []
+                    comments: [],
+                    quiz: JSON.parse(c.quiz),
+                    added: Date.now()
                 });
                 if (newAudio) {
                     res.json({ status: "OK", added: newAudio });

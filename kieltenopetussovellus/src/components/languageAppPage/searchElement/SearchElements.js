@@ -18,10 +18,10 @@ export const SearchContainer = styled.div`
         position: fixed;
         z-index: 998;
         width: 100%;
-        height: 87%;
         display: flex;
         opacity: ${({isOpen}) => (isOpen ? '100%' : '0')}; 
         top: ${({isOpen}) => (isOpen ? '80px' : '-100%')};
+        bottom: ${({isOpen}) => (isOpen ? 0 : 'none')};
         flex-direction:column;
         width: 100%;
         transition: 0.3s ease-in-out;

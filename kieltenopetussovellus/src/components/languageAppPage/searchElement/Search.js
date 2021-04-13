@@ -227,7 +227,7 @@ const Search = () => {
         return <AudioContainer
             key={index + "," + pageNum}
             avain={index}
-            image={audioimage}
+            image={t.language}
             title={t.title}
             description={t.desc}
             id={t._id}
