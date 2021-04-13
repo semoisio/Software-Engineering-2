@@ -48,6 +48,10 @@ app.use(emailRoutes);
 const loginRoutes = require('./routes/loginRoutes');
 app.use(loginRoutes);
 
+// reset email routes
+const emailResetRoutes = require('./routes/emailresetRoutes');
+app.use(emailResetRoutes);
+
 //Asetetaan serveri kuuntelemaan määriteltyäreittiä
 app.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);

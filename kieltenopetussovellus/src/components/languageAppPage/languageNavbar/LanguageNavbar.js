@@ -9,20 +9,22 @@ import {
     MobileIcon,
     SINavBtn
 } from './LanguageNavbarElements';
+import ConfirmDialog from '../../../dialogs/ConfirmDialog';
 
 const LanguageNavbar = ({toggle }) => {
     const history = useHistory();
-    
     const handleLogout = () => {
-        const r = window.confirm('Are you sure you wish to sign out?')
-        if(r){
-            history.push("/"); 
-            localStorage.clear();    
-            window.location.reload();
+        let dialogprops = {
+            title: "Sign out",
+            message: "Are you sure you wish to sign out?",
+            clickOk: async () => {
+                history.push("/"); 
+                localStorage.clear();    
+                window.location.reload();
+            }
         }
-        
-        //<NavBtn to="/signout" data-testid="navBtnSignout">Sign out</NavBtn>
-      };
+        ConfirmDialog(dialogprops);
+    };
     return (
         <LanguageNav>
             <Logo>GroupO</Logo>

@@ -46,7 +46,9 @@ module.exports = {
                             password: hashed,
                             email: c.email,
                             learning: c.learning,
-                            status: ""
+                            status: "",
+                            rptoken: ""
+                            //rpexpires: ""
                         };
                         // add user to db
                         const client2 = new MongoClient(uri, { useUnifiedTopology: true });

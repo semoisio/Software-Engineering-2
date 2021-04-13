@@ -9,6 +9,8 @@ import LanguageAppHome from './components/languageAppPage/LanguageAppHome';
 import SignUpSuccess from './components/signUp/SignUpSuccess';
 import Confirm from './components/signUp/Confirm';
 import ProfileDeleted from './components/profileDeleted/ProfileDeleted';
+import ForgotPassword from './components/signIn/ForgotPassword';
+import ResetPassword from './components/signIn/ResetPassword';
 
 
 function App() {
@@ -39,6 +41,8 @@ function App() {
         <Route path="/signupsuccess" component={SignUpSuccess} />
         <Route path="/confirm/:id" component={Confirm} />
         <Route path="/signin"><SignIn setUser={setUser} /></Route>
+        <Route path="/forgotpassword" component={ForgotPassword}/>
+        <Route path="/resetpassword/:id" component={ResetPassword}/>
           /**Tämä aina viimeiseksi. Ohjaa virhe sivulle */
           <Route path="/" component={Errorpage} />
       </Switch>
