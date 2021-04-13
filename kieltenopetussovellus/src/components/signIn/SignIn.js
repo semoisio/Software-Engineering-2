@@ -99,9 +99,10 @@ const SignIn = (props) => {
                                     <FormInput type="text" required value={username} onChange={(e) => { usernameChanged(e) }} />
                                     <FormLabel htmlFor="for">Password</FormLabel>
                                     <FormInput type="password" required value={password} onChange={(e) => { passwordChanged(e) }} />
+                                    <FormLabel htmlFor="for">{infoText}</FormLabel>
                                     <Link to="/forgotpassword">Forgot password?</Link>
                                     <FormButton type="submit">Sign in</FormButton>
-                                    <p style={{ color: "black" }}>{infoText}</p>
+                                    
                                 </Form>
 
                             </FormContent>

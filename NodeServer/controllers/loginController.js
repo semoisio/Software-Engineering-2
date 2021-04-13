@@ -28,13 +28,18 @@ module.exports = {
                     res.json({ status: "NOT OK", msg: "Username not found" });
                 }
                 else {
-                    // decrypts stored password and compares it to the input 
-                    if (!bcrypt.compareSync(req.query.password, checkName.password)) {
-                        res.json({ status: "NOT OK", msg: "Password incorrect" });
+                    if(checkName.status=='confirmed'){
+                        // decrypts stored password and compares it to the input
+                        if (!bcrypt.compareSync(req.query.password, checkName.password)) {
+                            res.json({ status: "NOT OK", msg: "Password incorrect" });
+                        }
+                        else {
+                            res.json({ status: "OK", msg: "Login successful" });
+                        }
                     }
-                    else {
-                        res.json({ status: "OK", msg: "Login successful" });
-                    }
+                    res.json({ status: "NOT OK", msg: "Email hasnt been confirmed yet" });
+                     
+                    
                 }
 
             }

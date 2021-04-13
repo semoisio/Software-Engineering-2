@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Footer, FooterLink } from '../footer/FooterElements';
+import PrivacyPolicy from '../footer/PrivacyPolicy.pdf';
 import Navbar from '../homePageNavbar/Navbar';
 import SideBar from '../homePageNavbar/SideBar';
 import { Link } from "react-router-dom";
@@ -21,6 +22,7 @@ import {
     FormButton
 
 } from './SignInElements';
+import ConfirmDialog from '../../dialogs/ConfirmDialog';
 
 
 const ResetPassword = (props) => {
@@ -88,6 +90,14 @@ const ResetPassword = (props) => {
             validatePw();
     }, [password1]);
 
+    let dialogprops = {
+        title: "Success",
+        message: "Password has been changed succesfully, you can now login",
+        clickOk: async () => {
+            history.push('/signin');
+        }
+    }
+
 
     useEffect(async () => {
         const token = props.match.params.id;
@@ -131,12 +141,13 @@ const ResetPassword = (props) => {
             let response = await result.json();
             setSigning(false);
             if (response.status === "OK") {
-                setInfotext(response.msg);
-                console.log('password changed')
+                //setInfotext(response.msg);
+
+                ConfirmDialog(dialogprops);
             }
             else {
                 setInfotext(response.msg);
-                console.log('submit fail')
+
             }
         }
 
@@ -162,9 +173,9 @@ const ResetPassword = (props) => {
                 </LoaderContainer>
 
                 <Footer>
-                    <FooterLink to='/'>Terms and Conditions</FooterLink>
-                    <FooterLink to='/'>Privacy Policy</FooterLink>
-                    <FooterLink to='/'>About us</FooterLink>
+                    <FooterLink to={PrivacyPolicy} target="_blank">Terms and Conditions</FooterLink>
+                    <FooterLink to={PrivacyPolicy} target="_blank">Privacy policy</FooterLink>
+                    <FooterLink to={PrivacyPolicy} target="_blank">About us</FooterLink>
                 </Footer>
             </Container>
 
@@ -199,15 +210,15 @@ const ResetPassword = (props) => {
                                         <FormInput type="password" required value={password2} onChange={(e) => { password2Changed(e) }} />
 
                                         <FormButton type="submit">Submit</FormButton>
-                                        <p style={{ color: "black" }}>{infoText}</p>
+                                        <FormLabel htmlFor="for">{infoText}</FormLabel>
                                     </Form>
 
                                 </FormContent>
                             </FormWrap>}
                     <Footer>
-                        <FooterLink to='/'>Terms and Conditions</FooterLink>
-                        <FooterLink to='/'>Privacy Policy</FooterLink>
-                        <FooterLink to='/'>About us</FooterLink>
+                        <FooterLink to={PrivacyPolicy} target="_blank">Terms and Conditions</FooterLink>
+                        <FooterLink to={PrivacyPolicy} target="_blank">Privacy policy</FooterLink>
+                        <FooterLink to={PrivacyPolicy} target="_blank">About us</FooterLink>
                     </Footer>
                 </Container>
 
@@ -226,21 +237,14 @@ const ResetPassword = (props) => {
                         <FormContent data-testid="resetpasswordformcontent">
                             <Form action="" data-testid="resetpasswordform" onSubmit={(e) => SubmitHomepage(e)}>
                                 <FormH1 data-testid="resetpasswordformh1">Problem verifying link</FormH1>
-                                
                                 <FormButton type="submit">Back to homepage</FormButton>
-
                             </Form>
-
                         </FormContent>
-
-
-
-
                     </FormWrap>
                     <Footer>
-                        <FooterLink to='/'>Terms and Conditions</FooterLink>
-                        <FooterLink to='/'>Privacy Policy</FooterLink>
-                        <FooterLink to='/'>About us</FooterLink>
+                        <FooterLink to={PrivacyPolicy} target="_blank">Terms and Conditions</FooterLink>
+                        <FooterLink to={PrivacyPolicy} target="_blank">Privacy policy</FooterLink>
+                        <FooterLink to={PrivacyPolicy} target="_blank">About us</FooterLink>
                     </Footer>
                 </Container>
 
