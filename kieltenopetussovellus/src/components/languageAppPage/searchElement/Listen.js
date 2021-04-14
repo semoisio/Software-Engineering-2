@@ -54,8 +54,6 @@ const Listen = (props) => {
     const [pageNum, setPageNum] = useState(0);
     // show quiz or not
     const [showQuiz, setShowQuiz] = useState(false);
-    // show answers or not
-    const [answer, setAnswer] = useState(false);
 
     const commentTextChanged = (e) => {
         setCommentText(e.target.value);
@@ -67,13 +65,6 @@ const Listen = (props) => {
 
     const clickHideQuiz = () => {
         setShowQuiz(false);
-    }
-
-    const clickShowAnswers = () => {
-        setAnswer(true);
-    }
-    const clickHideAnswers = () => {
-        setAnswer(false);
     }
 
     const changePage = (param) => {
@@ -240,29 +231,24 @@ const Listen = (props) => {
 
     const AudioQuiz = () => {
         if (audioInfo !== null) {
-            if (audioInfo.quiz.length > 0) {
+            if (audioInfo.quiz) {
                 let audioQuiz = audioInfo.quiz.map((t, index) => {
                     return (
                         <Quiz
                             key={index}
                             question={t.question}
                             answer={t.answer}
-                            showAnswer={answer}
                         />
                     )
                 });
                 return (
                     <QuizContainer>
                         {audioQuiz}
-                        { answer ?
-                            <ListenButton onClick={() => clickHideAnswers()}>Hide answers</ListenButton> :
-                            <ListenButton onClick={() => clickShowAnswers()}>Show answers</ListenButton>
-                        }
                     </QuizContainer>
                 );
             }
             else {
-                return <InfoText>No quiz has been made for this audio</InfoText>;
+                return null;
             }
         }
         else {
@@ -321,9 +307,12 @@ const Listen = (props) => {
                                         </StarContainer>
                                     </RatingContainer>
                                     {
-                                        showQuiz ?
-                                            <ListenButton onClick={() => clickHideQuiz()}>Hide quiz</ListenButton> :
-                                            <ListenButton onClick={() => clickTakeQuiz()}>Show quiz</ListenButton>
+                                        audioInfo.quiz ?
+                                            showQuiz ?
+                                                <ListenButton onClick={() => clickHideQuiz()}>Hide quiz</ListenButton> :
+                                                <ListenButton onClick={() => clickTakeQuiz()}>Show quiz</ListenButton>
+                                            : 
+                                            <InfoText>No quiz has been made for this audio</InfoText>
                                     }
                                     {
                                         showQuiz ?

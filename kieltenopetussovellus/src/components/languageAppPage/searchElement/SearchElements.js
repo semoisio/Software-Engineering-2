@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import {background,CONtext,CONh1,CONinput,RBbg,RBhover,RBtext,RBshadow } from '../../../tools/colors';
+import Select from 'react-select';
 
 export const SearchAndListenContainer = styled.div`
     display:flex;
@@ -198,6 +199,7 @@ export const FoundCount = styled.div`
     font-size: 1.1rem;
     display:flex;
     justify-content:space-around;
+    align-items: center;
 
     @media screen and (max-width: 500px){
         font-size: 0.8rem;
@@ -235,4 +237,17 @@ export const PageButton = styled.div`
     @media screen and (max-width: 500px){
         font-size: 0.8rem;
     }   
+`;
+
+export const SortContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+`;
+
+export const SortInput = styled(Select)`
+    min-width: 150px;
+    margin-left:1rem;
+    margin-right:1rem;
+    margin-bottom: 8px;
 `;

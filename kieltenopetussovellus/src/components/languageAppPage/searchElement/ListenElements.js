@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { CONinput } from '../../../tools/colors';
+import { CONinput, CONh1 } from '../../../tools/colors';
 
 export const ListenContainer = styled.div`
     display:flex;
@@ -119,13 +119,36 @@ export const QuestionAnswerContainer = styled.div`
     margin-bottom: 50px;
 `;
 
-export const AnswerContainer = styled.div`
+export const QuestionContainer = styled.div`
+    display: flex;
+`;
+
+export const UserAnswerContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
 `;
 
+export const AnswerContainer = styled.div`
+    color: ${CONh1};
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+`;
+
 export const StarContainer = styled.div`
     margin-left: 1rem;
     margin-right: 1rem;
+`;
+
+export const AnswerInput = styled.input`
+    display: flex;
+    flex-grow: 10;
+    padding: 12px 12px;
+    margin-bottom: 15px;
+    margin-left:1rem;
+    margin-right:1rem;
+    border-radius: 4px;
+    
 `;

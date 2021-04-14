@@ -127,6 +127,7 @@ const MyAudio = () => {
             }
             else {
                 setError(true);
+                setAudioArray([]);
                 setAudiot([[]]);
                 setSearching(false);
             }

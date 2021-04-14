@@ -26,7 +26,9 @@ import {
     PagesContainer,
     WhatPage,
     Found,
-    PageButton
+    PageButton,
+    SortContainer,
+    SortInput,
 } from './SearchElements';
 import {
     buildQuery,
@@ -35,8 +37,9 @@ import {
 import AudioContainer from './AudioContainer';
 import audioimage from '../../../images/AudioWave.jpg';
 import notFound from '../../../images/notFound.png';
-import { genreOptions, languageOptions } from '../../../tools/defaultOptions';
+import { genreOptions, languageOptions, sortOptions } from '../../../tools/defaultOptions';
 import Listen from './Listen';
+import { sortByKey } from '../../../tools/sortFunctions';
 
 const Search = () => {
     //This keep track is search open or not in smaller window sizes
@@ -47,8 +50,11 @@ const Search = () => {
     //If you want to do search update this state by +1
     const [doFetch, setDoFetch] = useState(0);
 
-    //Array where finded audios are saved
+    //Array where finded audios are saved by page
     const [audiot, setAudiot] = useState([[]]);
+    // array where found audios from server are saved
+    const [audioArray, setAudioArray] = useState([]);
+
     // This state keeps track did search succeed or not
     const [error, setError] = useState(false);
     // State to toggle searching or no
@@ -72,6 +78,10 @@ const Search = () => {
 
     // audio that is selected for listening
     const [selectedAudio, setSelectedAudio] = useState(null);
+
+    // sort audio
+    const [sortAudio, setSortAudio] = useState(sortOptions[0]);
+    const [sortCount, setSortCount] = useState(0);
 
     // Toggle search open and close
     const toggle = () => {
@@ -115,6 +125,11 @@ const Search = () => {
         setSelectedAudio(audioId);
     }
 
+    const sortChanged = (e) => {
+        setSortAudio(e);
+        setSortCount(1);
+    }
+
     // Form submit button fires this function and this fires audiofetch from database
     const fetchAudio = (e) => {
         setDoFetch(doFetch + 1);
@@ -138,11 +153,14 @@ const Search = () => {
 
                 if (rJson.status === "OK") {
                     setError(false);
-                    setAudiot(splitAudios(rJson.found));
+                    let sorted = sortByKey(rJson.found, sortAudio.value);
+                    setAudioArray(sorted);
+                    setAudiot(splitAudios(sorted));
                     setSearching(false);
                 }
                 else {
                     setError(true);
+                    setAudioArray([]);
                     setAudiot([[]]);
                     setSearching(false);
                 }
@@ -168,11 +186,14 @@ const Search = () => {
 
                 if (rJson.status === "OK") {
                     setError(false);
-                    setAudiot(splitAudios(rJson.found));
+                    let sorted = sortByKey(rJson.found, sortAudio.value);
+                    setAudioArray(sorted);
+                    setAudiot(splitAudios(sorted));
                     setSearching(false);
                 }
                 else {
                     setError(true);
+                    setAudioArray([]);
                     setAudiot([[]]);
                     setSearching(false);
                 }
@@ -186,6 +207,15 @@ const Search = () => {
         fetchAudio();
 
     }, []);
+
+    // sorting parameter changed
+    useEffect(() => {
+        if (audioArray.length > 0 && sortCount > 0) {
+            let sorted = sortByKey(audioArray, sortAudio.value);
+            setAudioArray(sorted);
+            setAudiot(splitAudios(sorted));
+        }
+    }, [sortAudio]);
 
     /**
      * Clears all text and choices from form
@@ -235,12 +265,12 @@ const Search = () => {
             setSelectedAudio={selectedAudioChanged}
         />
     });
-    
+
     return (
         <>
-            { listening ? <Listen 
-            setListening={listeningChanged} 
-            id={selectedAudio}
+            { listening ? <Listen
+                setListening={listeningChanged}
+                id={selectedAudio}
             /> :
                 <SearchAndListenContainer data-testid="searchContainer">
                     <OpenSearchIconContainer isOpen={isOpen} onClick={toggle}>
@@ -290,13 +320,33 @@ const Search = () => {
                                 null :
                                 error ?
                                     null :
-                                    audiot.length !== 0 ?
-                                        <FoundCount>
-                                            <Found>Found: {calculateAudios()}</Found>
-                                            <PageButton onClick={() => { changePage("-") }}>{"<"}Previous</PageButton>
-                                            <PageButton onClick={() => { changePage("+") }}>Next{">"}</PageButton>
-                                            <WhatPage>Page: {pageNum + 1}/{audiot.length}</WhatPage>
-                                        </FoundCount> : null
+                                    audiot.length === 0 ? null :
+                                        audiot[1] ?
+                                            <FoundCount>
+                                                <Found>Found: {calculateAudios()}</Found>
+                                                <SortContainer>
+                                                    <FormLabel htmlFor="for">Sort by</FormLabel>
+                                                    <SortInput
+                                                        value={sortAudio}
+                                                        onChange={sortChanged}
+                                                        options={sortOptions}
+                                                    />
+                                                </SortContainer>
+                                                <PageButton onClick={() => { changePage("-") }}>{"<"}Previous</PageButton>
+                                                <PageButton onClick={() => { changePage("+") }}>Next{">"}</PageButton>
+                                                <WhatPage>Page: {pageNum + 1}/{audiot.length}</WhatPage>
+                                            </FoundCount> :
+                                            <FoundCount>
+                                                <Found>Found: {calculateAudios()}</Found>
+                                                <SortContainer>
+                                                    <FormLabel htmlFor="for">Sort by</FormLabel>
+                                                    <SortInput
+                                                        value={sortAudio}
+                                                        onChange={sortChanged}
+                                                        options={sortOptions}
+                                                    />
+                                                </SortContainer>
+                                            </FoundCount>
                         }
                         { // if search is happening show loader
                             searching ?
@@ -321,11 +371,12 @@ const Search = () => {
                                 null :
                                 error ?
                                     null :
-                                    <PagesContainer>
-                                        <PageButton onClick={() => { changePage("-") }}> {"<"}Previous</PageButton>
-                                        <WhatPage>Page: {pageNum + 1}/{audiot.length}</WhatPage>
-                                        <PageButton onClick={() => { changePage("+") }}>Next{">"}</PageButton>
-                                    </PagesContainer>
+                                    audiot[1] ?
+                                        <PagesContainer>
+                                            <PageButton onClick={() => { changePage("-") }}> {"<"}Previous</PageButton>
+                                            <WhatPage>Page: {pageNum + 1}/{audiot.length}</WhatPage>
+                                            <PageButton onClick={() => { changePage("+") }}>Next{">"}</PageButton>
+                                        </PagesContainer> : null
                         }
 
                     </SearchResultContainer>
