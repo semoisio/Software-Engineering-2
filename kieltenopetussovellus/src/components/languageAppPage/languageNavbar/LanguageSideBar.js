@@ -25,7 +25,10 @@ const LanguageSideBar = ({ isOpen, toggle }) => {
                 window.location.reload();
             }
         }
-        ConfirmDialog(dialogprops);
+        history.push("/");
+        localStorage.clear();
+        window.location.reload();
+        //ConfirmDialog(dialogprops);
     };
 
     return (

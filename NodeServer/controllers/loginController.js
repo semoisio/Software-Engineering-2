@@ -22,13 +22,13 @@ module.exports = {
                 // finds user based on username
                 const client = new MongoClient(uri, { useUnifiedTopology: true });
                 const checkName = await crud.findOne(client, db, collection, { username: req.query.username });
-                
+
                 // checks if username exists
                 if (!checkName) {
                     res.json({ status: "NOT OK", msg: "Username not found" });
                 }
                 else {
-                    if(checkName.status=='confirmed'){
+                    if (checkName.status == 'confirmed') {
                         // decrypts stored password and compares it to the input
                         if (!bcrypt.compareSync(req.query.password, checkName.password)) {
                             res.json({ status: "NOT OK", msg: "Password incorrect" });
@@ -37,9 +37,12 @@ module.exports = {
                             res.json({ status: "OK", msg: "Login successful" });
                         }
                     }
-                    res.json({ status: "NOT OK", msg: "Email hasnt been confirmed yet" });
-                     
-                    
+                    else {
+                        res.json({ status: "NOT OK", msg: "Email hasnt been confirmed yet" });
+                    }
+
+
+
                 }
 
             }
@@ -53,9 +56,9 @@ module.exports = {
     },
     updatePassword: async (req, res) => {
         let c = req.body;
-        
+
         try {
-            
+
 
             if (!c.rptoken) {
                 res.json({ status: "NOT OK", msg: "token not found" });
@@ -64,7 +67,7 @@ module.exports = {
                 if (c.password) {
                     const hashed = await bcrypt.hash(c.password, 10);
                     c.password = hashed;
-                    
+
                 }
 
                 let token = (c.rptoken);
