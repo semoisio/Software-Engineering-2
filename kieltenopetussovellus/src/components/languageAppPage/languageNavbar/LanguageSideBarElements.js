@@ -44,6 +44,7 @@ export const SideBtnWrap = styled.div`
     display:flex;
     flex-direction:column;
     justify-content: center;
+    align-items:center
 `;
 
 export const SideNavBtn = styled(NavLink)`
@@ -66,5 +67,28 @@ export const SideNavBtn = styled(NavLink)`
     &:hover{
         transition: all 0.1s ease-in-out;
 	    background-color: #FFC67C;
+    }
+`;
+
+export const SideNavBtnLogOut = styled(NavLink)`
+    background-color: #FE786A;
+    box-shadow: 1px 1px 2px #626262;
+	padding: 1rem 1rem;
+	border: none;
+    border-radius: 30px;
+	text-decoration: none;
+	font-weight: 300;
+	color: #ffffff;
+	text-shadow: 1px 1px 2px #626262;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+	font-size: medium;
+	text-align: center;
+    margin-top: 1rem;
+    width: 100%;
+
+    &:hover{
+        transition: all 0.1s ease-in-out;
+	    background-color: #FE8A7E;
     }
 `;

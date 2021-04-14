@@ -6,7 +6,9 @@ import {
     Icon,
     CloseIcon,
     SideBtnWrap,
-    SideNavBtn
+    SideNavBtn,
+    SideNavBtnLogOut
+
 } from './LanguageSideBarElements';
 //<SideNavBtn to="/signout" onClick={toggle}>Sign out</SideNavBtn>
 
@@ -20,12 +22,12 @@ const LanguageSideBar = ({ isOpen, toggle }) => {
             title: "Sign out",
             message: "Are you sure you wish to sign out?",
             clickOk: async () => {
-                history.push("/");
+                //history.push("/");
                 localStorage.clear();
                 window.location.reload();
             }
         }
-        history.push("/");
+        //history.push("/");
         localStorage.clear();
         window.location.reload();
         //ConfirmDialog(dialogprops);
@@ -41,7 +43,7 @@ const LanguageSideBar = ({ isOpen, toggle }) => {
                 <SideNavBtn to="/newrecording" onClick={toggle}>New recording</SideNavBtn>
                 <SideNavBtn to="/profile" onClick={toggle}>Profile</SideNavBtn>
                 <SideNavBtn to="/myaudio" onClick={toggle}>My audios</SideNavBtn>
-                <button onClick={handleLogout}>Sign out</button>
+                <SideNavBtnLogOut  to="/" onClick={handleLogout}>Sign out</SideNavBtnLogOut>
             </SideBtnWrap>
 
         </LanguageSidebarContainer>
