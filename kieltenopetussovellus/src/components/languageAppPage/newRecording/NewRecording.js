@@ -339,75 +339,80 @@ const NewRecording = () => {
                     </RecordingButtonContainer>
                   </RecordingContainer>
               }
-              <RecordingForm>
-                <FormH1>Audio information</FormH1>
-                <FormLabel htmlFor="for" >Language</FormLabel>
-                <SelectContainer>
-                  <Select
-                    value={language}
-                    onChange={languageChanged}
-                    options={languageOptions}
-                  />
-                </SelectContainer>
-                <FormLabel htmlFor="for" >Title</FormLabel>
-                <FormInput type="text" value={title} onChange={(e) => titleChanged(e)}></FormInput>
+              {
+                recording ? null :
+                  <RecordingForm>
+                    <FormH1>Audio information</FormH1>
+                    <FormLabel htmlFor="for" >Language</FormLabel>
+                    <SelectContainer>
+                      <Select
+                        value={language}
+                        onChange={languageChanged}
+                        options={languageOptions}
+                      />
+                    </SelectContainer>
+                    <FormLabel htmlFor="for" >Title</FormLabel>
+                    <FormInput type="text" value={title} onChange={(e) => titleChanged(e)}></FormInput>
 
-                <FormLabel htmlFor="for" >Description</FormLabel>
-                <FormDesc type="textarea" value={desc} onChange={(e) => descChanged(e)}></FormDesc>
+                    <FormLabel htmlFor="for" >Description</FormLabel>
+                    <FormDesc type="textarea" value={desc} onChange={(e) => descChanged(e)}></FormDesc>
 
-                <FormLabel htmlFor="for" >Genre</FormLabel>
-                <SelectContainer>
-                  <Select
-                    value={genre}
-                    onChange={genreChanged}
-                    options={genreOptions}
-                  />
-                </SelectContainer>
+                    <FormLabel htmlFor="for" >Genre</FormLabel>
+                    <SelectContainer>
+                      <Select
+                        value={genre}
+                        onChange={genreChanged}
+                        options={genreOptions}
+                      />
+                    </SelectContainer>
 
-                <FormLabel htmlFor="for" >Difficulty</FormLabel>
-                <SelectContainer>
-                  <Select
-                    value={difficulty}
-                    onChange={difficultyChanged}
-                    options={difficultyOptions}
-                  />
-                </SelectContainer>
+                    <FormLabel htmlFor="for" >Difficulty</FormLabel>
+                    <SelectContainer>
+                      <Select
+                        value={difficulty}
+                        onChange={difficultyChanged}
+                        options={difficultyOptions}
+                      />
+                    </SelectContainer>
 
-                <FormLabel htmlFor="for" >
-                  <QuizCheck type="checkbox"
-                    checked={chkQuiz}
-                    onChange={(e) => chkQuizChanged(e)} />
+                    <FormLabel htmlFor="for" >
+                      <QuizCheck type="checkbox"
+                        checked={chkQuiz}
+                        onChange={(e) => chkQuizChanged(e)} />
                       Add quiz
                     </FormLabel>
-                {
-                  chkQuiz ?
-                    <QuizContainer>
-                      <QuestionAnswer>
-                        <FormLabel htmlFor="for" >Question 1</FormLabel>
-                        <FormInput type="text" value={q1} onChange={(e) => { q1Changed(e) }}></FormInput>
-                        <FormLabel htmlFor="for">Answer</FormLabel>
-                        <FormInput type="text" value={a1} onChange={(e) => { a1Changed(e) }}></FormInput>
-                      </QuestionAnswer>
-                      <QuestionAnswer>
-                        <FormLabel htmlFor="for">Question 2 (optional)</FormLabel>
-                        <FormInput type="text" value={q2} onChange={(e) => { q2Changed(e) }}></FormInput>
-                        <FormLabel htmlFor="for">Answer</FormLabel>
-                        <FormInput type="text" value={a2} onChange={(e) => { a2Changed(e) }}></FormInput>
-                      </QuestionAnswer><QuestionAnswer>
-                        <FormLabel htmlFor="for">Question 3 (optional)</FormLabel>
-                        <FormInput type="text" value={q3} onChange={(e) => { q3Changed(e) }}></FormInput>
-                        <FormLabel htmlFor="for">Answer</FormLabel>
-                        <FormInput type="text" value={a3} onChange={(e) => { a3Changed(e) }}></FormInput>
-                      </QuestionAnswer>
-                      <FormButton className="button2" onClick={() => clearQuiz()} type="button">Clear quiz</FormButton>
-                    </QuizContainer> : null
-                }
-
-              </RecordingForm>
-              <FormButton className="button2" onClick={() => clickCancel()} type="button">Clear</FormButton>
-              <UploadButtonContainer>
-                <FormButton onClick={() => uploadAudio()} type="button">Upload</FormButton>
-              </UploadButtonContainer>
+                    {
+                      chkQuiz ?
+                        <QuizContainer>
+                          <QuestionAnswer>
+                            <FormLabel htmlFor="for" >Question 1</FormLabel>
+                            <FormInput type="text" value={q1} onChange={(e) => { q1Changed(e) }}></FormInput>
+                            <FormLabel htmlFor="for">Answer</FormLabel>
+                            <FormInput type="text" value={a1} onChange={(e) => { a1Changed(e) }}></FormInput>
+                          </QuestionAnswer>
+                          <QuestionAnswer>
+                            <FormLabel htmlFor="for">Question 2 (optional)</FormLabel>
+                            <FormInput type="text" value={q2} onChange={(e) => { q2Changed(e) }}></FormInput>
+                            <FormLabel htmlFor="for">Answer</FormLabel>
+                            <FormInput type="text" value={a2} onChange={(e) => { a2Changed(e) }}></FormInput>
+                          </QuestionAnswer><QuestionAnswer>
+                            <FormLabel htmlFor="for">Question 3 (optional)</FormLabel>
+                            <FormInput type="text" value={q3} onChange={(e) => { q3Changed(e) }}></FormInput>
+                            <FormLabel htmlFor="for">Answer</FormLabel>
+                            <FormInput type="text" value={a3} onChange={(e) => { a3Changed(e) }}></FormInput>
+                          </QuestionAnswer>
+                          <FormButton className="button2" onClick={() => clearQuiz()} type="button">Clear quiz</FormButton>
+                        </QuizContainer> : null
+                    }
+                    <FormButton className="button2" onClick={() => clickCancel()} type="button">Clear</FormButton>
+                  </RecordingForm>
+              }
+              {
+                recording ? null :
+                  <UploadButtonContainer>
+                    <FormButton onClick={() => uploadAudio()} type="button">Upload</FormButton>
+                  </UploadButtonContainer>
+              }
             </InfoContainer>
           </NewRecordingContainer>
       }
