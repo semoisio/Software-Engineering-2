@@ -23,6 +23,8 @@ import {
     AudioPlayer,
     SortContainer,
     SelectInput,
+    SearchButton,
+    SearchInput
 } from './MyAudioElements';
 import {
     PagesContainer,
@@ -58,6 +60,9 @@ const MyAudio = () => {
     // sort audios by this
     const [sortAudio, setSortAudio] = useState(sortOptions[0]);
     const [sortCount, setSortCount] = useState(0);
+    //audio search input
+    const [searchTitle, setSearchTitle] = useState("");
+    const [searchInputChanged, setSearchInputChanged] = useState(false);
 
     // fields for editing audio info
     const [language, setLanguage] = useState("");
@@ -109,10 +114,26 @@ const MyAudio = () => {
         }
     }
 
+    const searchTitleChanged = (e) => {
+        setSearchTitle(e.target.value);
+        setSearchInputChanged(true);
+    }
+
+    const clickSearch = () => {
+        if (searchInputChanged) {
+            fetchAudio();
+        }
+    }
+
     // fetch user's audios from db
     const fetchAudio = async () => {
+        setSearchInputChanged(false);
         setSearching(true);
-        const url = "http://127.0.0.1:3001/audio?username=" + username;
+        let url = "http://127.0.0.1:3001/audio?username=" + username;
+        if (searchTitle !== "") {
+            url += "&title=" + searchTitle;
+        }
+        console.log(url);
         try {
             const response = await fetch(url);
             let rJson = await response.json();
@@ -259,52 +280,54 @@ const MyAudio = () => {
 
     return (
         <MyAudioContainer>
-            <SearchContainer isOpen={isOpen}>
-                {
-                    audioCount > 0 ?
-                        <Title>
-                            You have {audioCount} recordings
-                        </Title> : null
-                }
-                {
-                    audioCount > 0 ?
-                        <SortContainer>
-                            <FormLabel htmlFor="for">Sort by</FormLabel>
-                            <SelectInput
-                                value={sortAudio}
-                                onChange={sortChanged}
-                                options={sortOptions}
-                            />
-                        </SortContainer> : null
-                }
-                {
-                    audiot[1] ?
-                        <PagesContainer>
-                            <PageButton onClick={() => { changePage("-") }}> {"<"}Previous</PageButton>
-                            <WhatPage>Page: {pageNum + 1}/{audiot.length}</WhatPage>
-                            <PageButton onClick={() => { changePage("+") }}>Next{">"}</PageButton>
-                        </PagesContainer> : null
-                }
-                {
-                    searching ?
-                        <LoaderContainer>
-                            <LoaderText>Loading</LoaderText>
-                            <Loader
-                                type="TailSpin"
-                                color="#00BFFF"
-                                height={50}
-                                width={50}
-                            /></LoaderContainer>
-
-
-                        : error ?
-                            <AudioContainer
-                                image={notFound}
-                                title="No matches"
-                                description="We didn't find anything" />
-                            : audioInside
-                }
-            </SearchContainer>
+            {
+                searching ?
+                    <LoaderContainer>
+                        <LoaderText>Loading</LoaderText>
+                        <Loader
+                            type="TailSpin"
+                            color="#00BFFF"
+                            height={50}
+                            width={50}
+                        /></LoaderContainer> :
+                    <SearchContainer isOpen={isOpen}>
+                        {
+                            audioCount > 0 ?
+                                <Title>You have {audioCount} recordings.</Title> :
+                                <Title>You have no recordings.</Title>
+                        }
+                        {
+                            audioCount > 0 ?
+                                <SortContainer>
+                                    <FormLabel htmlFor="for">Sort by</FormLabel>
+                                    <SelectInput
+                                        value={sortAudio}
+                                        onChange={sortChanged}
+                                        options={sortOptions}
+                                    />
+                                    <FormLabel htmlFor="for">Search</FormLabel>
+                                    <FormInput maxLength="50" value={searchTitle} onChange={(e) => searchTitleChanged(e)}></FormInput>
+                                    <SearchButton onClick={() => clickSearch()}>Search</SearchButton>
+                                </SortContainer> : null
+                        }
+                        {
+                            audiot[1] ?
+                                <PagesContainer>
+                                    <PageButton onClick={() => { changePage("-") }}> {"<"}Previous</PageButton>
+                                    <WhatPage>Page: {pageNum + 1}/{audiot.length}</WhatPage>
+                                    <PageButton onClick={() => { changePage("+") }}>Next{">"}</PageButton>
+                                </PagesContainer> : null
+                        }
+                        {
+                            error ?
+                                <AudioContainer
+                                    image={notFound}
+                                    title="No matches"
+                                    description="We didn't find anything" />
+                                : audioInside
+                        }
+                    </SearchContainer>
+            }
             <EditContainer isOpen={isOpen}>
                 <MyAudioForm >
                     <Title>Edit audio information</Title>

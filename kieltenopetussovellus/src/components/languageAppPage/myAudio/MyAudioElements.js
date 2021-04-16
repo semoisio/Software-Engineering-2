@@ -6,46 +6,34 @@ import Select from 'react-select';
 export const MyAudioContainer = styled.div`
     display:flex;
     flex-wrap: wrap;
-    min-height:80vh;
+    justify-content: center;
 `;
 
 // container for showing user's audios
 export const SearchContainer = styled.div`
-    width:70%;
     display:flex;
     flex-direction:column;
-    margin-right: auto;
-
-    @media screen and (max-width: 768px){
-        width: 100%;
-        margin-right: 16px;
-        flex-direction:column;
-        transition: all 1s;
-    }
+    width: 100%;
+    transition: all 0.3s;
+    justify-content: center;
+    align-items: center;
 `;
 
 // container for editing selected audio info
 export const EditContainer = styled.div`
     display:flex;
-    width:30%;
     flex-direction:column;
+    position: fixed;
+    width: 100%;
+    z-index: 998;
     opacity: ${({ isOpen }) => (isOpen ? '100%' : '0')}; 
+    top: ${({ isOpen }) => (isOpen ? '80px' : '-100%')};
+    bottom: ${({ isOpen }) => (isOpen ? 0 : null)};
+    transition: 0.3s ease-in-out;
+    background: ${background};
+    overflow: auto;
     transition: all 0.3s;
     min-height:80vh;
-
-    @media screen and (max-width: 768px){
-        position: fixed;
-        width: 100%;
-        display: flex;
-        flex-direction:column;  
-        z-index: 998;
-        opacity: ${({ isOpen }) => (isOpen ? '100%' : '0')}; 
-        top: ${({ isOpen }) => (isOpen ? '80px' : '-100%')};
-        bottom: ${({ isOpen }) => (isOpen ? 0 : null)};
-        transition: 0.3s ease-in-out;
-        background: ${background};
-        overflow: auto;
-    }
 `;
 
 // container for search buttons
@@ -77,7 +65,7 @@ export const AudioPlayer = styled.audio`
 
 // search buttons
 export const SearchButton = styled.button`
-    width: 50%;
+    width: 30%;
     min-width: 75px;
     margin-left:1rem;
     margin-right:1rem;
@@ -168,8 +156,8 @@ export const LoaderText = styled.h1`
 
 export const SortContainer = styled.div`
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    width: 30%;
 `;
 
 export const SelectInput = styled(Select)`
