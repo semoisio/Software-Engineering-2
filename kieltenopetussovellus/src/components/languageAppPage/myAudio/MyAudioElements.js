@@ -25,7 +25,6 @@ export const EditContainer = styled.div`
     flex-direction:column;
     position: fixed;
     width: 100%;
-    z-index: 998;
     opacity: ${({ isOpen }) => (isOpen ? '100%' : '0')}; 
     top: ${({ isOpen }) => (isOpen ? '80px' : '-100%')};
     bottom: ${({ isOpen }) => (isOpen ? 0 : null)};
@@ -165,4 +164,26 @@ export const SelectInput = styled(Select)`
     margin-left:1rem;
     margin-right:1rem;
     margin-bottom: 8px;
+`;
+
+export const QuizContainer = styled.div`
+    display: flex;
+    flex-direction:column;
+    margin-left:1rem;
+    margin-right:1rem;
+    margin-bottom: 15px;
+`;
+
+export const QuizCheck = styled.input`
+    margin-right: 10px;
+`;
+
+export const QuestionAnswer = styled.div`
+    display: flex;
+    flex-direction:column;
+    border: 2px ${CONinput} solid;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 `;

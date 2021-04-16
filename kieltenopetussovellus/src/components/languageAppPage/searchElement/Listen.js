@@ -231,7 +231,7 @@ const Listen = (props) => {
 
     const AudioQuiz = () => {
         if (audioInfo !== null) {
-            if (audioInfo.quiz) {
+            if (audioInfo.quiz && audioInfo.quiz.length > 0 ) {
                 let audioQuiz = audioInfo.quiz.map((t, index) => {
                     return (
                         <Quiz
@@ -307,7 +307,7 @@ const Listen = (props) => {
                                         </StarContainer>
                                     </RatingContainer>
                                     {
-                                        audioInfo.quiz ?
+                                        audioInfo.quiz && audioInfo.quiz.length > 0 ?
                                             showQuiz ?
                                                 <ListenButton onClick={() => clickHideQuiz()}>Hide quiz</ListenButton> :
                                                 <ListenButton onClick={() => clickTakeQuiz()}>Show quiz</ListenButton>

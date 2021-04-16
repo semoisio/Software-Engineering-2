@@ -24,7 +24,10 @@ import {
     SortContainer,
     SelectInput,
     SearchButton,
-    SearchInput
+    SearchInput,
+    QuizContainer,
+    QuizCheck,
+    QuestionAnswer,
 } from './MyAudioElements';
 import {
     PagesContainer,
@@ -35,6 +38,7 @@ import AudioContainer from './AudioContainer';
 import ConfirmDialog from '../../../dialogs/ConfirmDialog';
 import { splitAudios } from '../searchElement/searchFunctions';
 import { sortByKey } from '../../../tools/sortFunctions';
+import NotifyDialog from '../../../dialogs/NotifyDialog';
 
 const MyAudio = () => {
     // Array where found audios are saved by page
@@ -70,6 +74,14 @@ const MyAudio = () => {
     const [desc, setDesc] = useState("");
     const [genre, setGenre] = useState("");
     const [difficulty, setDifficulty] = useState("");
+
+    // quiz inputs
+    const [q1, setQ1] = useState("");
+    const [q2, setQ2] = useState("");
+    const [q3, setQ3] = useState("");
+    const [a1, setA1] = useState("");
+    const [a2, setA2] = useState("");
+    const [a3, setA3] = useState("");
 
     const sortChanged = (e) => {
         setSortAudio(e);
@@ -125,6 +137,63 @@ const MyAudio = () => {
         }
     }
 
+    const length = 100;
+    const q1Changed = (e) => {
+        if (e.target.value.length < length) {
+            setQ1(e.target.value);
+        }
+    }
+    const q2Changed = (e) => {
+        if (e.target.value.length < length) {
+            setQ2(e.target.value);
+        }
+    }
+    const q3Changed = (e) => {
+        if (e.target.value.length < length) {
+            setQ3(e.target.value);
+        }
+    }
+    const a1Changed = (e) => {
+        if (e.target.value.length < length) {
+            setA1(e.target.value);
+        }
+    }
+    const a2Changed = (e) => {
+        if (e.target.value.length < length) {
+            setA2(e.target.value);
+        }
+    }
+    const a3Changed = (e) => {
+        if (e.target.value.length < length) {
+            setA3(e.target.value);
+        }
+    }
+
+    const clearQuiz = () => {
+        setQ1("");
+        setQ2("");
+        setQ3("");
+        setA1("");
+        setA2("");
+        setA3("");
+    }
+
+    const validateQuiz = () => {
+        let message = "";
+        if (q1.length > 0 && a1.length === 0 || q2.length > 0 && a2.length === 0 || q3.length > 0 && a3.length === 0) {
+            message = "Give answer to each question.";
+        }
+        else if (q1.length === 0 && a1.length > 0 || q2.length === 0 && a2.length > 0 || q3.length === 0 && a3.length > 0) {
+            message = "Dont use empty questions.";
+        }
+        return message;
+    }
+
+    const clickClear = (e) => {
+        e.preventDefault();
+        clearQuiz();
+    }
+
     // fetch user's audios from db
     const fetchAudio = async () => {
         setSearchInputChanged(false);
@@ -133,7 +202,6 @@ const MyAudio = () => {
         if (searchTitle !== "") {
             url += "&title=" + searchTitle;
         }
-        console.log(url);
         try {
             const response = await fetch(url);
             let rJson = await response.json();
@@ -173,6 +241,7 @@ const MyAudio = () => {
                 if (result.status === "OK") {
                     fetchAudio();
                     setSelectedAudio(null);
+                    clearQuiz();
                 }
             }
         }
@@ -182,6 +251,7 @@ const MyAudio = () => {
     // update audio info
     const updateAudio = async (audio) => {
         setSearching(true);
+        let dialogprops = null;
         const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -193,9 +263,18 @@ const MyAudio = () => {
         if (result.status === "OK") {
             fetchAudio();
             setSelectedAudio(null);
+            dialogprops = {
+                title: "Success",
+                message: "Audio updated successfully.",
+            }
         } else {
             setSearching(false);
+            dialogprops = {
+                title: "Error",
+                message: result.msg + ".",
+            }
         }
+        NotifyDialog(dialogprops);
     };
 
     // fetch one audio file
@@ -213,19 +292,53 @@ const MyAudio = () => {
 
     // user saves audio info
     const clickSave = (e) => {
-        //setSearching(true);
         e.preventDefault();
         if (selectedAudio) {
-            let updatedAudio = {
-                "_id": selectedAudio._id,
-                "language": language.value,
-                "title": title,
-                "desc": desc,
-                "genre": genre.value,
-                "difficulty": difficulty.value
+            let updatedAudio = null;
+            let dialogProps = null;
+            // check that fields are given
+            if (language && title.length > 0 && desc.length > 0 && genre && difficulty) {
+                let quiz = [];
+                let message = validateQuiz();
+                if (message !== "") {
+                    dialogProps = {
+                        title: "Check quiz",
+                        message: message,
+                    }
+                }
+                else {
+                    if (q1.length > 0) {
+                        quiz.push({ question: q1, answer: a1 });
+                    }
+                    if (q2.length > 0) {
+                        quiz.push({ question: q2, answer: a2 });
+                    }
+                    if (q3.length > 0) {
+                        quiz.push({ question: q3, answer: a3 });
+                    }
+                    updatedAudio = {
+                        "_id": selectedAudio._id,
+                        "language": language.value,
+                        "title": title,
+                        "desc": desc,
+                        "genre": genre.value,
+                        "difficulty": difficulty.value,
+                        "quiz": quiz
+                    };
+                    updateAudio(updatedAudio);
+                    setIsOpen(false);
+                }
             }
-            updateAudio(updatedAudio);
-            setIsOpen(false);
+            // some field missing
+            else {
+                dialogProps = {
+                    title: "Missing information",
+                    message: "Please fill audio information.",
+                }
+            }
+            if (dialogProps !== null) {
+                NotifyDialog(dialogProps);
+            }
         }
     };
 
@@ -249,6 +362,24 @@ const MyAudio = () => {
             setDesc(selectedAudio.desc);
             setGenre(genreOptions.find(x => x.value === selectedAudio.genre));
             setDifficulty(difficultyOptions.find(x => x.value === selectedAudio.difficulty));
+            if (selectedAudio.quiz && selectedAudio.quiz.length > 0) {
+                let quiz = selectedAudio.quiz;
+                let i;
+                for (i = 0; i < quiz.length; i++) {
+                    if (i === 0) {
+                        setQ1(quiz[i].question);
+                        setA1(quiz[i].answer);
+                    }
+                    else if (i === 1) {
+                        setQ2(quiz[i].question);
+                        setA2(quiz[i].answer);
+                    }
+                    else {
+                        setQ3(quiz[i].question);
+                        setA3(quiz[i].answer);
+                    }
+                }
+            }
             haeAudioFile();
         }
     }, [selectedAudio]);
@@ -272,6 +403,7 @@ const MyAudio = () => {
             desc={t.desc}
             genre={t.genre}
             difficulty={t.difficulty}
+            quiz={t.quiz}
             deleteAudio={deleteAudio}
             setSelectedAudio={setSelectedAudio}
             setIsOpen={setIsOpen}
@@ -370,6 +502,26 @@ const MyAudio = () => {
                             options={difficultyOptions}
                         />
                     </SelectContainer>
+                    <QuizContainer>
+                        <QuestionAnswer>
+                            <FormLabel htmlFor="for" >Question 1</FormLabel>
+                            <FormInput type="text" value={q1} onChange={(e) => { q1Changed(e) }}></FormInput>
+                            <FormLabel htmlFor="for">Answer</FormLabel>
+                            <FormInput type="text" value={a1} onChange={(e) => { a1Changed(e) }}></FormInput>
+                        </QuestionAnswer>
+                        <QuestionAnswer>
+                            <FormLabel htmlFor="for">Question 2</FormLabel>
+                            <FormInput type="text" value={q2} onChange={(e) => { q2Changed(e) }}></FormInput>
+                            <FormLabel htmlFor="for">Answer</FormLabel>
+                            <FormInput type="text" value={a2} onChange={(e) => { a2Changed(e) }}></FormInput>
+                        </QuestionAnswer><QuestionAnswer>
+                            <FormLabel htmlFor="for">Question 3</FormLabel>
+                            <FormInput type="text" value={q3} onChange={(e) => { q3Changed(e) }}></FormInput>
+                            <FormLabel htmlFor="for">Answer</FormLabel>
+                            <FormInput type="text" value={a3} onChange={(e) => { a3Changed(e) }}></FormInput>
+                        </QuestionAnswer>
+                        <EditButton  className="button2" onClick={(e) => clickClear(e)}>Clear quiz</EditButton>
+                    </QuizContainer>
                     <EditButtonContainer>
                         <EditButton onClick={(e) => clickSave(e)}>Save</EditButton>
                         <EditButton onClick={(e) => clickCancel(e)}>Cancel</EditButton>

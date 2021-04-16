@@ -24,7 +24,8 @@ const AudioContainer = (props) => {
             "title": props.title,
             "desc": props.desc,
             "genre": props.genre,
-            "difficulty": props.difficulty
+            "difficulty": props.difficulty,
+            "quiz": props.quiz,
         };
         props.setSelectedAudio(audio);
         props.setIsOpen(true);
