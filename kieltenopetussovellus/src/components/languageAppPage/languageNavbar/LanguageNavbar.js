@@ -11,10 +11,10 @@ import {
 } from './LanguageNavbarElements';
 import ConfirmDialog from '../../../dialogs/ConfirmDialog';
 
-const LanguageNavbar = ({toggle }) => {
+const LanguageNavbar = ({toggle, mainActive, setMainactive }) => {
     const history = useHistory();
 
-    const [mainActive, setMainactive] = useState(true);
+    
     
     const handleLogout = () => {
         let dialogprops = {
@@ -30,7 +30,7 @@ const LanguageNavbar = ({toggle }) => {
     };
     return (
         <LanguageNav>
-            <Logo>GroupO</Logo>
+            <Logo>LingoRec</Logo>
             <NavBtnWrapper>
                 <NavBtn activeClassName={mainActive ? "active" : null} onClick={() => setMainactive(true)} to="/" data-testid="navBtnSearch" >Search and Listen</NavBtn>
                 <NavBtn activeClassName="active"  to="/newrecording" data-testid="navBtnRecording" onClick={() => setMainactive(false)}>New recording</NavBtn>

@@ -49,7 +49,7 @@ export const NavBtnWrapper = styled.nav`
     font-size: 1.2rem;
     
 
-    @media screen and (max-width: 768px){
+    @media screen and (max-width: 795px){
         display:none;
     }
 `;
@@ -103,7 +103,7 @@ export const SINavBtn = styled.button`
 export const MobileIcon = styled.div`
     display: none;
 
-    @media screen and (max-width: 768px){
+    @media screen and (max-width: 795px){
         display: block;
         position: absolute;
         top: 0;

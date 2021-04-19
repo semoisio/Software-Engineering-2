@@ -25,12 +25,13 @@ const LanguageAppHome = () => {
         setIsOpen(!isOpen);
     };
 
+    const [mainActive, setMainactive] = useState(true);
 
     return (
         <LanguageContainer data-testid="languageContainer">
             <Router>
-                <LanguageNavbar toggle={toggle} />
-                <LanguageSideBar isOpen={isOpen} toggle={toggle} />
+                <LanguageNavbar toggle={toggle} mainActive={mainActive} setMainactive={setMainactive} />
+                <LanguageSideBar isOpen={isOpen} toggle={toggle} mainActive={mainActive} setMainactive={setMainactive}/>
                 <ElementsContainer>
                     <Switch>
                         <Route exact path="/" component={Search} />
