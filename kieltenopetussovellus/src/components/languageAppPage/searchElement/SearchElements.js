@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
-import {background,CONtext,CONh1,CONinput,RBbg,RBhover,RBtext,RBshadow } from '../../../tools/colors';
+import {background,CONtext,CONh1,CONinput} from '../../../tools/colors';
 import Select from 'react-select';
 
 export const SearchAndListenContainer = styled.div`
@@ -100,10 +100,11 @@ export const Form = styled.form`
 
 // Headline for form
 export const FormH1 = styled.h1`
+    margin-top: 20px;
     margin-bottom: 15px;
-    color: ${CONh1};
+    color: black;
     font-size: 20px;
-    font-weight: 400;
+    font-weight: bold;
     text-align: center;
 `;
 
@@ -111,7 +112,7 @@ export const FormH1 = styled.h1`
 export const FormLabel = styled.label`
     margin-bottom: 8px;
     font-size: 14px;
-    color: ${CONh1};
+    color: black;
     margin-left:1rem;
 `;
 
@@ -126,12 +127,6 @@ export const FormInput = styled.input`
 `;
 
 export const SelectContainer = styled.div`
-    margin-left:1rem;
-    margin-right:1rem;
-    margin-bottom: 15px;
-`;
-
-export const RadioBtnContainer = styled.div`
     margin-left:1rem;
     margin-right:1rem;
     margin-bottom: 15px;
@@ -157,25 +152,29 @@ export const FormButton = styled.button`
 
 //Styles for form button
 export const ClearButton = styled.div`
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background: ${RBbg};
-    padding: 0.5rem 0.5rem;
-    border: none;
-    border-radius: 4px;
-    color: ${RBtext};
-    font-size: medium;
-    margin-left:auto;
+    background-color: #FE786A;
+	box-shadow: 0px 2px 4px #000000;
+	padding: 1rem 1rem;
+	border: none;
+    border-radius: 10px;
+	text-decoration: none;
+	font-weight: 300;
+	color: #ffffff;
+	text-shadow: 1px 1px 2px #626262;
+    font-weight: 400;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+	font-size: medium;
+
+	text-align: center;
+	margin-left:1rem;
     margin-right:1rem;
     margin-bottom: 15px;
-    cursor: pointer;
-    border-radius: 10px;
-    font-weight: 300;
-    width:30%;
+    margin-top: 15px;
 
     &:hover{
-        background: ${RBhover   };
+        transition: all 0.1s ease-in-out;
+	    background-color: #FE8A7E;
     }
 `;
 

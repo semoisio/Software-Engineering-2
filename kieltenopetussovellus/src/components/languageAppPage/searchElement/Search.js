@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import Loader from "react-loader-spinner";
-import { RadioGroup, RadioButton } from 'react-radio-buttons';
-import { OBbg, OBhover } from '../../../tools/colors';
 import {
     SearchAndListenContainer,
     SearchContainer,
@@ -17,7 +15,6 @@ import {
     FormLabel,
     FormInput,
     SelectContainer,
-    RadioBtnContainer,
     FormButton,
     LoaderContainer,
     LoaderText,
@@ -37,7 +34,7 @@ import {
 import AudioContainer from './AudioContainer';
 import audioimage from '../../../images/AudioWave.jpg';
 import notFound from '../../../images/notFound.png';
-import { genreOptions, languageOptions, sortOptions } from '../../../tools/defaultOptions';
+import { genreOptions, languageOptions, sortOptions, difficultyOptions } from '../../../tools/defaultOptions';
 import Listen from './Listen';
 import { sortByKey } from '../../../tools/sortFunctions';
 
@@ -65,10 +62,9 @@ const Search = () => {
     //Select component language
     const [selectedLanguage, setSelectedLanguage] = useState({ value: "" });
 
-    //radio button
+    //Select component difficulty
     const [selectedDifficulty, setSelectedDifficulty] = useState("");
-    //Difficulty checked holds information what radiobutten have to bee checked
-    const [difficultyChecked, setDifficultyChecked] = useState([false, false, false]);
+
 
     //audio search input
     const [audioTitle, setAudioTitle] = useState("");
@@ -95,23 +91,10 @@ const Search = () => {
     const handleSelectClickGenre = (param) => {
         setSelectedGenre(param);
     }
-    const radioButtonChanged = (value) => {
-        setSelectedDifficulty(value);
-        switch (value) {
-            case "beginner":
-                setDifficultyChecked([true, false, false])
-                break;
-            case "intermediate":
-                setDifficultyChecked([false, true, false])
-                break;
-            case "expert":
-                setDifficultyChecked([false, false, true])
-                break;
-            default:
-                setDifficultyChecked([false, false, false])
-                break;
-        }
-    }
+    const handleSelectClickDifficulty = (param) => {
+        setSelectedDifficulty(param);
+      }
+
     const audioChanged = (e) => {
         setAudioTitle(e.target.value);
     }
@@ -143,7 +126,7 @@ const Search = () => {
             setPageNum(0);
             setSearching(true);
             const queryKeys = ["title", "difficulty", "genre", "language"];
-            const uncheckedQuery = [audioTitle, selectedDifficulty, selectedGenre.value, selectedLanguage.value];
+            const uncheckedQuery = [audioTitle, selectedDifficulty.value, selectedGenre.value, selectedLanguage.value];
 
             let query = buildQuery(uncheckedQuery, queryKeys);
             const url = "http://127.0.0.1:3001/audio" + query
@@ -224,7 +207,7 @@ const Search = () => {
         setSelectedGenre({ value: "" });
         setSelectedLanguage({ value: "" });
         setAudioTitle("")
-        radioButtonChanged("");
+        setSelectedDifficulty({value: ""});
     };
 
     const changePage = (param) => {
@@ -303,13 +286,13 @@ const Search = () => {
                                 />
                             </SelectContainer>
                             <FormLabel htmlFor="for" >Difficulty</FormLabel>
-                            <RadioBtnContainer>
-                                <RadioGroup onChange={(value) => { radioButtonChanged(value) }}>
-                                    <RadioButton checked={difficultyChecked[0]} rootColor={OBbg} pointColor={OBhover} value="beginner">Beginner</RadioButton>
-                                    <RadioButton checked={difficultyChecked[1]} rootColor={OBbg} pointColor={OBhover} value="intermediate">Intermediate</RadioButton>
-                                    <RadioButton checked={difficultyChecked[2]} rootColor={OBbg} pointColor={OBhover} value="expert">Expert</RadioButton>
-                                </RadioGroup>
-                            </RadioBtnContainer>
+                            <SelectContainer>
+                                <Select
+                                    value={selectedDifficulty}
+                                    onChange={handleSelectClickDifficulty}
+                                    options={difficultyOptions}
+                                />
+                            </SelectContainer>
                             <ClearButton type="button" onClick={() => { clearChoices() }}>Clear</ClearButton>
                             <FormButton type="submit">Search</FormButton>
                         </Form>
