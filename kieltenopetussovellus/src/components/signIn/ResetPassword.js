@@ -23,6 +23,7 @@ import {
 
 } from './SignInElements';
 import ConfirmDialog from '../../dialogs/ConfirmDialog';
+import NotifyDialog from '../../dialogs/NotifyDialog';
 
 
 const ResetPassword = (props) => {
@@ -92,8 +93,8 @@ const ResetPassword = (props) => {
 
     let dialogprops = {
         title: "Success",
-        message: "Password has been changed succesfully, you can now login",
-        clickOk: async () => {
+        message: "Password has been changed succesfully, you can now sign in",
+        clickOk: () => {
             history.push('/signin');
         }
     }
@@ -101,7 +102,6 @@ const ResetPassword = (props) => {
 
     useEffect(async () => {
         const token = props.match.params.id;
-        console.log(token)
         const requestOptions = {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
@@ -131,7 +131,6 @@ const ResetPassword = (props) => {
         else {
             setSigning(true);
             const token = props.match.params.id;
-            console.log(token)
             const requestOptions = {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
@@ -140,10 +139,9 @@ const ResetPassword = (props) => {
             const result = await fetch("http://127.0.0.1:3001/login", requestOptions);
             let response = await result.json();
             setSigning(false);
-            if (response.status === "OK") {
-                //setInfotext(response.msg);
-
-                ConfirmDialog(dialogprops);
+            if (response.status === "OK") {              
+                NotifyDialog(dialogprops);
+                history.push('/signin');
             }
             else {
                 setInfotext(response.msg);
@@ -237,6 +235,7 @@ const ResetPassword = (props) => {
                         <FormContent data-testid="resetpasswordformcontent">
                             <Form action="" data-testid="resetpasswordform" onSubmit={(e) => SubmitHomepage(e)}>
                                 <FormH1 data-testid="resetpasswordformh1">Problem verifying link</FormH1>
+                                <FormLabel htmlFor="for">{infoText}</FormLabel>
                                 <FormButton type="submit">Back to homepage</FormButton>
                             </Form>
                         </FormContent>

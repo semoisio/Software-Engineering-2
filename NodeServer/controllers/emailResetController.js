@@ -63,6 +63,7 @@ module.exports = {
     checkToken: async (req, res) => {
         
         let token = req.query.rptoken;
+        let now = Date.now();
         
         try {
             if (!token) {
@@ -72,8 +73,15 @@ module.exports = {
 
                 const client2 = new MongoClient(uri, { useUnifiedTopology: true });
                 const user = await crud.findOne(client2, db, collection, { rptoken: token });
+                let then = user.rpexpires;
                 if (user) {
-                    res.json({ status: "OK", msg: "Verified succesfully" });
+                    if(now>then){
+                        res.json({ status: "NOT OK", msg: "The password reset link has expired" });
+                    }
+                    else{
+                        res.json({ status: "OK", msg: "Verified succesfully" });
+                    }
+                    
                 }
                 else {
                     res.json({ status: "NOT OK", msg: "Token does not exist" });
