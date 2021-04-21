@@ -293,6 +293,9 @@ const NewRecording = () => {
         message: "Please stop recording.",
       }
     }
+    if(!dialogprops.clickOk){
+      dialogprops.clickOk = () =>{};
+    }
     NotifyDialog(dialogprops);
   }
 
