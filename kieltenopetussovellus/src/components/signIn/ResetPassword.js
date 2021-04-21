@@ -141,7 +141,6 @@ const ResetPassword = (props) => {
             setSigning(false);
             if (response.status === "OK") {              
                 NotifyDialog(dialogprops);
-                history.push('/signin');
             }
             else {
                 setInfotext(response.msg);
@@ -206,9 +205,9 @@ const ResetPassword = (props) => {
                                         <FormLabel>{pwInfo}</FormLabel>
                                         <FormLabel htmlFor="for">Confirm password</FormLabel>
                                         <FormInput type="password" required value={password2} onChange={(e) => { password2Changed(e) }} />
-
+                                        <FormH1 htmlFor="for">{infoText}</FormH1>
                                         <FormButton type="submit">Submit</FormButton>
-                                        <FormLabel htmlFor="for">{infoText}</FormLabel>
+                                        
                                     </Form>
 
                                 </FormContent>
@@ -235,7 +234,7 @@ const ResetPassword = (props) => {
                         <FormContent data-testid="resetpasswordformcontent">
                             <Form action="" data-testid="resetpasswordform" onSubmit={(e) => SubmitHomepage(e)}>
                                 <FormH1 data-testid="resetpasswordformh1">Problem verifying link</FormH1>
-                                <FormLabel htmlFor="for">{infoText}</FormLabel>
+                                <FormH1 data-testid="resetpasswordformh1-2">{infoText}</FormH1>
                                 <FormButton type="submit">Back to homepage</FormButton>
                             </Form>
                         </FormContent>
