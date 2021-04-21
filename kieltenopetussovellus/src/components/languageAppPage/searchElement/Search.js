@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
-import { Footer, FooterLink } from '../../footer/FooterElements';
-import PrivacyPolicy from '../../footer/PrivacyPolicy.pdf';
+import FooterJS from '../../footer/Footer';
 import Loader from "react-loader-spinner";
 import {
     SearchAndListenContainer,
@@ -397,11 +396,7 @@ const Search = () => {
                     </SearchResultContainer>
     
                 </SearchAndListenContainer>
-                <Footer>
-				        <FooterLink to= {PrivacyPolicy} target= "_blank">Terms and Conditions</FooterLink>
-				        <FooterLink to= {PrivacyPolicy} target= "_blank">Privacy policy</FooterLink>
-				        <FooterLink to= {PrivacyPolicy} target= "_blank">About us</FooterLink>
-			        </Footer>
+                <FooterJS/>
                 </div>
             }
         </>

@@ -11,6 +11,7 @@ import {
     FormButtonDelete,
     FormText
 } from './ProfileElements';
+import FooterJS from '../../footer/Footer';
 import Select from 'react-select';
 import kuva from '../../../images/AudioWave.jpg'
 import { languageOptions } from '../../../tools/defaultOptions';
@@ -456,6 +457,7 @@ const Profile = () => {
     }
 
     return (
+        <div>
         <ProfileContainer data-testid="profileContainer">
 
             {changePassword ?
@@ -537,8 +539,10 @@ const Profile = () => {
             }
 
 
-
+            
         </ProfileContainer>
+        <FooterJS/>
+        </div>
     )
 }
 
