@@ -15,7 +15,7 @@ export const LanguageNav = styled.nav`
     z-index: 10;
     margin-right:0;
 
-    @media screen and (max-width: 850px){
+    @media screen and (max-width: 960px){
         transition: 0.8s all ease;
     }
     /* @media screen and (max-width: 768px){

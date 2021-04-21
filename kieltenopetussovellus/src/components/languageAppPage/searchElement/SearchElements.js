@@ -15,7 +15,7 @@ export const SearchContainer = styled.div`
     display:flex;
     transition: all 1s;
 
-    @media screen and (max-width: 768px){
+    @media screen and (max-width: 850px){
         position: fixed;
         z-index: 998;
         width: 100%;
@@ -39,7 +39,7 @@ export const SearchResultContainer = styled.div`
     overflow: auto;
     display:flex;
     flex-direction: column;
-    @media screen and (max-width: 768px){
+    @media screen and (max-width: 850px){
         width:100%;
     }
 `;
@@ -52,7 +52,7 @@ export const OpenSearchIconContainer = styled.div`
     justify-content:center;
     width: 100%;
 
-    @media screen and (max-width: 768px){
+    @media screen and (max-width: 850px){
         display: flex;
         justify-content:center;
         align-items:center;
@@ -75,7 +75,7 @@ export const CloseSearchIconContainer = styled.div`
     color: ${CONtext};
     cursor: pointer;
 
-    @media screen and (max-width: 768px){
+    @media screen and (max-width: 850px){
         display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
         
         justify-content:center;
