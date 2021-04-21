@@ -1,4 +1,5 @@
 import React from 'react';
+import PrivacyPolicy from './PrivacyPolicy.pdf';
 
 import {
 	Footer,
