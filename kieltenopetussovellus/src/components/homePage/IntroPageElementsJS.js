@@ -48,6 +48,7 @@ export const IntroText = styled.div`
 	width: 60%;
 	margin: auto;
 	color: black;
+	margin-top:40px;
 
 	@media screen and (max-width: 768px){
         width:80%;
@@ -63,6 +64,7 @@ export const NavBtn = styled.nav`
 	justify-content:center;
 	text-align: center;
 	flex-wrap: wrap;
+	margin-top:40px;
 `;
 
 // Buttonit
@@ -71,6 +73,7 @@ export const IntroButton = styled(NavLink)`
 	box-shadow: 0px 2px 4px #000000;
 	padding: 1rem 1rem;
 	width: 10%;
+	min-width:100px;
 	border: none;
     border-radius: 10px;
 	text-decoration: none;
@@ -79,6 +82,7 @@ export const IntroButton = styled(NavLink)`
 	text-shadow: 1px 1px 2px #000000;
 	cursor: pointer;
 	transition: all 0.2s ease-in-out;
+	white-space:nowrap;
 
 	text-align: center;
 	margin: 10px;

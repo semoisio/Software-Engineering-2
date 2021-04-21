@@ -10,9 +10,9 @@
 export const buildQuery = (values, keys) => {
     let queryString = "";
 
-    if (values[2] === "none") {
-        values[2] = "";
-    }
+    // if (values[2] === "none") {
+    //     values[2] = "";
+    // }
 
     for (let i = 0; i < values.length; i++) {
 

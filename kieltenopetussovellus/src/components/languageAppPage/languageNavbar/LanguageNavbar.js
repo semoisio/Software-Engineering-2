@@ -11,10 +11,10 @@ import {
 } from './LanguageNavbarElements';
 import ConfirmDialog from '../../../dialogs/ConfirmDialog';
 
-const LanguageNavbar = ({toggle }) => {
+const LanguageNavbar = ({toggle, mainActive, setMainactive }) => {
     const history = useHistory();
 
-    const [mainActive, setMainactive] = useState(true);
+    
     
     const handleLogout = () => {
         let dialogprops = {
