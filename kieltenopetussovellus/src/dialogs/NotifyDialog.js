@@ -24,6 +24,7 @@ const ConfirmDialog = (props) => {
     const ui = ({ onClose }) => {
 
         const clickOk = () => {
+            props.clickOk();
             onClose()
         }
 
