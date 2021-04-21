@@ -139,6 +139,9 @@ const Search = () => {
                 if (rJson.status === "OK") {
                     setError(false);
                     let sorted = sortByKey(rJson.found, sortAudio.value);
+                    if (sortAudio.value === "added") {
+                        sorted = sorted.reverse();
+                    }
                     setAudioArray(sorted);
                     setAudiot(splitAudios(sorted));
                     setSearching(false);
@@ -185,6 +188,7 @@ const Search = () => {
                 if (rJson.status === "OK") {
                     setError(false);
                     let sorted = sortByKey(rJson.found, sortAudio.value);
+                    sorted = sorted.reverse();
                     setAudioArray(sorted);
                     setAudiot(splitAudios(sorted));
                     setSearching(false);
@@ -210,6 +214,9 @@ const Search = () => {
     useEffect(() => {
         if (audioArray.length > 0 && sortCount > 0) {
             let sorted = sortByKey(audioArray, sortAudio.value);
+            if (sortAudio.value === "added") {
+                sorted = sorted.reverse();
+            }
             setAudioArray(sorted);
             setAudiot(splitAudios(sorted));
         }

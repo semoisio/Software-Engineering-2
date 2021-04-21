@@ -209,12 +209,16 @@ const MyAudio = () => {
             if (rJson.status === "OK") {
                 setError(false);
                 let sorted = sortByKey(rJson.found, sortAudio.value);
+                if (sortAudio.value === "added") {
+                    sorted = sorted.reverse();
+                }
                 setAudioArray(sorted);
                 setAudioCount(rJson.found.length);
                 setAudiot(splitAudios(sorted));
                 setSearching(false);
             }
             else {
+                setAudioCount(0);
                 setError(true);
                 setAudioArray([]);
                 setAudiot([[]]);
@@ -242,6 +246,13 @@ const MyAudio = () => {
                     fetchAudio();
                     setSelectedAudio(null);
                     clearQuiz();
+                }
+                else {
+                    dialogProps = {
+                        title: "Error",
+                        message: result.msg
+                    }
+                    NotifyDialog(dialogProps);
                 }
             }
         }
@@ -388,6 +399,9 @@ const MyAudio = () => {
     useEffect(() => {
         if (audioArray.length > 0 && sortCount > 0) {
             let sorted = sortByKey(audioArray, sortAudio.value);
+            if (sortAudio.value === "added") {
+                sorted = sorted.reverse();
+            }
             setAudioArray(sorted);
             setAudiot(splitAudios(sorted));
         }

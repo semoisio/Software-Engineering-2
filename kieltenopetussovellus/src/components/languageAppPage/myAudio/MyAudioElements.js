@@ -13,7 +13,7 @@ export const MyAudioContainer = styled.div`
 export const SearchContainer = styled.div`
     display:flex;
     flex-direction:column;
-    z-index: 1;
+    //z-index: 1;
     width: 100%;
     transition: all 0.3s;
     justify-content: center;
@@ -25,11 +25,11 @@ export const EditContainer = styled.div`
     display:flex;
     flex-direction:column;
     position: fixed;
-    z-index: 2;
+    //z-index: 2;
     width: 100%;
     opacity: ${({ isOpen }) => (isOpen ? '100%' : '0')}; 
-    top: ${({ isOpen }) => (isOpen ? '80px' : '-100%')};
-    bottom: ${({ isOpen }) => (isOpen ? 0 : null)};
+    top: ${({ isOpen }) => (isOpen ? '80px' : '-1400px')};
+    bottom: ${({ isOpen }) => (isOpen ? 0 : 'none')};
     transition: 0.3s ease-in-out;
     background: ${background};
     overflow: auto;
