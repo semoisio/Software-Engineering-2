@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
+import { Footer, FooterLink } from '../../footer/FooterElements';
+import PrivacyPolicy from '../../footer/PrivacyPolicy.pdf';
 import Loader from "react-loader-spinner";
 import {
     SearchAndListenContainer,
@@ -63,7 +65,7 @@ const Search = () => {
     const [selectedLanguage, setSelectedLanguage] = useState({ value: "" });
 
     //Select component difficulty
-    const [selectedDifficulty, setSelectedDifficulty] = useState("");
+    const [selectedDifficulty, setSelectedDifficulty] = useState({ value: "" });
 
 
     //audio search input
@@ -158,14 +160,27 @@ const Search = () => {
         }
     }, [doFetch]);
 
-    // When page opened first time this function fetches some audio to display to screen
-    useEffect(() => {
+    //When page opened first time this function fetches some audio to display to screen
+    // useEffect(() => {
+    //     const fetchAudio = async () => {
+    //         setSearching(true);
+    //         const url = "http://127.0.0.1:3001/audio";
+    //         try {
+    //             const response = await fetch(url);
+    //             let rJson = await response.json();
+
+     useEffect(() => {
         const fetchAudio = async () => {
             setSearching(true);
-            const url = "http://127.0.0.1:3001/audio";
+            const userURL = "http://127.0.0.1:3001/user?username=" + localStorage.getItem("user");
+
             try {
+                const user = await fetch(userURL);
+                let userJson = await user.json();
+
+                const url = "http://127.0.0.1:3001/audio?language="+ userJson.found.learning;
                 const response = await fetch(url);
-                let rJson = await response.json();
+                let rJson = await response.json();   
 
                 if (rJson.status === "OK") {
                     setError(false);
@@ -255,6 +270,7 @@ const Search = () => {
                 setListening={listeningChanged}
                 id={selectedAudio}
             /> :
+                <div>
                 <SearchAndListenContainer data-testid="searchContainer">
                     <OpenSearchIconContainer isOpen={isOpen} onClick={toggle}>
                         <SearchText>Open search</SearchText>
@@ -305,22 +321,30 @@ const Search = () => {
                                     null :
                                     audiot.length === 0 ? null :
                                         audiot[1] ?
-                                            <FoundCount>
-                                                <Found>Found: {calculateAudios()}</Found>
+                                            <div>
+                                                <FoundCount><FormH1>
+                                                Found: {calculateAudios()} recordings
+                                                </FormH1></FoundCount>
+                                                
                                                 <SortContainer>
-                                                    <FormLabel htmlFor="for">Sort by</FormLabel>
-                                                    <SortInput
-                                                        value={sortAudio}
-                                                        onChange={sortChanged}
-                                                        options={sortOptions}
-                                                    />
-                                                </SortContainer>
                                                 <PageButton onClick={() => { changePage("-") }}>{"<"}Previous</PageButton>
+                                                    <FormLabel htmlFor="for">Sort by</FormLabel>
+                                                    <SortInput
+                                                        value={sortAudio}
+                                                        onChange={sortChanged}
+                                                        options={sortOptions}
+                                                    />
                                                 <PageButton onClick={() => { changePage("+") }}>Next{">"}</PageButton>
-                                                <WhatPage>Page: {pageNum + 1}/{audiot.length}</WhatPage>
-                                            </FoundCount> :
+                                                </SortContainer>
+                                                
+                                                
+                                                
+                                             
+                                            </div>:
+                                            <div>
                                             <FoundCount>
-                                                <Found>Found: {calculateAudios()}</Found>
+                                                <FormH1>Found: {calculateAudios()} recordings</FormH1>
+                                                </FoundCount>
                                                 <SortContainer>
                                                     <FormLabel htmlFor="for">Sort by</FormLabel>
                                                     <SortInput
@@ -329,7 +353,8 @@ const Search = () => {
                                                         options={sortOptions}
                                                     />
                                                 </SortContainer>
-                                            </FoundCount>
+                                            
+                                            </div>
                         }
                         { // if search is happening show loader
                             searching ?
@@ -361,9 +386,16 @@ const Search = () => {
                                             <PageButton onClick={() => { changePage("+") }}>Next{">"}</PageButton>
                                         </PagesContainer> : null
                         }
-
+                    
                     </SearchResultContainer>
+    
                 </SearchAndListenContainer>
+                <Footer>
+				        <FooterLink to= {PrivacyPolicy} target= "_blank">Terms and Conditions</FooterLink>
+				        <FooterLink to= {PrivacyPolicy} target= "_blank">Privacy policy</FooterLink>
+				        <FooterLink to= {PrivacyPolicy} target= "_blank">About us</FooterLink>
+			        </Footer>
+                </div>
             }
         </>
     )

@@ -30,7 +30,7 @@ const LanguageNavbar = ({toggle }) => {
     };
     return (
         <LanguageNav>
-            <Logo>GroupO</Logo>
+            <Logo>LingoRec</Logo>
             <NavBtnWrapper>
                 <NavBtn activeClassName={mainActive ? "active" : null} onClick={() => setMainactive(true)} to="/" data-testid="navBtnSearch" >Search and Listen</NavBtn>
                 <NavBtn activeClassName="active"  to="/newrecording" data-testid="navBtnRecording" onClick={() => setMainactive(false)}>New recording</NavBtn>

@@ -205,14 +205,14 @@ export const FoundCount = styled.div`
     }
 
 `;
-export const WhatPage = styled.h3`
-    margin:0;
-    color:${CONh1}; 
-    margin-right: 3rem;
+export const WhatPage = styled.label`
+margin-bottom: 8px;
+font-size: 14px;
+color: black;
 `;
-export const Found = styled.h3`
-    margin:0;
-`;
+// export const Found = styled.h3`
+//     margin:0;
+// `;
 
 export const PagesContainer = styled.div`
     display:flex;
@@ -224,10 +224,12 @@ export const PagesContainer = styled.div`
     } 
     
 `;
-export const PageButton = styled.div`
-    font-size: 1.5rem;
-    color:${CONh1};
-    cursor: pointer;
+export const PageButton = styled.label`
+margin-right: 30px;
+margin-left: 30px;
+margin-bottom: 8px;
+font-size: 14px;
+color: black;
 
     &:hover{
         opacity: 50%;
@@ -238,10 +240,12 @@ export const PageButton = styled.div`
     }   
 `;
 
+//tää jäi kesken, miten napit saa menemään nurkkiin ?
 export const SortContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    //align-content: space-between;
 `;
 
 export const SortInput = styled(Select)`
@@ -250,3 +254,4 @@ export const SortInput = styled(Select)`
     margin-right:1rem;
     margin-bottom: 8px;
 `;
+

@@ -15,7 +15,7 @@ export const LanguageNav = styled.nav`
     z-index: 10;
     margin-right:0;
 
-    @media screen and (max-width: 960px){
+    @media screen and (max-width: 850px){
         transition: 0.8s all ease;
     }
     /* @media screen and (max-width: 768px){
@@ -47,9 +47,8 @@ export const NavBtnWrapper = styled.nav`
     flex-direction:row;
     justify-content: flex-end;
     font-size: 1.2rem;
-    
 
-    @media screen and (max-width: 768px){
+    @media screen and (max-width: 850px){
         display:none;
     }
 `;
@@ -104,7 +103,7 @@ export const SINavBtn = styled.button`
 export const MobileIcon = styled.div`
     display: none;
 
-    @media screen and (max-width: 768px){
+    @media screen and (max-width: 850px){
         display: block;
         position: absolute;
         top: 0;
