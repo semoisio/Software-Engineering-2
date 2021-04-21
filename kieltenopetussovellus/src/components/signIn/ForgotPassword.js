@@ -9,6 +9,7 @@ import {
     LoaderText,
 } from '../../components/languageAppPage/searchElement/SearchElements';
 import ConfirmDialog from '../../dialogs/ConfirmDialog';
+import NotifyDialog from '../../dialogs/NotifyDialog';
 import {
     Container,
     FormWrap,
@@ -60,19 +61,21 @@ const ForgotPassword = (props) => {
     const SubmitEmail = async (e) => {
         e.preventDefault();
         setLoading(true);
-        const token = crypto.randomBytes(20).toString('hex');
-        //const expires = Date.now() + 3600000;
 
+        //Creating token to send with the link and an expiration date
+        const token = crypto.randomBytes(20).toString('hex');
+        const expires = Date.now() + 3600000;
+        
         const requestOptions = {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ "email": email, "rptoken": token })
+            body: JSON.stringify({ "email": email, "rptoken": token, "rpexpires":expires })
         };
         const result = await fetch("http://127.0.0.1:3001/emailreset", requestOptions);
         let response = await result.json();
         setLoading(false);
         if (response.status === "OK") {
-            ConfirmDialog(dialogprops);
+            NotifyDialog(dialogprops);
             setInfotext("");
         }
         else {

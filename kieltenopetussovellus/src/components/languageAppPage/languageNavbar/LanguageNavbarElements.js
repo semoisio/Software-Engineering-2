@@ -79,6 +79,7 @@ export const NavBtn = styled(NavLink)`
 
 export const SINavBtn = styled.button`
     color: #fff;
+    font-size: 95%;
     text-shadow: 1px 1px 2px #626262;
     display: flex;
     align-items: center;
