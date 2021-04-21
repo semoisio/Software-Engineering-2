@@ -8,12 +8,16 @@ import {
     AudioDescription,
     StartAudioBtn
 } from './AudioContainerElements';
-import {getFlag} from '../../../tools/flagFunction';
+import { getFlag } from '../../../tools/flagFunction';
+import ReactStars from "react-rating-stars-component";
+import { getRating, calculateRating, addRating } from './ratingFunctions';
+import { CONh1 } from '../../../tools/colors';
 
 const AudioContainer = (props) => {
     const [audioFetched, setAudioFetched] = useState("");
     const [doFetch, setDoFetch] = useState(0);
     const [searching, setSearching] = useState(false);
+    const [ratingValue, setRatingValue] = useState(calculateRating(props.rating));
 
     useEffect(() => {
         /*
@@ -52,6 +56,14 @@ const AudioContainer = (props) => {
             <AudioTextContainer>
                 <AudioTitle>{props.title}</AudioTitle>
                 <AudioDescription>{props.description}</AudioDescription>
+                <ReactStars
+                    count={5}
+                    size={30}
+                    color="gray"
+                    activeColor="red"
+                    value={ratingValue}
+                    edit={false}
+                />
             </AudioTextContainer>
             {
                 searching ?

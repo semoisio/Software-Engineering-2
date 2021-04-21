@@ -267,6 +267,7 @@ const Search = () => {
             id={t._id}
             setListening={listeningChanged}
             setSelectedAudio={selectedAudioChanged}
+            rating={t.rating}
         />
     });
 

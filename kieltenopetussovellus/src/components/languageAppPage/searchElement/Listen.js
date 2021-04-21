@@ -277,6 +277,7 @@ const Listen = (props) => {
                                         <ReactStars
                                             count={5}
                                             size={30}
+                                            color="gray"
                                             activeColor={CONh1}
                                             value={ratingValue}
                                             edit={false}

@@ -391,6 +391,9 @@ const MyAudio = () => {
                     }
                 }
             }
+            else {
+                clearQuiz();
+            }
             haeAudioFile();
         }
     }, [selectedAudio]);
