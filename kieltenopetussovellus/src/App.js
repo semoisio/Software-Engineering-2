@@ -15,45 +15,29 @@ import ResetPassword from './components/signIn/ResetPassword';
 
 function App() {
 
-  //const [isLoggedin, setIsloggedin] = useState(false);
   const [user, setUser] = useState();
-
-  let page = null;
-  
-  useEffect(() => {
-    const loggedInUser = localStorage.getItem("user");
-    if (loggedInUser) {
-      const foundUser = loggedInUser;
-      setUser(foundUser);
-    }
-  }, []);
-
-  if (user) {
-    console.log(user)
-    page = <LanguageAppHome />;
-  }
-  else {
-    page = <Router>
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/signup" component={SignUp} />
-        <Route path="/profile" component={ProfileDeleted} />
-        <Route path="/signupsuccess" component={SignUpSuccess} />
-        <Route path="/confirm/:id" component={Confirm} />
-        <Route path="/signin"><SignIn setUser={setUser} /></Route>
-        <Route path="/forgotpassword" component={ForgotPassword}/>
-        <Route path="/resetpassword/:id" component={ResetPassword}/>
-          /**Tämä aina viimeiseksi. Ohjaa virhe sivulle */
-          <Route path="/" component={Errorpage} />
-      </Switch>
-    </Router>
-  }
-
 
   return (
 
     <div className="App" data-testid="app">
-      {page}
+      {
+        localStorage.getItem("user") ?
+          <LanguageAppHome /> :
+          <Router>
+            <Switch>
+              <Route exact path="/" component={HomePage} />
+              <Route path="/signup" component={SignUp} />
+              <Route path="/profile" component={ProfileDeleted} />
+              <Route path="/signupsuccess" component={SignUpSuccess} />
+              <Route path="/confirm/:id" component={Confirm} />
+              <Route path="/signin"><SignIn setUser={setUser}/></Route>
+              <Route path="/forgotpassword" component={ForgotPassword} />
+              <Route path="/resetpassword/:id" component={ResetPassword} />
+          /**Tämä aina viimeiseksi. Ohjaa virhe sivulle */
+          <Route path="/" component={Errorpage} />
+            </Switch>
+          </Router>
+      }
     </div>
   );
 }
