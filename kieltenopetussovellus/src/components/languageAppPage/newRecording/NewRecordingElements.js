@@ -6,32 +6,16 @@ import { CONinput } from '../../../tools/colors';
 // Container for all of the components
 export const NewRecordingContainer = styled.div`
     display:flex;
-    flex-wrap: wrap;
     justify-content:center;
-
-    @media screen and (max-width: 768px){
-        display: flex;
-        flex-direction:column;
-        width: 100%;
-        transition: all 1s;
-    }
+    min-height: 90vh;
 `;
 
 // Container for recording 
 export const RecordingContainer = styled.div`
     width: 100%;
-    max-width: 1600px;
+    max-width: 1200px;
     display:flex;
     flex-direction:column;
-
-    @media screen and (max-width: 768px){
-        width: 100%;
-        min-width: 0px;
-        margin-right: 16px;
-        display: flex;
-        flex-direction:column;
-        transition: all 1s;
-    }
 `;
 
 // React mic
@@ -39,7 +23,8 @@ export const RecordingMic = styled(ReactMic)`
     margin-right:1rem;
     margin-left:1rem;
     margin-bottom:15px;
-    
+    border: solid 1px ${CONinput};
+    border-radius: 10px;
 `;
 
 // Container for recording buttons
@@ -51,16 +36,10 @@ export const RecordingButtonContainer = styled.div`
 // Container for recording info
 export const InfoContainer = styled.div`
     width: 100%;
-    max-width: 1600px;
+    max-width: 1200px;
     display:flex;
     flex-direction:column;
-
-    @media screen and (max-width: 768px){
-        display: flex;
-        flex-direction:column;
-        width: 100%;
-        transition: all 1s;
-    }
+    
 `;
 
 //Recording buttons
@@ -87,7 +66,9 @@ export const RecordingForm = styled.form`
 
 // Headline for form
 export const FormH1 = styled.h1`
-    margin-bottom: 15px;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
     text-align: center;
 `;
 
@@ -95,6 +76,7 @@ export const FormH1 = styled.h1`
 export const FormLabel = styled.label`
     margin-bottom: 8px;
     font-size: 14px;
+    color: black;
     margin-left:1rem;
 `;
 
@@ -104,7 +86,7 @@ export const FormInput = styled.input`
     margin-bottom: 15px;
     margin-left:1rem;
     margin-right:1rem;
-    border: none;
+    border: solid 1px ${CONinput};
     border-radius: 4px;
 `;
 
@@ -113,7 +95,7 @@ export const FormDesc = styled.textarea`
     margin-bottom: 15px;
     margin-left:1rem;
     margin-right:1rem;
-    border: none;
+    border: solid 1px ${CONinput};
     border-radius: 4px;
 `;
 
@@ -158,8 +140,6 @@ export const QuizCheck = styled.input`
 export const QuestionAnswer = styled.div`
     display: flex;
     flex-direction:column;
-    border: 2px ${CONinput} solid;
-    border-radius: 4px;
     margin-bottom: 15px;
     padding-top: 1rem;
     padding-bottom: 1rem;

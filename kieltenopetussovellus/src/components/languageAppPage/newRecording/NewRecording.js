@@ -29,6 +29,7 @@ import { genreOptions, languageOptions, difficultyOptions } from '../../../tools
 import ConfirmDialog from '../../../dialogs/ConfirmDialog';
 import NotifyDialog from '../../../dialogs/NotifyDialog';
 import Loader from "react-loader-spinner";
+import FooterJS from '../../footer/Footer';
 const fs = require('fs');
 
 
@@ -293,8 +294,8 @@ const NewRecording = () => {
         message: "Please stop recording.",
       }
     }
-    if(!dialogprops.clickOk){
-      dialogprops.clickOk = () =>{};
+    if (!dialogprops.clickOk) {
+      dialogprops.clickOk = () => { };
     }
     NotifyDialog(dialogprops);
   }
@@ -398,27 +399,35 @@ const NewRecording = () => {
                             <FormInput type="text" value={q2} onChange={(e) => { q2Changed(e) }}></FormInput>
                             <FormLabel htmlFor="for">Answer</FormLabel>
                             <FormInput type="text" value={a2} onChange={(e) => { a2Changed(e) }}></FormInput>
-                          </QuestionAnswer><QuestionAnswer>
+                          </QuestionAnswer>
+                          <QuestionAnswer>
                             <FormLabel htmlFor="for">Question 3 (optional)</FormLabel>
                             <FormInput type="text" value={q3} onChange={(e) => { q3Changed(e) }}></FormInput>
                             <FormLabel htmlFor="for">Answer</FormLabel>
                             <FormInput type="text" value={a3} onChange={(e) => { a3Changed(e) }}></FormInput>
                           </QuestionAnswer>
-                          <FormButton className="button2" onClick={() => clearQuiz()} type="button">Clear quiz</FormButton>
+
                         </QuizContainer> : null
                     }
-                    <FormButton className="button2" onClick={() => clickCancel()} type="button">Clear</FormButton>
                   </RecordingForm>
               }
               {
                 recording ? null :
                   <UploadButtonContainer>
                     <FormButton onClick={() => uploadAudio()} type="button">Upload</FormButton>
+                    {
+                      chkQuiz ?
+                        <FormButton className="button2" onClick={() => clearQuiz()} type="button">Clear quiz</FormButton>
+                        : null
+                    }
+                    <FormButton className="button2" onClick={() => clickCancel()} type="button">Clear all</FormButton>
                   </UploadButtonContainer>
               }
             </InfoContainer>
+
           </NewRecordingContainer>
       }
+      <FooterJS />
     </>
   )
 }
