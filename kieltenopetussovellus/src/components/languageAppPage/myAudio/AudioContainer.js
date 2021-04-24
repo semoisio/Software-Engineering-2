@@ -13,9 +13,12 @@ import {
     AudioPlayer,
 } from './MyAudioElements'
 import {getFlag} from '../../../tools/flagFunction';
+import {calculateRating} from '../searchElement/ratingFunctions';
+import ReactStars from "react-rating-stars-component";
 
 const AudioContainer = (props) => {
     const [searching, setSearching] = useState(false);
+    const [ratingValue, setRatingValue] = useState(calculateRating(props.rating));
 
     const clickEdit = () => {
         const audio = {
@@ -38,6 +41,14 @@ const AudioContainer = (props) => {
             <AudioTextContainer>
                 <AudioTitle>{props.title}</AudioTitle>
                 <AudioDescription>{props.desc}</AudioDescription>
+                <ReactStars
+                    count={5}
+                    size={30}
+                    color="gray"
+                    activeColor="red"
+                    value={ratingValue}
+                    edit={false}
+                />
             </AudioTextContainer>
             {
                 searching ?
@@ -45,8 +56,8 @@ const AudioContainer = (props) => {
                     props.id === undefined ?
                         null :
                         <ButtonContainer>
-                            <SearchButton onClick={() => clickEdit()}>Edit</SearchButton>
-                            <SearchButton onClick={() => props.deleteAudio(props.id)}>Delete</SearchButton>
+                            <SearchButton className="button" onClick={() => clickEdit()}>Edit</SearchButton>
+                            <SearchButton className="button2" onClick={() => props.deleteAudio(props.id)}>Delete</SearchButton>
                         </ButtonContainer>
             }
 

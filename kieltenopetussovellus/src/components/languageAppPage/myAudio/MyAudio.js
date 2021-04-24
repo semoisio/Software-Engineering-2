@@ -4,7 +4,7 @@ import Loader from "react-loader-spinner";
 import audioimage from '../../../images/AudioWave.jpg';
 import notFound from '../../../images/notFound.png';
 import { genreOptions, languageOptions, difficultyOptions, sortOptions } from '../../../tools/defaultOptions';
-
+import FooterJS from '../../footer/Footer';
 import {
     MyAudioContainer,
     SearchContainer,
@@ -28,6 +28,7 @@ import {
     QuizContainer,
     QuizCheck,
     QuestionAnswer,
+    FooterDiv
 } from './MyAudioElements';
 import {
     PagesContainer,
@@ -424,128 +425,133 @@ const MyAudio = () => {
             deleteAudio={deleteAudio}
             setSelectedAudio={setSelectedAudio}
             setIsOpen={setIsOpen}
+            rating={t.rating}
         />
     });
 
     return (
-        <MyAudioContainer>
-            {
-                searching ?
-                    <LoaderContainer>
-                        <LoaderText>Loading</LoaderText>
-                        <Loader
-                            type="TailSpin"
-                            color="#00BFFF"
-                            height={50}
-                            width={50}
-                        /></LoaderContainer> :
-                    <SearchContainer isOpen={isOpen}>
+        <div>
+            <MyAudioContainer>
+                {
+                    searching ?
+                        <LoaderContainer>
+                            <LoaderText>Loading</LoaderText>
+                            <Loader
+                                type="TailSpin"
+                                color="#00BFFF"
+                                height={50}
+                                width={50}
+                            /></LoaderContainer> :
+                        <SearchContainer isOpen={isOpen}>
+                            {
+                                audioCount > 0 ?
+                                    <Title>You have {audioCount} recordings.</Title> :
+                                    <Title>You have no recordings.</Title>
+                            }
+                            {
+                                audioCount > 0 ?
+                                    <SortContainer>
+                                        <FormLabel htmlFor="for">Sort by</FormLabel>
+                                        <SelectInput
+                                            value={sortAudio}
+                                            onChange={sortChanged}
+                                            options={sortOptions}
+                                        />
+                                        <FormLabel htmlFor="for">Search</FormLabel>
+                                        <FormInput maxLength="50" value={searchTitle} onChange={(e) => searchTitleChanged(e)}></FormInput>
+                                        <SearchButton onClick={() => clickSearch()}>Search</SearchButton>
+                                    </SortContainer> : null
+                            }
+                            {
+                                audiot[1] ?
+                                    <PagesContainer>
+                                        <PageButton onClick={() => { changePage("-") }}> {"<"}Previous</PageButton>
+                                        <WhatPage>Page: {pageNum + 1}/{audiot.length}</WhatPage>
+                                        <PageButton onClick={() => { changePage("+") }}>Next{">"}</PageButton>
+                                    </PagesContainer> : null
+                            }
+                            {
+                                error ?
+                                    <AudioContainer
+                                        image={notFound}
+                                        title="No matches"
+                                        description="We didn't find anything" />
+                                    : audioInside
+                            }
+                        </SearchContainer>
+                }
+                <EditContainer isOpen={isOpen}>
+                    <MyAudioForm >
+                        <Title>Edit audio information</Title>
                         {
-                            audioCount > 0 ?
-                                <Title>You have {audioCount} recordings.</Title> :
-                                <Title>You have no recordings.</Title>
+                            audioFetched !== "" ?
+                                <AudioPlayer controls>
+                                    <source width="200px" src={audioFetched} type="audio/webm" />
+                                </AudioPlayer> : null
+
                         }
-                        {
-                            audioCount > 0 ?
-                                <SortContainer>
-                                    <FormLabel htmlFor="for">Sort by</FormLabel>
-                                    <SelectInput
-                                        value={sortAudio}
-                                        onChange={sortChanged}
-                                        options={sortOptions}
-                                    />
-                                    <FormLabel htmlFor="for">Search</FormLabel>
-                                    <FormInput maxLength="50" value={searchTitle} onChange={(e) => searchTitleChanged(e)}></FormInput>
-                                    <SearchButton onClick={() => clickSearch()}>Search</SearchButton>
-                                </SortContainer> : null
-                        }
-                        {
-                            audiot[1] ?
-                                <PagesContainer>
-                                    <PageButton onClick={() => { changePage("-") }}> {"<"}Previous</PageButton>
-                                    <WhatPage>Page: {pageNum + 1}/{audiot.length}</WhatPage>
-                                    <PageButton onClick={() => { changePage("+") }}>Next{">"}</PageButton>
-                                </PagesContainer> : null
-                        }
-                        {
-                            error ?
-                                <AudioContainer
-                                    image={notFound}
-                                    title="No matches"
-                                    description="We didn't find anything" />
-                                : audioInside
-                        }
-                    </SearchContainer>
-            }
-            <EditContainer isOpen={isOpen}>
-                <MyAudioForm >
-                    <Title>Edit audio information</Title>
-                    {
-                        audioFetched !== "" ?
-                            <AudioPlayer controls>
-                                <source src={audioFetched} type="audio/webm" />
-                            </AudioPlayer> : null
+                        <FormLabel htmlFor="for" >Language</FormLabel>
+                        <SelectContainer>
+                            <Select
+                                value={language}
+                                onChange={languageChanged}
+                                options={languageOptions}
+                            />
+                        </SelectContainer>
 
-                    }
-                    <FormLabel htmlFor="for" >Language</FormLabel>
-                    <SelectContainer>
-                        <Select
-                            value={language}
-                            onChange={languageChanged}
-                            options={languageOptions}
-                        />
-                    </SelectContainer>
+                        <FormLabel htmlFor="for" >Title</FormLabel>
+                        <FormInput type="text" value={title} onChange={(e) => titleChanged(e)} defa></FormInput>
 
-                    <FormLabel htmlFor="for" >Title</FormLabel>
-                    <FormInput type="text" value={title} onChange={(e) => titleChanged(e)} defa></FormInput>
+                        <FormLabel htmlFor="for" >Description</FormLabel>
+                        <FormDesc type="textarea" value={desc} onChange={(e) => descChanged(e)}></FormDesc>
 
-                    <FormLabel htmlFor="for" >Description</FormLabel>
-                    <FormDesc type="textarea" value={desc} onChange={(e) => descChanged(e)}></FormDesc>
+                        <FormLabel htmlFor="for" >Genre</FormLabel>
+                        <SelectContainer>
+                            <Select
+                                value={genre}
+                                onChange={genreChanged}
+                                options={genreOptions}
+                            />
+                        </SelectContainer>
 
-                    <FormLabel htmlFor="for" >Genre</FormLabel>
-                    <SelectContainer>
-                        <Select
-                            value={genre}
-                            onChange={genreChanged}
-                            options={genreOptions}
-                        />
-                    </SelectContainer>
-
-                    <FormLabel htmlFor="for" >Difficulty</FormLabel>
-                    <SelectContainer>
-                        <Select
-                            value={difficulty}
-                            onChange={difficultyChanged}
-                            options={difficultyOptions}
-                        />
-                    </SelectContainer>
-                    <QuizContainer>
-                        <QuestionAnswer>
-                            <FormLabel htmlFor="for" >Question 1</FormLabel>
-                            <FormInput type="text" value={q1} onChange={(e) => { q1Changed(e) }}></FormInput>
-                            <FormLabel htmlFor="for">Answer</FormLabel>
-                            <FormInput type="text" value={a1} onChange={(e) => { a1Changed(e) }}></FormInput>
-                        </QuestionAnswer>
-                        <QuestionAnswer>
-                            <FormLabel htmlFor="for">Question 2</FormLabel>
-                            <FormInput type="text" value={q2} onChange={(e) => { q2Changed(e) }}></FormInput>
-                            <FormLabel htmlFor="for">Answer</FormLabel>
-                            <FormInput type="text" value={a2} onChange={(e) => { a2Changed(e) }}></FormInput>
-                        </QuestionAnswer><QuestionAnswer>
-                            <FormLabel htmlFor="for">Question 3</FormLabel>
-                            <FormInput type="text" value={q3} onChange={(e) => { q3Changed(e) }}></FormInput>
-                            <FormLabel htmlFor="for">Answer</FormLabel>
-                            <FormInput type="text" value={a3} onChange={(e) => { a3Changed(e) }}></FormInput>
-                        </QuestionAnswer>
-                        <EditButton  className="button2" onClick={(e) => clickClear(e)}>Clear quiz</EditButton>
-                    </QuizContainer>
-                    <EditButtonContainer>
-                        <EditButton onClick={(e) => clickSave(e)}>Save</EditButton>
-                        <EditButton onClick={(e) => clickCancel(e)}>Cancel</EditButton>
-                    </EditButtonContainer>
-                </MyAudioForm>
-            </EditContainer>
-        </MyAudioContainer>
+                        <FormLabel htmlFor="for" >Difficulty</FormLabel>
+                        <SelectContainer>
+                            <Select
+                                value={difficulty}
+                                onChange={difficultyChanged}
+                                options={difficultyOptions}
+                            />
+                        </SelectContainer>
+                        <QuizContainer>
+                            <QuestionAnswer>
+                                <FormLabel htmlFor="for" >Question 1</FormLabel>
+                                <FormInput type="text" value={q1} onChange={(e) => { q1Changed(e) }}></FormInput>
+                                <FormLabel htmlFor="for">Answer</FormLabel>
+                                <FormInput type="text" value={a1} onChange={(e) => { a1Changed(e) }}></FormInput>
+                            </QuestionAnswer>
+                            <QuestionAnswer>
+                                <FormLabel htmlFor="for">Question 2</FormLabel>
+                                <FormInput type="text" value={q2} onChange={(e) => { q2Changed(e) }}></FormInput>
+                                <FormLabel htmlFor="for">Answer</FormLabel>
+                                <FormInput type="text" value={a2} onChange={(e) => { a2Changed(e) }}></FormInput>
+                            </QuestionAnswer>
+                            <QuestionAnswer>
+                                <FormLabel htmlFor="for">Question 3</FormLabel>
+                                <FormInput type="text" value={q3} onChange={(e) => { q3Changed(e) }}></FormInput>
+                                <FormLabel htmlFor="for">Answer</FormLabel>
+                                <FormInput type="text" value={a3} onChange={(e) => { a3Changed(e) }}></FormInput>
+                            </QuestionAnswer>
+                            <EditButton className="button2" onClick={(e) => clickClear(e)}>Clear quiz</EditButton>
+                        </QuizContainer>
+                        <EditButtonContainer>
+                            <EditButton className="button" onClick={(e) => clickSave(e)}>Save</EditButton>
+                            <EditButton className="button2" onClick={(e) => clickCancel(e)}>Cancel</EditButton>
+                        </EditButtonContainer>
+                    </MyAudioForm>
+                </EditContainer>
+            </MyAudioContainer>
+            <FooterJS />
+        </div>
     )
 }
 

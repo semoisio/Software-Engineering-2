@@ -7,6 +7,9 @@ export const MyAudioContainer = styled.div`
     display:flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items:center;
+    flex-direction:column;
+    min-height:100vh;
 `;
 
 // container for showing user's audios
@@ -18,6 +21,7 @@ export const SearchContainer = styled.div`
     transition: all 0.3s;
     justify-content: center;
     align-items: center;
+    max-width: 1200px;
 `;
 
 // container for editing selected audio info
@@ -25,6 +29,7 @@ export const EditContainer = styled.div`
     display:flex;
     flex-direction:column;
     position: fixed;
+    align-items:center;
     //z-index: 2;
     width: 100%;
     opacity: ${({ isOpen }) => (isOpen ? '100%' : '0')}; 
@@ -78,9 +83,10 @@ export const EditButtonContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-right: 2rem;
+    justify-content: start;
+    align-items: flex-start;
+    margin-right: 1rem;
+    margin-left:1rem;
 `;
 
 // edit buttons
@@ -89,6 +95,14 @@ export const EditButton = styled.button`
     margin-left:1rem;
     margin-right:1rem;
     margin-bottom:15px;
+    width: 300px;
+`;
+// edit buttons
+export const EditButton2 = styled.button`
+    width: 40%;
+    margin-right:1rem;
+    margin-bottom:15px;
+    width: 300px;
 `;
 
 // titles
@@ -102,6 +116,7 @@ export const MyAudioForm = styled.form`
     flex-direction:column;
     width: 100%;
     justify-content: right;
+    max-width: 1200px;
 `;
 
 // Labels for diffrent form elements
@@ -117,7 +132,7 @@ export const FormInput = styled.input`
     margin-bottom: 15px;
     margin-left:1rem;
     margin-right:1rem;
-    border: none;
+    border: solid 1px ${CONinput};
     border-radius: 4px;
 `;
 
@@ -126,7 +141,7 @@ export const FormDesc = styled.textarea`
     margin-bottom: 15px;
     margin-left:1rem;
     margin-right:1rem;
-    border: none;
+    border: solid 1px ${CONinput};
     border-radius: 4px;
 `;
 
@@ -159,6 +174,9 @@ export const SortContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 30%;
+    @media screen and (max-width: 850px){
+        width: 250px;
+    }
 `;
 
 export const SelectInput = styled(Select)`
@@ -183,9 +201,13 @@ export const QuizCheck = styled.input`
 export const QuestionAnswer = styled.div`
     display: flex;
     flex-direction:column;
-    border: 2px ${CONinput} solid;
+    background: #E8E8E8;
     border-radius: 4px;
     margin-bottom: 15px;
     padding-top: 1rem;
     padding-bottom: 1rem;
+`;
+
+export const FooterDiv = styled.div`
+    width:100%;
 `;
