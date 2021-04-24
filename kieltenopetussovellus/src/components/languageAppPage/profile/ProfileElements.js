@@ -24,37 +24,46 @@ export const UserContainer = styled.div`
       width: 280px;
 `;
 
+export const PasswordChangeContainer = styled.div`
+      display:flex;     
+      justify-content:center;
+      flex-direction:column;
+      align-items: flex-start;
+      width: 280px;
+`;
+
 export const UserImage = styled.img`
       height: 150px;
       width: 150px;
-      border-radius: 5px;
+      border-radius: 10px;
       margin:0.8rem;
-
 `;
 export const SelectContainer = styled.div`
     margin:0.8rem;
     width: 200px;
+
 `;
 
 // Labels for diffrent form elements
 export const FormLabel = styled.label`
-
-    color: ${CONh1};
+    color: black;
     margin:0.2rem;
+    
 `;
 
 export const FormText = styled.p`
-
+    font-size :14px;
     color: ${CONtext};
     margin:0.2rem;
+    white-space: pre-line;
 `;
 
 // Styles for inputs
 export const FormInput = styled.input`
     padding: 12px 12px;
     margin-bottom: 15px;
-    margin-left:1rem;
-    margin-right:1rem;
+    /* margin-left:1rem;
+    margin-right:1rem; */
     border: solid 1px ${CONinput};
     border-radius: 4px;
     width: 245px;

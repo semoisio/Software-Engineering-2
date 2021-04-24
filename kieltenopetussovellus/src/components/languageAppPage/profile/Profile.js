@@ -9,7 +9,8 @@ import {
     FormLabel,
     FormButton,
     FormButtonDelete,
-    FormText
+    FormText,
+    PasswordChangeContainer
 } from './ProfileElements';
 import FooterJS from '../../footer/Footer';
 import Select from 'react-select';
@@ -462,7 +463,7 @@ const Profile = () => {
 
             {changePassword ?
 
-                <UserContainer>
+                <PasswordChangeContainer>
                     <FormLabel>Old password</FormLabel>
                     <FormInput type="password" value={oldPassword} onChange={(e) => (oldPasswordChanged(e))} />
                     <FormLabel>New password</FormLabel>
@@ -481,15 +482,15 @@ const Profile = () => {
                                 width={50}
                             />
                         </> :
-                        <>
+                        <UserContainer>
                             <FormButton onClick={() => { setDoPasswordUpdate(doPasswordUpdate + 1) }} >Save password</FormButton>
                             <FormButtonDelete className="button2" onClick={() => { cancelSavePassword() }} >Cancel</FormButtonDelete>
-                        </>
+                        </UserContainer>
                     }
 
-                </UserContainer> :
+                </PasswordChangeContainer> :
                 deleteActive ?
-                    <UserContainer>
+                    <PasswordChangeContainer>
                         <FormLabel>Give password</FormLabel>
                         <FormInput type="password" value={deletePassword} onChange={(e) => (deletePasswordChanged(e))} />
 
@@ -503,13 +504,13 @@ const Profile = () => {
                                     width={50}
                                 />
                             </> :
-                            <>
+                            <UserContainer>
                                 <FormButton className="button2" onClick={() => makeSureDelete()} >Delete account</FormButton>
                                 <FormButtonDelete onClick={() => { cancelDelete() }} >Cancel</FormButtonDelete>
-                            </>
+                            </UserContainer>
                         }
 
-                    </UserContainer> :
+                    </PasswordChangeContainer> :
                     searching ?
                         <LoaderContainer>
                             <LoaderText>Loading user data</LoaderText>
