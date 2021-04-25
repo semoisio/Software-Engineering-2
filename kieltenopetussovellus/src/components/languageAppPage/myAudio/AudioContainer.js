@@ -11,6 +11,8 @@ import {
     ButtonContainer,
     SearchButton,
     AudioPlayer,
+    EditButton,
+    EditButton2,
 } from './MyAudioElements'
 import {getFlag} from '../../../tools/flagFunction';
 import {calculateRating} from '../searchElement/ratingFunctions';
@@ -44,8 +46,8 @@ const AudioContainer = (props) => {
                 <ReactStars
                     count={5}
                     size={30}
-                    color="gray"
-                    activeColor="red"
+                    color="#fff"
+                    activeColor="#FFC67C"
                     value={ratingValue}
                     edit={false}
                 />
@@ -56,8 +58,8 @@ const AudioContainer = (props) => {
                     props.id === undefined ?
                         null :
                         <ButtonContainer>
-                            <SearchButton className="button" onClick={() => clickEdit()}>Edit</SearchButton>
-                            <SearchButton className="button2" onClick={() => props.deleteAudio(props.id)}>Delete</SearchButton>
+                            <EditButton className="button" onClick={() => clickEdit()}>Edit</EditButton>
+                            <EditButton2 className="button2" onClick={() => props.deleteAudio(props.id)}>Delete</EditButton2>
                         </ButtonContainer>
             }
 

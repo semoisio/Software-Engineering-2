@@ -59,8 +59,8 @@ const AudioContainer = (props) => {
                 <ReactStars
                     count={5}
                     size={30}
-                    color="gray"
-                    activeColor="red"
+                    color="#fff"
+                    activeColor="#FFC67C"
                     value={ratingValue}
                     edit={false}
                 />
