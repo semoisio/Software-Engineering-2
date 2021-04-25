@@ -27,6 +27,8 @@ import {
     PageButton,
     SortContainer,
     SortInput,
+    FormH2,
+    ChooseContainer
 } from './SearchElements';
 import {
     buildQuery,
@@ -289,7 +291,7 @@ const Search = () => {
                             <CloseIcon onClick={toggle} />
                         </CloseSearchIconContainer>
                         <Form onSubmit={(e) => fetchAudio(e)}>
-                            <FormH1>Search audio</FormH1>
+                            <FormH2>Search audio</FormH2>
                             <FormLabel htmlFor="for" >Search</FormLabel>
                             <FormInput type="text" value={audioTitle} onChange={(e) => { audioChanged(e) }} />
                             <FormLabel htmlFor="for" >Language</FormLabel>
@@ -330,36 +332,48 @@ const Search = () => {
                                         audiot[1] ?
                                             <div>
                                                 <FoundCount><FormH1>
-                                                Found: {calculateAudios()} recordings
-                                                </FormH1></FoundCount>
-                                                
-                                                <SortContainer>
-                                                <PageButton onClick={() => { changePage("-") }}>{"<"}Previous</PageButton>
-                                                    <FormLabel htmlFor="for">Sort by</FormLabel>
-                                                    <SortInput
-                                                        value={sortAudio}
-                                                        onChange={sortChanged}
-                                                        options={sortOptions}
-                                                    />
-                                                <PageButton onClick={() => { changePage("+") }}>Next{">"}</PageButton>
-                                                </SortContainer>
+                                                Found {calculateAudios()} recordings
+                                                </FormH1>
+                                                </FoundCount>
+                                                <ChooseContainer>
+                                                    <WhatPage>Page {pageNum + 1}/{audiot.length}</WhatPage>
+                                                    
+                                                    <SortContainer>
+                                                        <FormLabel htmlFor="for">Sort by</FormLabel>
+                                                        <SortInput
+                                                          value={sortAudio}
+                                                           onChange={sortChanged}
+                                                           options={sortOptions}
+                                                          />
+                                                    </SortContainer>
+                                                    <SortContainer>
+                                                        <PagesContainer>
+                                                            <PageButton onClick={() => { changePage("-") }}>{"<"}Previous</PageButton>
+                                                            <PageButton onClick={() => { changePage("+") }}>Next{">"}</PageButton>
+                                                        </PagesContainer>
+                                                    </SortContainer>
+                                                </ChooseContainer>
                                                 
                                                 
                                                 
                                              
                                             </div>:
                                             <div>
-                                            <FoundCount>
-                                                <FormH1>Found: {calculateAudios()} recordings</FormH1>
-                                                </FoundCount>
-                                                <SortContainer>
-                                                    <FormLabel htmlFor="for">Sort by</FormLabel>
-                                                    <SortInput
-                                                        value={sortAudio}
-                                                        onChange={sortChanged}
-                                                        options={sortOptions}
-                                                    />
-                                                </SortContainer>
+                                            <FoundCount><FormH1>
+                                                Found {calculateAudios()} recordings
+                                                </FormH1></FoundCount>
+                                                <ChooseContainer>
+                                                    <WhatPage>Page {pageNum + 1}/{audiot.length}</WhatPage>
+                                                    <SortContainer>
+                                                        <FormLabel htmlFor="for">Sort by</FormLabel>
+                                                        <SortInput
+                                                          value={sortAudio}
+                                                           onChange={sortChanged}
+                                                           options={sortOptions}
+                                                          />
+                                                    </SortContainer>
+                                                </ChooseContainer>
+                                                
                                             
                                             </div>
                         }
@@ -387,11 +401,15 @@ const Search = () => {
                                 error ?
                                     null :
                                     audiot[1] ?
-                                        <PagesContainer>
-                                            <PageButton onClick={() => { changePage("-") }}> {"<"}Previous</PageButton>
-                                            <WhatPage>Page: {pageNum + 1}/{audiot.length}</WhatPage>
-                                            <PageButton onClick={() => { changePage("+") }}>Next{">"}</PageButton>
-                                        </PagesContainer> : null
+                                        <ChooseContainer>
+                                        <WhatPage>Page {pageNum + 1}/{audiot.length}</WhatPage>
+                                        <SortContainer>
+                                            <PagesContainer>
+                                                <PageButton onClick={() => { changePage("-") }}>{"<"}Previous</PageButton>
+                                                <PageButton onClick={() => { changePage("+") }}>Next{">"}</PageButton>
+                                            </PagesContainer>
+                                        </SortContainer>
+                                    </ChooseContainer> : null
                         }
                     
                     </SearchResultContainer>

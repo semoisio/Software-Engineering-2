@@ -7,18 +7,20 @@ export const SearchAndListenContainer = styled.div`
     display:flex;
     flex-wrap: wrap;
     min-height:80vh;
+    padding-left: 10px;
 `;
 
 export const SearchContainer = styled.div`
     min-height:80vh;
     width:30%;
     display:flex;
+    margin-top: 20px;
     transition: all 1s;
 
     @media screen and (max-width: 850px){
         position: fixed;
         z-index: 998;
-        width: 100%;
+        width: fit-content;
         display: flex;
         opacity: ${({isOpen}) => (isOpen ? '100%' : '0')}; 
         top: ${({isOpen}) => (isOpen ? '80px' : '-100%')};
@@ -33,7 +35,7 @@ export const SearchContainer = styled.div`
 `;
 
 export const SearchResultContainer = styled.div`
-    height:90vh;
+    height:130vh;
     width:70%;
     transition: all 1s;
     overflow: auto;
@@ -63,7 +65,7 @@ export const OpenSearchIconContainer = styled.div`
     }
 `;
 export const SearchText = styled.h4`
-    margin: 0.5rem;
+    margin: 0.75rem;
 `;
 
 export const OpenIcon = styled(AiFillCaretDown)`
@@ -98,10 +100,20 @@ export const Form = styled.form`
     width: 100%;    
 `;
 
-// Headline for form
+// Headline for form (Found:)
 export const FormH1 = styled.h1`
-    margin-top: 20px;
+    margin-top: 15px;
     margin-bottom: 15px;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+`;
+
+// Headline for search results (Search audio)
+export const FormH2 = styled.h1`
+    margin-top: 10px;
+    margin-bottom: 35px;
     color: black;
     font-size: 20px;
     font-weight: bold;
@@ -134,12 +146,6 @@ export const SelectContainer = styled.div`
 
 //Styles for form button
 export const FormButton = styled.button`
-    //background: #FFC67C;
-    //padding: 16px 0;
-    //border: none;
-    //border-radius: 4px;
-    //color: #fff;
-    //font-size: 20px;
     margin-left:1rem;
     margin-right:1rem;
     margin-bottom: 15px;
@@ -158,7 +164,6 @@ export const ClearButton = styled.div`
 	border: none;
     border-radius: 10px;
 	text-decoration: none;
-	font-weight: 300;
 	color: #ffffff;
 	text-shadow: 1px 1px 2px #626262;
     font-weight: 400;
@@ -186,19 +191,21 @@ export const LoaderContainer = styled.div`
     margin-top: auto;
     margin-bottom:auto;
 `;
+
 export const LoaderText = styled.h1`
     margin-top: 0;
     margin-right: 1rem;
 `;
 
 export const FoundCount = styled.div`
-    margin-left: 16px;
+    margin-right: 16px;
     margin-top: 1rem;
     color:${CONh1};
     font-size: 1.1rem;
     display:flex;
     justify-content:space-around;
     align-items: center;
+    width:93%;
 
     @media screen and (max-width: 500px){
         font-size: 0.8rem;
@@ -206,34 +213,29 @@ export const FoundCount = styled.div`
 
 `;
 export const WhatPage = styled.label`
-margin-bottom: 8px;
-font-size: 14px;
 color: black;
+margin-left: 16px;
+margin-right: 30px;
+font-size: 14px;
 `;
-// export const Found = styled.h3`
-//     margin:0;
-// `;
+
 
 export const PagesContainer = styled.div`
     display:flex;
     align-items:center;
     justify-content:space-around;
     
-    @media screen and (max-width: 500px){
+    @media screen and (max-width: 450px){
         font-size: 0.8rem;
+        flex-direction: column;
     } 
     
 `;
 export const PageButton = styled.label`
-margin-right: 30px;
-margin-left: 30px;
-margin-bottom: 8px;
+margin-right: 16px;
 font-size: 14px;
-color: black;
-
-    &:hover{
-        opacity: 50%;
-    }
+color: #FF995E;
+text-shadow: 1px 1px 2px #000000;
 
     @media screen and (max-width: 500px){
         font-size: 0.8rem;
@@ -241,11 +243,19 @@ color: black;
 `;
 
 //tää jäi kesken, miten napit saa menemään nurkkiin ?
+export const ChooseContainer = styled.div`
+    display: flex;
+    align-items: center;
+    width: 93%;
+    justify-content: space-between;
+    
+`;
+
 export const SortContainer = styled.div`
     display: flex;
-    flex-direction: row;
     align-items: center;
-    //align-content: space-between;
+    justify-content: center;
+    margin:0;
 `;
 
 export const SortInput = styled(Select)`
@@ -253,5 +263,9 @@ export const SortInput = styled(Select)`
     margin-left:1rem;
     margin-right:1rem;
     margin-bottom: 8px;
+
+    @media screen and (max-width: 500px){
+        min-width: 100px;
+    }
 `;
 

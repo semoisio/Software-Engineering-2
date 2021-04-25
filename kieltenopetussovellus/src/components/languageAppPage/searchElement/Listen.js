@@ -277,8 +277,8 @@ const Listen = (props) => {
                                         <ReactStars
                                             count={5}
                                             size={30}
-                                            color="gray"
-                                            activeColor={CONh1}
+                                            color="#E8E8E8"
+                                            activeColor="#FFC67C"
                                             value={ratingValue}
                                             edit={false}
                                         />
@@ -302,7 +302,8 @@ const Listen = (props) => {
                                                 count={5}
                                                 onChange={userRatingChanged}
                                                 size={30}
-                                                activeColor={CONh1}
+                                                color="#E8E8E8"
+                                                activeColor="#FFC67C"
                                                 value={userRating}
                                             />
                                         </StarContainer>
