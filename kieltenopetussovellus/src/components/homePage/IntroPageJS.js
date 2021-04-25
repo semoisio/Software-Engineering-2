@@ -11,8 +11,7 @@ import {
 	IntroButton
 } from './IntroPageElementsJS';
 
-import { Footer, FooterLink } from '../footer/FooterElements';
-import PrivacyPolicy from '../footer/PrivacyPolicy.pdf';
+import FooterJS from '../footer/Footer';
 
 
 function IntroPageJS() {
@@ -25,18 +24,14 @@ function IntroPageJS() {
 					</IntroLogoDiv>
 					<IntroText>
 						<IntroH1>Welcome to LingoRec</IntroH1>
-						<IntroText>Improve your language skills by listening and recording short audio clips in LingoRec! You can listen, record and share new content every day. We welcome all learners from beginner to expert to join the flow and start practising today. </IntroText>
+						<IntroText>Improve your language skills by listening and recording short audio clips in LingoRec! Practise understanding different dialects, test how you fared by making a quiz and find new friends by commenting and rating other users recordings. <br></br><br></br>We welcome all learners from beginners to experts to join the flow and start practising your skills today. </IntroText>
 					</IntroText>
 					<NavBtn>
 						<IntroButton to='/signin' href="">Sign in</IntroButton>
 						<IntroButton to='/signup' href="">Join now</IntroButton>
 					</NavBtn>
 				</IntroPageMain>
-				<Footer>
-					<FooterLink to= {PrivacyPolicy} target= "_blank">Terms and Conditions</FooterLink>
-					<FooterLink to= {PrivacyPolicy} target= "_blank">Privacy policy</FooterLink>
-					<FooterLink to= {PrivacyPolicy} target= "_blank">About us</FooterLink>
-				</Footer>
+				<FooterJS />
 			</IntroPageContainer>
 
 		</>

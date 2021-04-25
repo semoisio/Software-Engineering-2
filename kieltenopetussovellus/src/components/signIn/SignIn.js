@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Footer, FooterLink } from '../footer/FooterElements';
-import PrivacyPolicy from '../footer/PrivacyPolicy.pdf';
+import FooterJS from '../footer/Footer';
 import Navbar from '../homePageNavbar/Navbar';
 import SideBar from '../homePageNavbar/SideBar';
 import { Link } from "react-router-dom";
@@ -107,11 +106,7 @@ const SignIn = (props) => {
 
                             </FormContent>
                         </FormWrap>}
-                <Footer>
-				    <FooterLink to= {PrivacyPolicy} target= "_blank">Terms and Conditions</FooterLink>
-				    <FooterLink to= {PrivacyPolicy} target= "_blank">Privacy policy</FooterLink>
-				    <FooterLink to= {PrivacyPolicy} target= "_blank">About us</FooterLink>
-			    </Footer>
+                        <FooterJS />
             </Container>
 
         </>

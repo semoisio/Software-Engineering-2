@@ -42,6 +42,7 @@ export const NavLogo = styled(NavLink)`
     margin-left: 24px;
     font-weight: bold;
     text-decoration: none;
+    text-shadow: 1px 1px 2px #626262;
 `;
 
 

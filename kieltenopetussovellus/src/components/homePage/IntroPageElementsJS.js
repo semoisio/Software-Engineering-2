@@ -45,10 +45,12 @@ export const IntroText = styled.div`
 	text-align: center;
 	padding: 10px;
 	overflow-wrap: break-word;
-	width: 60%;
+	width: 65%;
 	margin: auto;
 	color: black;
 	margin-top:40px;
+	font-size: 18px;
+	font-weight: 500;
 
 	@media screen and (max-width: 768px){
         width:80%;
