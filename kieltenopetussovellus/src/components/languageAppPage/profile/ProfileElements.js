@@ -8,8 +8,11 @@ export const ProfileContainer = styled.div`
     min-height: 100vh;
 `;
 export const Username = styled.h1`
-      text-align:center;
-      margin:0.2rem;
+    text-align:center;
+    margin:0.2rem;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
 `;
 
 export const Learn = styled.h3`
@@ -37,6 +40,7 @@ export const UserImage = styled.img`
       width: 150px;
       border-radius: 10px;
       margin:0.8rem;
+      border: solid 1px ${CONinput};
 `;
 export const SelectContainer = styled.div`
     margin:0.8rem;
@@ -77,6 +81,5 @@ export const FormButton = styled.button`
 
 export const FormButtonDelete = styled.button`
     margin-bottom: 5px;
-    //background: red;
     width: 200px;
 `;

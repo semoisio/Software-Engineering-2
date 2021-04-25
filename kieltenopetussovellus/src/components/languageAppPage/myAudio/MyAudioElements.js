@@ -46,35 +46,32 @@ export const EditContainer = styled.div`
 export const ButtonContainer = styled.div`
     display: flex;
     flex-wrap: nowrap;
-    flex-direction: row;
-    justify-content: right;
-    align-items: end;
-    margin-right: 2rem;
+    align-items: center;
+    
 
-    @media screen and (max-width: 768px){
-        width: 100%;
-        margin-right: 16px;
+
+    /* @media screen and (max-width: 768px){
         display: flex;
         flex-direction: row;
         transition: all 1s;
         justify-content: center;
-    }
+    } */
 `;
 
 // audio player
 export const AudioPlayer = styled.audio`
     min-width: 200px;
-    margin-left:1rem;
-    margin-right:1rem;
+    margin-left:auto;
+    margin-right:auto;
     margin-bottom:15px;
 `;
 
 // search buttons
 export const SearchButton = styled.button`
-    width: 30%;
+    width: 40%;
     min-width: 75px;
-    margin-left:1rem;
-    margin-right:1rem;
+    margin-left:auto;
+    margin-right:auto;
     margin-bottom:15px;
 `;
 
@@ -92,22 +89,26 @@ export const EditButtonContainer = styled.div`
 // edit buttons
 export const EditButton = styled.button`
     width: 40%;
+    min-width: 75px;
     margin-left:1rem;
     margin-right:1rem;
     margin-bottom:15px;
-    width: 300px;
 `;
 // edit buttons
 export const EditButton2 = styled.button`
     width: 40%;
     margin-right:1rem;
     margin-bottom:15px;
-    width: 300px;
+    min-width: 75px;
 `;
 
 // titles
 export const Title = styled.h1`
     margin-left:1rem;
+    text-align:center;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
 `;
 
 // edit form

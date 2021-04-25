@@ -445,8 +445,8 @@ const MyAudio = () => {
                         <SearchContainer isOpen={isOpen}>
                             {
                                 audioCount > 0 ?
-                                    <Title>You have {audioCount} recordings.</Title> :
-                                    <Title>You have no recordings.</Title>
+                                    <Title>You have {audioCount} recordings</Title> :
+                                    <Title>You have no recordings</Title>
                             }
                             {
                                 audioCount > 0 ?

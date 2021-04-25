@@ -7,32 +7,35 @@ export const DialogContainer = styled.div`
     flex-direction: column;
     width: 280px;
     height: 200px;
-    border: 4px ${CONinput} solid;
+    border: 0.5px black solid;
     border-radius: 4px;
     background: ${background};
+
 `;
 
 export const TitleContainer = styled.div`
     display: flex;
     background: ${NAVbg};
+    height: 30px;
     padding: 0px;
+    text-transform: uppercase;
 `;
 
 export const DialogTitle = styled.h3`
-    margin-top: 0px;
-    margin-bottom: 0px;
-    margin-left: 4px;
-    margin-right: 4px;
+    margin: auto;
+    text-align: center;
+    color: #FFF;
+	text-shadow: 1px 1px 2px #626262;
+    font-weight: 500;
 `;
 
 
 export const MessageContainer = styled.div`
     display: flex;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-left: 4px;
-    margin-right: 4px;
-    text-align: left;
+    margin: auto;
+    text-align: center;
+    word-break: normal;
+
 `;
 
 export const DialogMessage = styled.p`
@@ -42,7 +45,7 @@ export const DialogMessage = styled.p`
 
 export const ButtonContainer = styled.div`
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
 `;
 
 export const DialogButton = styled.button`
