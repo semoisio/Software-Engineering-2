@@ -34,8 +34,7 @@ export const Logo = styled.div`
     margin-left: 24px;
     font-weight: bold;
     text-decoration: none;
-    //width:20%;
-    //margin-left:2rem;
+    text-shadow: 1px 1px 2px #626262;
 `;
 
 //Yläpalkin buttonien tausta-nav

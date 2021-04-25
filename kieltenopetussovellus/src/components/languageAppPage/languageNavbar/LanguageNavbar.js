@@ -34,8 +34,8 @@ const LanguageNavbar = ({toggle, mainActive, setMainactive }) => {
             <NavBtnWrapper>
                 <NavBtn activeClassName={mainActive ? "active" : null} onClick={() => setMainactive(true)} to="/" data-testid="navBtnSearch" >Search and Listen</NavBtn>
                 <NavBtn activeClassName="active"  to="/newrecording" data-testid="navBtnRecording" onClick={() => setMainactive(false)}>New recording</NavBtn>
-                <NavBtn activeClassName="active" to="/profile" data-testid="navBtnProfile" onClick={() => setMainactive(false)}>Profile</NavBtn>
                 <NavBtn activeClassName="active" to="/myaudio" data-testid="navBtnProfile" onClick={() => setMainactive(false)}>My audios</NavBtn>
+                <NavBtn activeClassName="active" to="/profile" data-testid="navBtnProfile" onClick={() => setMainactive(false)}>Profile</NavBtn>
                 <SINavBtn className="button1" onClick={handleLogout}>Sign out</SINavBtn>
             </NavBtnWrapper>
             <MobileIcon onClick={toggle}>
