@@ -3,7 +3,7 @@
  * @param {Array} ratingArray 
  */
 export const calculateRating = (ratingArray) => {
-    if (ratingArray.length > 0) {
+    if (ratingArray && ratingArray.length > 0) {
         let sum = 0;
         var i;
         for (i = 0; i < ratingArray.length; i++) {
@@ -39,6 +39,11 @@ export const addRating = (username, value, ratingArray) => {
     }
 }
 
+/**
+ * Returns given user's rating from array. If the user is not found, returns -1. 
+ * @param {String} username 
+ * @param {Array} ratingArray 
+ */
 export const getRating = (username, ratingArray) => {
     if (ratingArray) {
         let found = ratingArray.find(x => x.username === username);

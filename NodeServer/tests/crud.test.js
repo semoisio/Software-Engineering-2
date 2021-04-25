@@ -171,6 +171,14 @@ test('Testing findMany with documents found in db:', async (done) => {
     done(); 
 });
 
+test('Testing findMany with empty parameters:', async (done) => {
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
+    expect.assertions(1);
+    const res = await findMany(client, db, collection, { }, null, null);
+    expect(res.length).toBe(4);
+    done(); 
+});
+
 test('Testing updateMany with documents not in db:', async (done) => {
     const client = new MongoClient(uri, { useUnifiedTopology: true });
     expect.assertions(1);
@@ -184,6 +192,14 @@ test('Testing updateMany with documents in db:', async (done) => {
     expect.assertions(1);
     const res = await updateMany(client, db, collection, { name: /9/}, { name: "Allupdated" });
     expect(res).toBe(3);
+    done(); 
+});
+
+test('Testing updateMany with empty parameters:', async (done) => {
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
+    expect.assertions(1);
+    const res = await updateMany(client, db, collection, { }, { });
+    expect(res).toBeUndefined();
     done(); 
 });
 
@@ -203,10 +219,10 @@ test('Testing deleteMany with one document that is in db:', async (done) => {
     done(); 
 });
 
-test('Testing deleteOne with empty parameters:', async (done) => {
+test('Testing deleteMany with empty parameters:', async (done) => {
     const client = new MongoClient(uri, { useUnifiedTopology: true });
     expect.assertions(1);
-    const res = await deleteOne(client, db, collection, {});
+    const res = await deleteMany(client, db, collection, {});
     expect(res).toBe(1);
     done(); 
 });

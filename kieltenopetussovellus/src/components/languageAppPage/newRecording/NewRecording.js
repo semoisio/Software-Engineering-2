@@ -304,18 +304,19 @@ const NewRecording = () => {
 
   return (
     <>
-      {
-        uploading ?
-          <LoaderContainer>
-            <LoaderText>Uploading</LoaderText>
-            <Loader
-              type="TailSpin"
-              color="#00BFFF"
-              height={50}
-              width={50}
-            />
-          </LoaderContainer> :
-          <NewRecordingContainer data-testid="recordingContainer">
+
+      <NewRecordingContainer data-testid="recordingContainer">
+        {
+          uploading ?
+            <LoaderContainer>
+              <LoaderText>Uploading</LoaderText>
+              <Loader
+                type="TailSpin"
+                color="#00BFFF"
+                height={50}
+                width={50}
+              />
+            </LoaderContainer> :
             <InfoContainer>
               {
                 recordedAudio === null ?
@@ -424,9 +425,8 @@ const NewRecording = () => {
                   </UploadButtonContainer>
               }
             </InfoContainer>
-
-          </NewRecordingContainer>
-      }
+        }
+      </NewRecordingContainer>
       <FooterJS />
     </>
   )
