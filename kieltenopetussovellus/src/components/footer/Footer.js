@@ -1,5 +1,7 @@
 import React from 'react';
 import PrivacyPolicy from './PrivacyPolicy.pdf';
+import AboutUs from './AboutUs.pdf';
+import Terms from './Terms.pdf';
 
 import {
 	Footer,
@@ -10,9 +12,9 @@ function FooterJS () {
     return (
         <>
         		<Footer>
-					<FooterLink to= {PrivacyPolicy} target= "_blank">Terms and Conditions</FooterLink>
+					<FooterLink to= {Terms} target= "_blank">Terms and Conditions</FooterLink>
 					<FooterLink to= {PrivacyPolicy} target= "_blank">Privacy policy</FooterLink>
-					<FooterLink to='/'>About us</FooterLink>
+					<FooterLink to= {AboutUs} target= "_blank">About us</FooterLink>
 				</Footer>
     </>
 	)
