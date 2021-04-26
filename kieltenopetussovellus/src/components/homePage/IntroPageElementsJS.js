@@ -37,7 +37,7 @@ export const IntroH1 = styled.h1`
 	text-shadow: 2px 2px 4px #000000;
 
 	@media screen and (max-width: 768px){
-        font-size: 30px;
+        font-size: 40px;
     }
 `;
 
@@ -48,7 +48,7 @@ export const IntroText = styled.div`
 	width: 65%;
 	margin: auto;
 	color: black;
-	margin-top:40px;
+	margin-top:30px;
 	font-size: 18px;
 	font-weight: 500;
 
@@ -67,7 +67,8 @@ export const NavBtn = styled.nav`
 	justify-content:center;
 	text-align: center;
 	flex-wrap: wrap;
-	margin-top:40px;
+	margin:30px;
+	
 `;
 
 // Buttonit
@@ -75,8 +76,8 @@ export const IntroButton = styled(NavLink)`
     background-color: #FF995E;
 	box-shadow: 0px 2px 4px #000000;
 	padding: 1rem 1rem;
-	width: 10%;
-	min-width:100px;
+	width: 20%;
+	min-width:75px;
 	border: none;
     border-radius: 10px;
 	text-decoration: none;
@@ -89,9 +90,19 @@ export const IntroButton = styled(NavLink)`
 
 	text-align: center;
 	margin: 10px;
+	margin-bottom:15px;
 
     &:hover{
         transition: all 0.1s ease-in-out;
 		background-color: #FFC67C;
+    }
+
+	@media screen and (max-width: 768px){
+        width:15%;
+		font-size:14px;
+    }
+	@media screen and (max-width: 363px){
+        width:5%;
+		font-size:14px;
     }
 `;

@@ -537,10 +537,11 @@ const MyAudio = () => {
                                 <FormLabel htmlFor="for">Answer</FormLabel>
                                 <FormInput type="text" value={a3} onChange={(e) => { a3Changed(e) }}></FormInput>
                             </QuestionAnswer>
-                            <EditButton className="button2" onClick={(e) => clickClear(e)}>Clear quiz</EditButton>
+                            
                         </QuizContainer>
                         <EditButtonContainer>
                             <EditButton className="button" onClick={(e) => clickSave(e)}>Save</EditButton>
+                            <EditButton className="button2" onClick={(e) => clickClear(e)}>Clear quiz</EditButton>
                             <EditButton className="button2" onClick={(e) => clickCancel(e)}>Cancel</EditButton>
                         </EditButtonContainer>
                     </MyAudioForm>

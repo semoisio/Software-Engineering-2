@@ -88,7 +88,7 @@ export const EditButtonContainer = styled.div`
 
 // edit buttons
 export const EditButton = styled.button`
-    width: 40%;
+    width: 30%;
     min-width: 75px;
     margin-left:1rem;
     margin-right:1rem;
@@ -96,7 +96,7 @@ export const EditButton = styled.button`
 `;
 // edit buttons
 export const EditButton2 = styled.button`
-    width: 40%;
+    width: 30%;
     margin-right:1rem;
     margin-bottom:15px;
     min-width: 75px;
