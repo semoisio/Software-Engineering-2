@@ -3,9 +3,7 @@ import {background,CONtext,CONh1,CONinput,OBbg,OBhover,OBtext} from '../../../to
 
 export const OneAudioContainer = styled.div`
     width: 93%;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    margin-bottom: 1rem;
+    margin: 1rem;
     height: auto;
     display: flex;
     flex-wrap: wrap;

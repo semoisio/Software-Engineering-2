@@ -50,12 +50,22 @@ const AudioContainer = (props) => {
         setDoFetch(doFetch + 1);
     }
 
+    const setImage = () => {
+        if( props.title === "No matches"){
+            return props.image
+        }else{
+            return getFlag(props.image)
+        }      
+    }
+
+
     return (
         <OneAudioContainer>
-            <AudioImage src={getFlag(props.image)} />
+            <AudioImage src={setImage()} />
             <AudioTextContainer>
                 <AudioTitle>{props.title}</AudioTitle>
                 <AudioDescription>{props.description}</AudioDescription>
+                {props.title !== "No matches" ? 
                 <ReactStars
                     count={5}
                     size={30}
@@ -63,7 +73,8 @@ const AudioContainer = (props) => {
                     activeColor="#FFC67C"
                     value={ratingValue}
                     edit={false}
-                />
+                />:null
+                }
             </AudioTextContainer>
             {
                 searching ?
@@ -71,7 +82,8 @@ const AudioContainer = (props) => {
                     //props.id === undefined ?
                     //null :
                     //audioFetched === "" ?
-                    <StartAudioBtn onClick={() => fireFetch()}>Listen audio</StartAudioBtn>
+                    props.title !== "No matches" ? 
+                    <StartAudioBtn onClick={() => fireFetch()}>Listen audio</StartAudioBtn>:null
                 //:
                 //<audio controls>
                 //    <source src={audioFetched} type="audio/webm" />

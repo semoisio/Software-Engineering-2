@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import { ReactMic } from 'react-mic';
-import { CONinput } from '../../../tools/colors';
+import { CONinput, CONh1 } from '../../../tools/colors';
 
 // Container for all of the components
 export const NewRecordingContainer = styled.div`
@@ -51,8 +51,8 @@ export const RecordButton = styled.button`
 `;
 
 export const AudioPlayer = styled.audio`
-    margin-right:1rem;
-    margin-left:1rem;
+    margin-right:auto;
+    margin-left:auto;
     margin-bottom:15px;
 `;
 
@@ -143,4 +143,5 @@ export const QuestionAnswer = styled.div`
     margin-bottom: 15px;
     padding-top: 1rem;
     padding-bottom: 1rem;
+    background: #E8E8E8;
 `;

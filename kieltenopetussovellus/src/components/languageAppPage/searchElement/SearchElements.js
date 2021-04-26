@@ -35,7 +35,7 @@ export const SearchContainer = styled.div`
 `;
 
 export const SearchResultContainer = styled.div`
-    height:130vh;
+    height:80vh;
     width:70%;
     transition: all 1s;
     overflow: auto;
@@ -269,3 +269,14 @@ export const SortInput = styled(Select)`
     }
 `;
 
+export const ErrorContainer = styled.h1`
+    display:flex;
+    height:40vh;
+    margin-top: 10px;
+    margin-bottom: 35px;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    justify-content:center;
+    align-items:center;
+`;
