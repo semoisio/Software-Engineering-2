@@ -11,7 +11,7 @@ import {
 } from './LanguageNavbarElements';
 import ConfirmDialog from '../../../dialogs/ConfirmDialog';
 
-const LanguageNavbar = ({toggle, mainActive, setMainactive }) => {
+const LanguageNavbar = ({toggle, mainActive, setMainactive,setUser }) => {
     const history = useHistory();
 
     
@@ -20,10 +20,11 @@ const LanguageNavbar = ({toggle, mainActive, setMainactive }) => {
         let dialogprops = {
             title: "Sign out",
             message: "Are you sure you wish to sign out?",
-            clickOk: async () => {
+            clickOk: () => {
                 history.push("/"); 
-                localStorage.clear();    
-                window.location.reload();
+                localStorage.clear(); 
+                setUser("");   
+                //window.location.reload();
             }
         }
         ConfirmDialog(dialogprops);

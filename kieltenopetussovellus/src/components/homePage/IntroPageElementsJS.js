@@ -54,6 +54,7 @@ export const IntroText = styled.div`
 
 	@media screen and (max-width: 768px){
         width:80%;
+		font-size:14px;
     }
 `;
 

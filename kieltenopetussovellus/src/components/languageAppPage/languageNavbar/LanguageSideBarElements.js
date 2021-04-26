@@ -70,8 +70,7 @@ export const SideNavBtn = styled(NavLink)`
     }
 `;
 
-export const SideNavBtnLogOut = styled(NavLink)`
-    background-color: #FE786A;
+export const SideNavBtnLogOut = styled.div`
     box-shadow: 1px 1px 2px #626262;
 	padding: 1rem 1rem;
 	border: none;

@@ -13,6 +13,7 @@ import {
     RatingContainer,
     QuizContainer,
     StarContainer,
+    BackButton
 } from './ListenElements';
 import {
     PagesContainer,
@@ -256,7 +257,7 @@ const Listen = (props) => {
         }
     }
 
-
+console.log(audioFetched);
     return (
         <>
             {
@@ -266,23 +267,8 @@ const Listen = (props) => {
                         audioInfo === null ? <InfoText>Something went wrong...</InfoText> :
                             <ListenContainer>
                                 <InfoContainer>
+                                <BackButton className="button2" onClick={() => clickBack()}>Back</BackButton>
                                     <Title>{audioInfo.title}</Title>
-                                    <InfoText>Recorded by {audioInfo.username}</InfoText>
-                                    <InfoText>Description: {audioInfo.desc}</InfoText>
-                                    <InfoText>Difficulty: {audioInfo.difficulty}</InfoText>
-                                    <InfoText>Language: {audioInfo.language}</InfoText>
-                                    <InfoText>Genre: {audioInfo.genre}</InfoText>
-                                    <InfoText>Rating:</InfoText>
-                                    <StarContainer>
-                                        <ReactStars
-                                            count={5}
-                                            size={30}
-                                            color="#E8E8E8"
-                                            activeColor="#FFC67C"
-                                            value={ratingValue}
-                                            edit={false}
-                                        />
-                                    </StarContainer>
                                     {
                                         fetching ?
                                             <Loader type="TailSpin" color="#00BFFF" height={50} width={50} /> :
@@ -295,19 +281,23 @@ const Listen = (props) => {
                                                     <source src={audioFetched} type="audio/webm" />
                                                 </AudioPlayer>
                                     }
-                                    <RatingContainer>
-                                        <InfoText>Rate audio:</InfoText>
-                                        <StarContainer>
-                                            <ReactStars
-                                                count={5}
-                                                onChange={userRatingChanged}
-                                                size={30}
-                                                color="#E8E8E8"
-                                                activeColor="#FFC67C"
-                                                value={userRating}
-                                            />
-                                        </StarContainer>
-                                    </RatingContainer>
+                                    <InfoText>Recorded by {audioInfo.username}</InfoText>
+                                    <InfoText>Description: {audioInfo.desc}</InfoText>
+                                    <InfoText>Difficulty: {audioInfo.difficulty}</InfoText>
+                                    <InfoText>Language: {audioInfo.language}</InfoText>
+                                    <InfoText>Genre: {audioInfo.genre}</InfoText>
+                                    <StarContainer>
+                                        <ReactStars
+                                            count={5}
+                                            size={30}
+                                            color="#E8E8E8"
+                                            activeColor="#FFC67C"
+                                            value={ratingValue}
+                                            edit={false}
+                                        />
+                                    </StarContainer>
+                                    <Title></Title>
+                                    
                                     {
                                         audioInfo.quiz && audioInfo.quiz.length > 0 ?
                                             showQuiz ?
@@ -320,9 +310,23 @@ const Listen = (props) => {
                                         showQuiz ?
                                             <AudioQuiz /> : null
                                     }
-                                    <ListenButton onClick={() => clickBack()}>Back</ListenButton>
+                                   
                                 </InfoContainer>
+                                
                                 <CommentContainer>
+                                <RatingContainer>
+                                        <Title>Rate audio:</Title>
+                                        <StarContainer>
+                                            <ReactStars
+                                                count={5}
+                                                onChange={userRatingChanged}
+                                                size={30}
+                                                color="#E8E8E8"
+                                                activeColor="#FFC67C"
+                                                value={userRating}
+                                            />
+                                        </StarContainer>
+                                    </RatingContainer>
                                     {
                                         commentArray[1] ?
                                             <PagesContainer>

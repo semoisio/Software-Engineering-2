@@ -6,7 +6,7 @@ import Select from 'react-select';
 export const SearchAndListenContainer = styled.div`
     display:flex;
     flex-wrap: wrap;
-    min-height:80vh;
+    min-height:572px;
     padding-left: 10px;
 `;
 
@@ -232,14 +232,19 @@ export const PagesContainer = styled.div`
     
 `;
 export const PageButton = styled.label`
-margin-right: 16px;
-font-size: 14px;
-color: #FF995E;
-text-shadow: 1px 1px 2px #000000;
+
+    margin-right: 16px;
+    font-size: 14px;
+    color: black;   
+    cursor: pointer;
 
     @media screen and (max-width: 500px){
         font-size: 0.8rem;
     }   
+
+    &:hover{
+        opacity:50%;
+    }
 `;
 
 //tää jäi kesken, miten napit saa menemään nurkkiin ?

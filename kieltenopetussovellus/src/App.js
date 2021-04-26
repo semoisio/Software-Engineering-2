@@ -22,7 +22,7 @@ function App() {
     <div className="App" data-testid="app">
       {
         localStorage.getItem("user") ?
-          <LanguageAppHome /> :
+          <LanguageAppHome setUser={setUser} /> :
           <Router>
             <Switch>
               <Route exact path="/" component={HomePage} />

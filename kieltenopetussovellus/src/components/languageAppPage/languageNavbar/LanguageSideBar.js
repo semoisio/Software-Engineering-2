@@ -14,7 +14,7 @@ import {
 
 
 
-const LanguageSideBar = ({ isOpen, toggle, mainActive, setMainactive  }) => {
+const LanguageSideBar = ({ isOpen, toggle, setMainactive, setUser  }) => {
     const history = useHistory();
 
     const handleLogout = () => {
@@ -25,11 +25,13 @@ const LanguageSideBar = ({ isOpen, toggle, mainActive, setMainactive  }) => {
                 //history.push("/");
                 localStorage.clear();
                 window.location.reload();
+                
             }
         }
-        //history.push("/");
+        history.push("/");
         localStorage.clear();
-        window.location.reload();
+        setUser("");
+        //window.location.reload();
         //ConfirmDialog(dialogprops);
     };
 
@@ -48,7 +50,7 @@ const LanguageSideBar = ({ isOpen, toggle, mainActive, setMainactive  }) => {
                 <SideNavBtn to="/newrecording" onClick={() => btnClicked(false)}>New recording</SideNavBtn>
                 <SideNavBtn to="/profile" onClick={() => btnClicked(false)}>Profile</SideNavBtn>
                 <SideNavBtn to="/myaudio" onClick={() => btnClicked(false)}>My audios</SideNavBtn>
-                <SideNavBtnLogOut  to="/" onClick={handleLogout}>Sign out</SideNavBtnLogOut>
+                <SideNavBtnLogOut className="button2" onClick={handleLogout}>Sign out</SideNavBtnLogOut>
             </SideBtnWrap>
 
         </LanguageSidebarContainer>

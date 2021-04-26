@@ -47,9 +47,12 @@ export const InfoText = styled.label`
     margin-right: 1rem;
 `;
 
-export const Title = styled.h1`
+export const Title = styled.p`
     margin-left: 1rem;
     margin-right: 1rem;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
 `;
 
 export const ListenButton = styled.button`
@@ -57,6 +60,16 @@ export const ListenButton = styled.button`
     margin-bottom: 15px;
     margin-left: 1rem;
     margin-right: 1rem;
+`;
+
+export const BackButton = styled.button`
+    width: 75px;
+    margin-bottom: 15px;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    position:absolute;
+    top: 90px;
+    right: 0;
 `;
 
 export const CommentInput = styled.textarea`
@@ -134,7 +147,7 @@ export const AnswerContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 `;
 
 export const StarContainer = styled.div`

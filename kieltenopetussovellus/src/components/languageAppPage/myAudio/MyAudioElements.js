@@ -6,10 +6,10 @@ import Select from 'react-select';
 export const MyAudioContainer = styled.div`
     display:flex;
     flex-wrap: wrap;
-    justify-content: center;
+    //justify-content: center;
     align-items:center;
     flex-direction:column;
-    min-height:100vh;
+    min-height:592px;
 `;
 
 // container for showing user's audios

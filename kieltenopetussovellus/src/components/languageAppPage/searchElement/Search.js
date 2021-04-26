@@ -318,7 +318,7 @@ const Search = () => {
                                     options={difficultyOptions}
                                 />
                             </SelectContainer>
-                            <ClearButton type="button" onClick={() => { clearChoices() }}>Clear</ClearButton>
+                            <FormButton className="button2" type="button" onClick={() => { clearChoices() }}>Clear</FormButton>
                             <FormButton type="submit">Search</FormButton>
                         </Form>
                     </SearchContainer>

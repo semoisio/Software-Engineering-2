@@ -14,7 +14,7 @@ import Errorpage from '../errorPage/Errorpage';
 import MyAudio from './myAudio/MyAudio';
 
 /**Landing page after signing in */
-const LanguageAppHome = () => {
+const LanguageAppHome = (props) => {
     // This state keeps track is sidebaropen or not
     const [isOpen, setIsOpen] = useState(false);
 
@@ -30,8 +30,8 @@ const LanguageAppHome = () => {
     return (
         <LanguageContainer data-testid="languageContainer">
             <Router>
-                <LanguageNavbar toggle={toggle} mainActive={mainActive} setMainactive={setMainactive} />
-                <LanguageSideBar isOpen={isOpen} toggle={toggle} mainActive={mainActive} setMainactive={setMainactive}/>
+                <LanguageNavbar setUser={props.setUser} toggle={toggle} mainActive={mainActive} setMainactive={setMainactive} />
+                <LanguageSideBar setUser={props.setUser} isOpen={isOpen} toggle={toggle}  setMainactive={setMainactive}/>
                 <ElementsContainer>
                     <Switch>
                         <Route exact path="/" component={Search} />

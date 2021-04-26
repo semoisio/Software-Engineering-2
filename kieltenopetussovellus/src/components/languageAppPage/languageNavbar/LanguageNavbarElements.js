@@ -27,7 +27,6 @@ export const LanguageNav = styled.nav`
 export const Logo = styled.div`
     color: white;
     justify-self: flex-start;
-    cursor: pointer;
     font-size: 1.5rem;
     display: flex;
     align-items: center;

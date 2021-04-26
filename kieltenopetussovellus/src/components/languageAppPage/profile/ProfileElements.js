@@ -3,9 +3,11 @@ import {CONtext,CONh1,CONinput} from '../../../tools/colors';
 
 export const ProfileContainer = styled.div`
     display:flex;
-    //align-items:center;
-    justify-content:center;
-    min-height: 100vh;
+    align-items:center;
+    //justify-content:center;
+    flex-direction:column;
+    min-height: 572px;
+    margin-top: 30px;
 `;
 export const Username = styled.h1`
     text-align:center;

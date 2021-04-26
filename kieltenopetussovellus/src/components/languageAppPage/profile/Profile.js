@@ -24,7 +24,7 @@ import {
 import { foundCorrectLabel, checkMatch } from './profileFunctions';
 import NotifyDialog from '../../../dialogs/NotifyDialog';
 import ConfirmDialog from '../../../dialogs/ConfirmDialog';
-import {getFlag} from '../../../tools/flagFunction';
+import { getFlag } from '../../../tools/flagFunction';
 
 
 const Profile = () => {
@@ -459,44 +459,22 @@ const Profile = () => {
 
     return (
         <div>
-        <ProfileContainer data-testid="profileContainer">
+            <ProfileContainer data-testid="profileContainer">
 
-            {changePassword ?
+                {changePassword ?
 
-                <PasswordChangeContainer>
-                    <FormLabel>Old password</FormLabel>
-                    <FormInput type="password" value={oldPassword} onChange={(e) => (oldPasswordChanged(e))} />
-                    <FormLabel>New password</FormLabel>
-                    <FormInput type="password" value={newPassword1} onChange={(e) => (passwordChanged(e))} onFocus={() => pwFocus()} />
-                    <FormText>{pwInfo}</FormText>
-                    <FormLabel>Confirm new password</FormLabel>
-                    <FormInput type="password" value={newPassword2} onChange={(e) => (confirmPasswordChanged(e))}/>
-
-                    {doCheck ?
-                        <>
-                            <LoaderText>Checking</LoaderText>
-                            <Loader
-                                type="TailSpin"
-                                color="#00BFFF"
-                                height={50}
-                                width={50}
-                            />
-                        </> :
-                        <UserContainer>
-                            <FormButton onClick={() => { setDoPasswordUpdate(doPasswordUpdate + 1) }} >Save password</FormButton>
-                            <FormButtonDelete className="button2" onClick={() => { cancelSavePassword() }} >Cancel</FormButtonDelete>
-                        </UserContainer>
-                    }
-
-                </PasswordChangeContainer> :
-                deleteActive ?
                     <PasswordChangeContainer>
-                        <FormLabel>Give password</FormLabel>
-                        <FormInput type="password" value={deletePassword} onChange={(e) => (deletePasswordChanged(e))} />
+                        <FormLabel>Old password</FormLabel>
+                        <FormInput type="password" value={oldPassword} onChange={(e) => (oldPasswordChanged(e))} />
+                        <FormLabel>New password</FormLabel>
+                        <FormInput type="password" value={newPassword1} onChange={(e) => (passwordChanged(e))} onFocus={() => pwFocus()} />
+                        <FormText>{pwInfo}</FormText>
+                        <FormLabel>Confirm new password</FormLabel>
+                        <FormInput type="password" value={newPassword2} onChange={(e) => (confirmPasswordChanged(e))} />
 
                         {doCheck ?
                             <>
-                                <LoaderText>Deleting</LoaderText>
+                                <LoaderText>Checking</LoaderText>
                                 <Loader
                                     type="TailSpin"
                                     color="#00BFFF"
@@ -505,44 +483,66 @@ const Profile = () => {
                                 />
                             </> :
                             <UserContainer>
-                                <FormButton className="button2" onClick={() => makeSureDelete()} >Delete account</FormButton>
-                                <FormButtonDelete onClick={() => { cancelDelete() }} >Cancel</FormButtonDelete>
+                                <FormButton onClick={() => { setDoPasswordUpdate(doPasswordUpdate + 1) }} >Save password</FormButton>
+                                <FormButtonDelete className="button2" onClick={() => { cancelSavePassword() }} >Cancel</FormButtonDelete>
                             </UserContainer>
                         }
 
                     </PasswordChangeContainer> :
-                    searching ?
-                        <LoaderContainer>
-                            <LoaderText>Loading user data</LoaderText>
-                            <Loader
-                                type="TailSpin"
-                                color="#00BFFF"
-                                height={50}
-                                width={50}
-                            />
-                        </LoaderContainer> :
+                    deleteActive ?
+                        <PasswordChangeContainer>
+                            <FormLabel>Give password</FormLabel>
+                            <FormInput type="password" value={deletePassword} onChange={(e) => (deletePasswordChanged(e))} />
 
-                        <UserContainer>
-                            <Username>{user === undefined ? "testi" : user.username}</Username>
-                            <UserImage src={user ? getFlag(user.learning) : kuva} />
-                            <SelectContainer>
-                                <Select
-                                    isDisabled={!editing}
-                                    value={selectedLanguage}
-                                    onChange={handleSelectClickLanguage}
-                                    options={languageOptions}
+                            {doCheck ?
+                                <>
+                                    <LoaderText>Deleting</LoaderText>
+                                    <Loader
+                                        type="TailSpin"
+                                        color="#00BFFF"
+                                        height={50}
+                                        width={50}
+                                    />
+                                </> :
+                                <UserContainer>
+                                    <FormButton className="button2" onClick={() => makeSureDelete()} >Delete account</FormButton>
+                                    <FormButtonDelete onClick={() => { cancelDelete() }} >Cancel</FormButtonDelete>
+                                </UserContainer>
+                            }
+
+                        </PasswordChangeContainer> :
+                        searching ?
+                            <LoaderContainer>
+                                <LoaderText>Loading user data</LoaderText>
+                                <Loader
+                                    type="TailSpin"
+                                    color="#00BFFF"
+                                    height={50}
+                                    width={50}
                                 />
-                            </SelectContainer>
-                            <FormButton onClick={() => editingChangged()}>{editingButtonText}</FormButton>
-                            <FormButton onClick={() => changePasswordClicked()}>Change password</FormButton>
-                            <FormButtonDelete className="button2" onClick={() => confirmUserDelete()}>Delete account</FormButtonDelete>
-                        </UserContainer>
-            }
+                            </LoaderContainer> :
+
+                            <UserContainer>
+                                <Username>{user === undefined ? "testi" : user.username}</Username>
+                                <UserImage src={user ? getFlag(user.learning) : kuva} />
+                                <SelectContainer>
+                                    <Select
+                                        isDisabled={!editing}
+                                        value={selectedLanguage}
+                                        onChange={handleSelectClickLanguage}
+                                        options={languageOptions}
+                                    />
+                                </SelectContainer>
+                                <FormButton onClick={() => editingChangged()}>{editingButtonText}</FormButton>
+                                <FormButton onClick={() => changePasswordClicked()}>Change password</FormButton>
+                                <FormButtonDelete className="button2" onClick={() => confirmUserDelete()}>Delete account</FormButtonDelete>
+                            </UserContainer>
+                }
 
 
-            
-        </ProfileContainer>
-        <FooterJS/>
+
+            </ProfileContainer>
+            <FooterJS />
         </div>
     )
 }
