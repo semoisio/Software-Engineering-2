@@ -68,6 +68,7 @@ const MyAudio = () => {
     //audio search input
     const [searchTitle, setSearchTitle] = useState("");
     const [searchInputChanged, setSearchInputChanged] = useState(false);
+    const [searchCount, setSearchCount] = useState(-1);
 
     // fields for editing audio info
     const [language, setLanguage] = useState("");
@@ -199,6 +200,7 @@ const MyAudio = () => {
     const fetchAudio = async () => {
         setSearchInputChanged(false);
         setSearching(true);
+        setSearchCount(searchCount + 1);
         let url = "http://127.0.0.1:3001/audio?username=" + username;
         if (searchTitle !== "") {
             url += "&title=" + searchTitle;
@@ -225,6 +227,7 @@ const MyAudio = () => {
                 setAudiot([[]]);
                 setSearching(false);
             }
+
         } catch {
             console.log("Audio search failed");
             setSearching(false);
@@ -443,13 +446,9 @@ const MyAudio = () => {
                                 width={50}
                             /></LoaderContainer> :
                         <SearchContainer isOpen={isOpen}>
+                            <Title>Found {audioCount} recordings</Title>
                             {
-                                audioCount > 0 ?
-                                    <Title>You have {audioCount} recordings</Title> :
-                                    <Title>You have no recordings</Title>
-                            }
-                            {
-                                audioCount > 0 ?
+                                searchCount > 0 || audioCount > 0 ?
                                     <SortContainer>
                                         <FormLabel htmlFor="for">Sort by</FormLabel>
                                         <SelectInput
@@ -472,10 +471,7 @@ const MyAudio = () => {
                             }
                             {
                                 error ?
-                                    <AudioContainer
-                                        image={notFound}
-                                        title="No matches"
-                                        description="We didn't find anything" />
+                                    null
                                     : audioInside
                             }
                         </SearchContainer>
