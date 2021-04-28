@@ -2,6 +2,7 @@
   "name": "kieltenopetussovellus",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "react": "^17.0.1",
     "react-alert": "^7.0.2",
