@@ -1,3 +1,11 @@
+# Software Engineering 2 group work
+
+This is our group work from course Software engineering 2. We build app where you can record and listen records. You can also rate and comment others recordings.
+
+
+
+
+
 # Introduction 
 TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
 
